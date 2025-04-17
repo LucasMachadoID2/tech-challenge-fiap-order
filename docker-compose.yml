@@ -2,8 +2,8 @@ services:
   postgres:
     image: postgres
     environment:
-      POSTGRES_USER: ${USER_APP_DB}
-      POSTGRES_PASSWORD: ${PASSWORD_APP_DB}
-      POSTGRES_DB: ${DATABASE_APP_DB}
+      POSTGRES_USER: tech-challenge-app
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tech-challenge-fiap
     ports:
       - "5432:5432"
