@@ -2,7 +2,7 @@
 
 ## Pré-requisitos
 - Java 21
-- Banco de dados prostgres
+- Banco de dados MongoDB
 
 ## Instruções de execução
 Está disponibilizado um docker-compose.yml que irá fornecer toda infraestrutura necessaria para a execução local da aplicação
