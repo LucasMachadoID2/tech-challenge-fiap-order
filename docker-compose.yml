@@ -1,9 +1,10 @@
 services:
-  postgres:
-    image: postgres
+  mongodb:
+    image: mongo:7.0
+    restart: always
     environment:
-      POSTGRES_USER: tech-challenge-app
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: tech-challenge-fiap
+      MONGO_INITDB_DATABASE: tech-chall
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
     ports:
-      - "5432:5432"
+    - 27017:27017
