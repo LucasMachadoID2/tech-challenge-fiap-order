@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.entrypoint.dto;
+package com.tech_challenge_fiap.adapter.service.inbound.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
