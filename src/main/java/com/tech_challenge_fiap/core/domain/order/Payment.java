@@ -7,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class Order {
-
-    private String id;
-    private PaymentStatus paymentStatus;
+public class Payment {
+    String id;
+    String qrImage;
+    String qrCode;
+    PaymentStatus status;
 }

@@ -18,8 +18,8 @@ public class OrderController {
     @PostMapping("create")
     public ResponseEntity<?> create(OrderRequestDto orderRequestDTO) {
         try {
-            orderUseCase.createOrder(orderRequestDTO);
-            return ResponseEntity.ok().build();
+            var savedOrder = orderUseCase.createOrder(orderRequestDTO);
+            return ResponseEntity.ok(savedOrder);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
