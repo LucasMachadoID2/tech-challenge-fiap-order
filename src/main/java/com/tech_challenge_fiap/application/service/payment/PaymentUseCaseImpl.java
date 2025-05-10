@@ -4,7 +4,7 @@ import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.order.OrderRepository;
 import com.tech_challenge_fiap.core.domain.order.PaymentStatus;
 import com.tech_challenge_fiap.core.domain.payment.PaymentUseCase;
-import com.tech_challenge_fiap.entrypoint.dto.PaymentRequestDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

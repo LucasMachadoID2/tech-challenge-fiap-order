@@ -1,7 +1,7 @@
 package com.tech_challenge_fiap.adapter.service.inbound.controller;
 
 import com.tech_challenge_fiap.core.domain.payment.PaymentUseCase;
-import com.tech_challenge_fiap.entrypoint.dto.PaymentRequestDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
