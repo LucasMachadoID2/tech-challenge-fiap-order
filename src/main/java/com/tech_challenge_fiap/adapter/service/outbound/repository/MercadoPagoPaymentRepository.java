@@ -8,7 +8,7 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.payment.PaymentRepository;
-import com.tech_challenge_fiap.entrypoint.dto.PaymentResponseDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentResponseDto;
 import com.tech_challenge_fiap.util.exception.CouldNotCreatePaymentException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

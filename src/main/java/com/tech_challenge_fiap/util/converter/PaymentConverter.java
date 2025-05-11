@@ -1,7 +1,7 @@
 package com.tech_challenge_fiap.util.converter;
 
 import com.mercadopago.resources.payment.Payment;
-import com.tech_challenge_fiap.entrypoint.dto.PaymentResponseDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentResponseDto;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

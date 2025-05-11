@@ -3,7 +3,7 @@ package com.tech_challenge_fiap.application.service;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
 import com.tech_challenge_fiap.core.domain.order.OrderUseCase;
 import com.tech_challenge_fiap.core.domain.order.OrderRepository;
-import com.tech_challenge_fiap.entrypoint.dto.OrderRequestDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
