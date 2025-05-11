@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.adapter.service.inbound.dto;
+package com.tech_challenge_fiap.adapter.service.inbound.dtosssss;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
