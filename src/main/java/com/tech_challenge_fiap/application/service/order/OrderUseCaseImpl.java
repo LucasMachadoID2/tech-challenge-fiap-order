@@ -23,14 +23,15 @@ public class OrderUseCaseImpl implements OrderUseCase {
 
     @Override
     public Order createOrder(OrderRequestDto orderRequestDTO) {
-        var paymentEntity = PaymentEntity.builder()
-                .status(PaymentStatusEnumEntity.WAITING_PAYMENT)
+        var payment = Payment.builder()
+                .status(PaymentStatusEnum.WAITING_PAYMENT)
                 .build();
-
-        OrderEntity orderEntity = OrderEntity.builder()
-                .payment(paymentEntity)
-                .build();
-        return orderRepository.save(orderEntity);
+       var order = Order.builder()
+               .id(orderRequestDTO.getId())
+               .payment(payment)
+               .build();
+       
+        return orderRepository.save(orderToEntity(order));
     }
 
     @Override
