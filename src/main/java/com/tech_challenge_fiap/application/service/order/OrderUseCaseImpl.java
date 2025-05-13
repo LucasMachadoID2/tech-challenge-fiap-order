@@ -2,12 +2,14 @@ package com.tech_challenge_fiap.application.service.order;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentStatusDto;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
-import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentStatusEntity;
+import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentEntity;
+import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentStatusEnumEntity;
 import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.order.OrderUseCase;
 import com.tech_challenge_fiap.core.domain.order.OrderRepository;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderRequestDto;
-import com.tech_challenge_fiap.core.domain.payment.PaymentStatus;
+import com.tech_challenge_fiap.core.domain.payment.Payment;
+import com.tech_challenge_fiap.core.domain.payment.PaymentStatusEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,12 @@ public class OrderUseCaseImpl implements OrderUseCase {
 
     @Override
     public Order createOrder(OrderRequestDto orderRequestDTO) {
+        var paymentEntity = PaymentEntity.builder()
+                .status(PaymentStatusEnumEntity.WAITING_PAYMENT)
+                .build();
+
         OrderEntity orderEntity = OrderEntity.builder()
-                .paymentStatus(PaymentStatusEntity.WAITING_PAYMENT)
+                .payment(paymentEntity)
                 .build();
         return orderRepository.save(orderEntity);
     }
@@ -30,7 +36,15 @@ public class OrderUseCaseImpl implements OrderUseCase {
     @Override
     public Order updatePaymentStatus(String orderId, PaymentStatusDto paymentStatusDto) {
         var order = orderRepository.getOrderById(orderId);
-        order.setPaymentStatus(PaymentStatus.valueOf(paymentStatusDto.name()));
+
+        var payment = Payment.builder()
+                .id(order.getPayment().getId())
+                .qrCode(order.getPayment().getQrCode())
+                .qrImage(order.getPayment().getQrImage())
+                .status(PaymentStatusEnum.valueOf(paymentStatusDto.name()))
+                .build();
+
+        order.setPayment(payment);
 
         return orderRepository.save(orderToEntity(order));
     }

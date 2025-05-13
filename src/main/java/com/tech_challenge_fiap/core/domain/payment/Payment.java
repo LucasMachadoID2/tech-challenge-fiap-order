@@ -11,5 +11,5 @@ public class Payment {
     String id;
     String qrImage;
     String qrCode;
-    PaymentStatus status;
+    PaymentStatusEnum status;
 }
