@@ -13,7 +13,7 @@ public class OrderConverter {
 
     public static Order entityToOrder(OrderEntity orderEntity) {
         var payment = Payment.builder()
-                .id(orderEntity.getId())
+                .id(orderEntity.getPayment().getId())
                 .qrCode(orderEntity.getPayment().getQrCode())
                 .qrImage(orderEntity.getPayment().getQrImage())
                 .status(PaymentStatusEnum.valueOf(orderEntity.getPayment().getStatus().name()))
