@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.core.domain.order;
+package com.tech_challenge_fiap.core.domain.payment;
 
 public enum PaymentStatus {
     WAITING_PAYMENT,

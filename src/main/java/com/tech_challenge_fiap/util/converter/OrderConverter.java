@@ -3,7 +3,7 @@ package com.tech_challenge_fiap.util.converter;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentStatusEntity;
 import com.tech_challenge_fiap.core.domain.order.Order;
-import com.tech_challenge_fiap.core.domain.order.PaymentStatus;
+import com.tech_challenge_fiap.core.domain.payment.PaymentStatus;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

@@ -2,7 +2,7 @@ package com.tech_challenge_fiap.application.service.payment;
 
 import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.order.OrderRepository;
-import com.tech_challenge_fiap.core.domain.order.PaymentStatus;
+import com.tech_challenge_fiap.core.domain.payment.PaymentStatus;
 import com.tech_challenge_fiap.core.domain.payment.PaymentUseCase;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
 import lombok.RequiredArgsConstructor;
