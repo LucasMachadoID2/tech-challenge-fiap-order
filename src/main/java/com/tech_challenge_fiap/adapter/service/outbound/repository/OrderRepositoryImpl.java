@@ -3,6 +3,7 @@ package com.tech_challenge_fiap.adapter.service.outbound.repository;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
 import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.order.OrderRepository;
+import com.tech_challenge_fiap.util.exception.OrderNotFoundExpection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,11 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Order getOrderById(String id) {
-        var order = mongoOrderRepository.findById(id).orElseThrow();
-        return entityToOrder(order);
+        try {
+            var order = mongoOrderRepository.findById(id).orElseThrow();
+            return entityToOrder(order);
+        } catch (Exception e) {
+            throw new OrderNotFoundExpection(id);
+        }
     }
 }

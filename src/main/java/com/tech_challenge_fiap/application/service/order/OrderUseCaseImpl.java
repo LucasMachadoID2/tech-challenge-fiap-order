@@ -30,7 +30,7 @@ public class OrderUseCaseImpl implements OrderUseCase {
                .id(orderRequestDTO.getId())
                .payment(payment)
                .build();
-       
+
         return orderRepository.save(orderToEntity(order));
     }
 
