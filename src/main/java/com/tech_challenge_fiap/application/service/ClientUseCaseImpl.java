@@ -5,6 +5,7 @@ import com.tech_challenge_fiap.adapter.service.outbound.repository.MongoClientRe
 import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
 import com.tech_challenge_fiap.util.converter.ClientConverter;
+import com.tech_challenge_fiap.util.exception.ClientNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class ClientUseCaseImpl implements ClientUseCase {
 
     @Override
     public Client update(String id, Client client) {
+        if (mongoRepository.findById(id).isEmpty()) {
+            throw new ClientNotFoundException("Cliente não encontrado para o id: " + id);
+        }
         ClientEntity entity = toEntity(client);
         entity.setId(id);
         return toDomain(mongoRepository.save(entity));
@@ -32,6 +36,9 @@ public class ClientUseCaseImpl implements ClientUseCase {
 
     @Override
     public void delete(String id) {
+        if (mongoRepository.findById(id).isEmpty()) {
+            throw new ClientNotFoundException("Cliente não encontrado para o id: " + id);
+        }
         mongoRepository.deleteById(id);
     }
 
@@ -39,7 +46,7 @@ public class ClientUseCaseImpl implements ClientUseCase {
     public Client findById(String id) {
         return mongoRepository.findById(id)
                 .map(ClientConverter::toDomain)
-                .orElse(null);
+                .orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado para o id: " + id));
     }
 
     @Override
