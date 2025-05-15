@@ -34,9 +34,4 @@ public class ClientRepositoryImpl implements ClientRepository {
     public List<ClientEntity> findAll() {
         return mongoRepository.findAll();
     }
-
-//    @Override
-//    public List<ClientEntity> findByCategory(CategoryEnum category) {
-//        return mongoRepository.findByCategory(category);
-//    }
 }

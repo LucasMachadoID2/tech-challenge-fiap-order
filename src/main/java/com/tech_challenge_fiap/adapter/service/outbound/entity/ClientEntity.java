@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class ClientEntity {
     @Id
     private String id;
