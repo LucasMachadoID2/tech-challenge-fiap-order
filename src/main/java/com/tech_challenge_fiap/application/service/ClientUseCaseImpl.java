@@ -6,6 +6,7 @@ import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
 import com.tech_challenge_fiap.util.converter.ClientConverter;
 import com.tech_challenge_fiap.util.exception.ClientNotFoundException;
+import com.tech_challenge_fiap.util.exception.CpfAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,11 @@ public class ClientUseCaseImpl implements ClientUseCase {
 
     @Override
     public Client create(Client client) {
+        boolean cpfExists = mongoRepository.findAll().stream()
+                .anyMatch(c -> c.getCpf().equals(client.getCpf()));
+        if (cpfExists) {
+            throw new CpfAlreadyExistsException(client.getCpf());
+        }
         return toDomain(mongoRepository.save(toEntity(client)));
     }
 
