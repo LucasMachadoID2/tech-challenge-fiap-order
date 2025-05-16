@@ -12,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Document
 @Builder
-public class OrderEntity {
-
+public class PaymentEntity {
     @Id
-    private String id;
-
-    private PaymentEntity payment;
+    String id;
+    String qrImage;
+    String qrCode;
+    PaymentStatusEnumEntity status;
 }
