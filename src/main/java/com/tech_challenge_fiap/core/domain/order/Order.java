@@ -29,16 +29,26 @@ public class Order {
 
     private Payment payment;
 
-    private Long orderPrice;
-
     public static OrderBuilder builder() {
         return new CustomOrderBuilder();
+    }
+
+    public Long getOrderPrice() {
+        if(nonNull(this.client)) {
+            return this.products.stream().map(product -> {
+                if(nonNull(product.getPriceForClient())) {
+                    return product.getPriceForClient();
+                }
+                return product.getPrice();
+            }).mapToLong(Long::longValue).sum();
+        }
+
+        return this.products.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
     }
 
     private static class CustomOrderBuilder extends OrderBuilder {
         @Override
         public Order build() {
-            super.orderPrice = calculatePrice();
             validateProducts();
             return super.build();
         }
@@ -47,19 +57,6 @@ public class Order {
             if(super.products.isEmpty()) {
                 throw new IllegalArgumentException("Product list cannot be empty");
             }
-        }
-
-        private Long calculatePrice() {
-            if(nonNull(super.client)) {
-                return super.products.stream().map(product -> {
-                    if(nonNull(product.getPriceForClient())) {
-                        return product.getPriceForClient();
-                    }
-                    return product.getPrice();
-                }).mapToLong(Long::longValue).sum();
-            }
-
-            return super.products.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
         }
     }
 }

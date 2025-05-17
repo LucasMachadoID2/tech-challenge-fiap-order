@@ -37,7 +37,6 @@ public class OrderConverter {
                 .client(nonNull(order.getClient()) ? ClientConverter.toResponse(order.getClient()) : null)
                 .products(order.getProducts().stream().map(ProductConverter::toResponse).toList())
                 .payment(PaymentConverter.toResponse(order.getPayment()))
-                .orderPrice(order.getOrderPrice())
                 .build();
     }
 }

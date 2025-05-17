@@ -20,6 +20,4 @@ public class OrderResponseDto {
     private List<ProductResponseDto> products;
 
     private PaymentResponseDto payment;
-    
-    private Long orderPrice;
 }
