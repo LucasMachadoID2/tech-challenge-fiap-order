@@ -13,10 +13,9 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OrderRequestDto {
+public class OrderUpdateStatusRequestDto {
 
-    private String clientId;
+    private String orderId;
 
-    @NotNull
-    private List<String> productIds;
+    private String newStatus;
 }
