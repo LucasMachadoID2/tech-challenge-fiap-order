@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PaymentResponseDto {
 
-    private String qrCodeImage;
+    private String id;
+    private String qrImage;
     private String qrCode;
 }

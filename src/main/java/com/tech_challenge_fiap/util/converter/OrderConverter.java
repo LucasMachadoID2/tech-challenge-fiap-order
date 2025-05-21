@@ -1,41 +1,42 @@
 package com.tech_challenge_fiap.util.converter;
 
+import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderResponseDto;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
-import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentEntity;
-import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentStatusEnumEntity;
 import com.tech_challenge_fiap.core.domain.order.Order;
-import com.tech_challenge_fiap.core.domain.payment.Payment;
-import com.tech_challenge_fiap.core.domain.payment.PaymentStatusEnum;
 import lombok.experimental.UtilityClass;
+
+import static java.util.Objects.nonNull;
 
 @UtilityClass
 public class OrderConverter {
 
     public static Order entityToOrder(OrderEntity orderEntity) {
-        var payment = Payment.builder()
-                .id(orderEntity.getPayment().getId())
-                .qrCode(orderEntity.getPayment().getQrCode())
-                .qrImage(orderEntity.getPayment().getQrImage())
-                .status(PaymentStatusEnum.valueOf(orderEntity.getPayment().getStatus().name()))
-                .build();
-
         return Order.builder()
                 .id(orderEntity.getId())
-                .payment(payment)
+                .status(orderEntity.getStatus())
+                .client(nonNull(orderEntity.getClient()) ? ClientConverter.toDomain(orderEntity.getClient()) : null)
+                .products(orderEntity.getProducts().stream().map(ProductConverter::toDomain).toList())
+                .payment(PaymentConverter.toPaymentDomain(orderEntity.getPayment()))
                 .build();
     }
 
     public static OrderEntity orderToEntity(Order order) {
-        var paymentEntity = PaymentEntity.builder()
-                .id(order.getPayment().getId())
-                .qrCode(order.getPayment().getQrCode())
-                .qrImage(order.getPayment().getQrImage())
-                .status(PaymentStatusEnumEntity.valueOf(order.getPayment().getStatus().name()))
-                .build();
-
         return OrderEntity.builder()
                 .id(order.getId())
-                .payment(paymentEntity)
+                .status(order.getStatus())
+                .client(nonNull(order.getClient()) ? ClientConverter.toEntity(order.getClient()) : null)
+                .products(order.getProducts().stream().map(ProductConverter::toEntity).toList())
+                .payment(PaymentConverter.toEntity(order.getPayment()))
+                .build();
+    }
+
+    public static OrderResponseDto toResponse(Order order) {
+        return OrderResponseDto.builder()
+                .id(order.getId())
+                .status(order.getStatus().name())
+                .client(nonNull(order.getClient()) ? ClientConverter.toResponse(order.getClient()) : null)
+                .products(order.getProducts().stream().map(ProductConverter::toResponse).toList())
+                .payment(PaymentConverter.toResponse(order.getPayment()))
                 .build();
     }
 }
