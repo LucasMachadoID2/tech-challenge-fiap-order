@@ -28,9 +28,13 @@ public class ClientConverter {
     }
 
     public static Client toDomain(ClientRequestDto dto) {
+        String cpf = dto.getCpf();
+        if (cpf != null) {
+            cpf = cpf.replaceAll("[^0-9]", "");
+        }
         return Client.builder()
                 .name(dto.getName())
-                .cpf(dto.getCpf())
+                .cpf(cpf)
                 .email(dto.getEmail())
                 .build();
     }

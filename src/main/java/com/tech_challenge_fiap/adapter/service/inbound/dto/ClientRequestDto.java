@@ -9,8 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
+import com.tech_challenge_fiap.util.validation.Cpf;
 
 @Builder
 @Getter
@@ -20,7 +20,7 @@ import jakarta.validation.constraints.NotBlank;
 public class ClientRequestDto {
     private String name;
     @NotBlank(message = "CPF é obrigatório")
-    @Size(min = 11, max = 11, message = "CPF deve ter exatamente 11 dígitos")
+    @Cpf
     private String cpf;
     private String email;
 }
