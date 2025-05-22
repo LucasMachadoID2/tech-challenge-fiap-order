@@ -22,7 +22,7 @@ public class ClientController {
     private final ClientUseCase clientUseCase;
 
     @PostMapping
-    public ResponseEntity<ClientResponseDto> create(@RequestBody @jakarta.validation.Valid ClientRequestDto request) {
+    public ResponseEntity<ClientResponseDto> create(@RequestBody ClientRequestDto request) {
         var created = clientUseCase.create(toDomain(request));
         return ResponseEntity.ok(toResponse(created));
     }

@@ -2,14 +2,9 @@ package com.tech_challenge_fiap.adapter.service.inbound.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-
-import jakarta.validation.constraints.NotBlank;
 
 @Builder
 @Getter
@@ -18,7 +13,6 @@ import jakarta.validation.constraints.NotBlank;
 
 public class ClientRequestDto {
     private String name;
-    @NotBlank(message = "CPF é obrigatório")
     private String cpf;
     private String email;
 }
