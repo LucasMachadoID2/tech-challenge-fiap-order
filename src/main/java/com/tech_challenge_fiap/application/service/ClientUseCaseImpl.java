@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.tech_challenge_fiap.util.converter.ClientConverter.*;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toDomain;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toEntity;
 
 @Service
 @RequiredArgsConstructor

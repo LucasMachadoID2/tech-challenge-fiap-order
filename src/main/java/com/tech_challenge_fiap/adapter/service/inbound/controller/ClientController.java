@@ -1,7 +1,5 @@
 package com.tech_challenge_fiap.adapter.service.inbound.controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import java.beans.PropertyEditorSupport;
+
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientRequestDto;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientResponseDto;
 import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
@@ -13,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.util.converter.ClientConverter.*;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toDomain;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toResponse;
 
 @RestController
 @RequestMapping("/v1/clients")
@@ -21,20 +20,6 @@ import static com.tech_challenge_fiap.util.converter.ClientConverter.*;
 public class ClientController {
 
     private final ClientUseCase clientUseCase;
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(String.class, "cpf", new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null) {
-                    setValue(text.replaceAll("[^0-9]", ""));
-                } else {
-                    setValue(null);
-                }
-            }
-        });
-    }
 
     @PostMapping
     public ResponseEntity<ClientResponseDto> create(@RequestBody @jakarta.validation.Valid ClientRequestDto request) {

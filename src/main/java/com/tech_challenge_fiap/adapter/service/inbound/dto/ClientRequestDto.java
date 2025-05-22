@@ -10,7 +10,6 @@ import lombok.Getter;
 
 
 import jakarta.validation.constraints.NotBlank;
-import com.tech_challenge_fiap.util.validation.Cpf;
 
 @Builder
 @Getter
@@ -20,7 +19,6 @@ import com.tech_challenge_fiap.util.validation.Cpf;
 public class ClientRequestDto {
     private String name;
     @NotBlank(message = "CPF é obrigatório")
-    @Cpf
     private String cpf;
     private String email;
 }

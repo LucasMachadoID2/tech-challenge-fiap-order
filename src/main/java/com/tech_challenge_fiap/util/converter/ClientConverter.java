@@ -2,8 +2,8 @@ package com.tech_challenge_fiap.util.converter;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientRequestDto;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientResponseDto;
-import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.ClientEntity;
+import com.tech_challenge_fiap.core.domain.client.Client;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -28,13 +28,9 @@ public class ClientConverter {
     }
 
     public static Client toDomain(ClientRequestDto dto) {
-        String cpf = dto.getCpf();
-        if (cpf != null) {
-            cpf = cpf.replaceAll("[^0-9]", "");
-        }
         return Client.builder()
                 .name(dto.getName())
-                .cpf(cpf)
+                .cpf(dto.getCpf())
                 .email(dto.getEmail())
                 .build();
     }
