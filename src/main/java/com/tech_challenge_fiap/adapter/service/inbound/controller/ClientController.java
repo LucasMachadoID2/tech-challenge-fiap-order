@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.util.converter.ClientConverter.*;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toDomain;
+import static com.tech_challenge_fiap.util.converter.ClientConverter.toResponse;
 
 @RestController
 @RequestMapping("/v1/clients")
