@@ -1,5 +1,6 @@
 package com.tech_challenge_fiap.adapter.service.outbound.entity;
 
+import com.tech_challenge_fiap.util.Enum.PaymentStatusEnumEntity;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
