@@ -1,12 +1,12 @@
 db = db.getSiblingDB('tech-chall');
 
-db.products.insertMany([
+db.product.insertMany([
   {
     name: "Hambúrguer Artesanal",
     description: "Hambúrguer com carne 180g, queijo cheddar e pão brioche",
     image: "https://br.freepik.com/fotos-gratis/hamburguer-de-vista-frontal-em-um-carrinho_9523079.htm#fromView=search&page=1&position=2&uuid=9ecc3827-6e81-4f85-bcac-0728fe83ba6f&query=hamburguer+artesanal",
     price: 3600,
-    priceForClient: ,
+    priceForClient: null,
     category: "LANCHE",
     quantity: 30
   },
@@ -33,7 +33,7 @@ db.products.insertMany([
     description: "Copo de suco natural 300ml (laranja, limão ou abacaxi)",
     image: "https://br.freepik.com/fotos-gratis/suco-de-laranja-em-um-copo-e-laranja-fresca_7365457.htm#fromView=search&page=1&position=12&uuid=cd46fbb1-0f66-4a62-ad60-c0e91455dde7&query=suco+natural",
     price: 1000,
-    priceForClient: ,
+    priceForClient: null,
     category: "BEBIDA",
     quantity: 60
   },
@@ -42,7 +42,7 @@ db.products.insertMany([
     description: "Brownie de chocolate com bola de sorvete de creme",
     image: "https://br.freepik.com/fotos-gratis/brownie-de-chocolate-servido-com-sorvete-de-baunilha-e-morangos_5536627.htm#fromView=search&page=1&position=6&uuid=7e11a676-378e-48f6-946d-18d10db9592f&query=Brownie+com+Sorvete",
     price: 1700,
-    priceForClient: ,
+    priceForClient: null,
     category: "SOBREMESA",
     quantity: 25
   },

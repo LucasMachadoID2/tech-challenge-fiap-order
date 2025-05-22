@@ -2,7 +2,7 @@ package com.tech_challenge_fiap.util.converter;
 
 import com.tech_challenge_fiap.adapter.service.outbound.entity.OrderEntity;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentEntity;
-import com.tech_challenge_fiap.adapter.service.outbound.entity.PaymentStatusEnumEntity;
+import com.tech_challenge_fiap.util.Enum.PaymentStatusEnumEntity;
 import com.tech_challenge_fiap.core.domain.order.Order;
 import com.tech_challenge_fiap.core.domain.payment.Payment;
 import com.tech_challenge_fiap.core.domain.payment.PaymentStatusEnum;
