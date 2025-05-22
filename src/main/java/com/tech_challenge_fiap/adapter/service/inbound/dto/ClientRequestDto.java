@@ -10,7 +10,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-
 public class ClientRequestDto {
     private String name;
     private String cpf;
