@@ -2,8 +2,8 @@ package com.tech_challenge_fiap.util.converter;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientRequestDto;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.ClientResponseDto;
-import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.adapter.service.outbound.entity.ClientEntity;
+import com.tech_challenge_fiap.core.domain.client.Client;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
