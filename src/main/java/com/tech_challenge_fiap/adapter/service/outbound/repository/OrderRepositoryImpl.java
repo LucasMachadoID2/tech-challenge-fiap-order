@@ -28,12 +28,9 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Order getOrderById(String id) {
-        try {
-            var order = mongoOrderRepository.findById(id).orElseThrow();
-            return entityToOrder(order);
-        } catch (Exception e) {
-            throw new OrderNotFoundException(id);
-        }
+        var order = mongoOrderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
+        return entityToOrder(order);
     }
 
     @Override

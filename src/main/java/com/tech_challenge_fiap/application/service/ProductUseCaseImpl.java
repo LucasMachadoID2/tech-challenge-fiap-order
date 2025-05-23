@@ -6,12 +6,14 @@ import com.tech_challenge_fiap.core.domain.product.Product;
 import com.tech_challenge_fiap.core.domain.product.ProductUseCase;
 import com.tech_challenge_fiap.util.Enum.CategoryEnum;
 import com.tech_challenge_fiap.util.converter.ProductConverter;
+import com.tech_challenge_fiap.util.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.tech_challenge_fiap.util.converter.ProductConverter.*;
+import static com.tech_challenge_fiap.util.converter.ProductConverter.toDomain;
+import static com.tech_challenge_fiap.util.converter.ProductConverter.toEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +42,7 @@ public class ProductUseCaseImpl implements ProductUseCase {
     public Product findById(String id) {
         return mongoRepository.findById(id)
                 .map(ProductConverter::toDomain)
-                .orElse(null);
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Override

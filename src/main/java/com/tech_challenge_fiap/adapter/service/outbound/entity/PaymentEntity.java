@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode
 @Getter
 @Setter
-@Document
+@Document(collection = "payment")
 @Builder
 public class PaymentEntity {
     @Id

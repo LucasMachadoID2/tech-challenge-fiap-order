@@ -41,6 +41,7 @@ public class PaymentConverter {
                 .id(payment.getId())
                 .qrImage(payment.getQrImage())
                 .qrCode(payment.getQrCode())
+                .status(payment.getStatus().name())
                 .build();
     }
 }
