@@ -47,8 +47,8 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<ProductResponseDto>> findByCategory(@PathVariable CategoryEnum category) {
+    @GetMapping("/category")
+    public ResponseEntity<List<ProductResponseDto>> findByCategory(@RequestParam(value = "category") CategoryEnum category) {
         var products = productUseCase.findByCategory(category).stream()
                 .map(ProductConverter::toResponse)
                 .collect(Collectors.toList());

@@ -2,7 +2,7 @@ package com.tech_challenge_fiap.application.service.order;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderRequestDto;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderUpdateStatusRequestDto;
-import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentStatusDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
 import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
 import com.tech_challenge_fiap.core.domain.order.Order;
@@ -56,17 +56,11 @@ public class OrderUseCaseImpl implements OrderUseCase {
     }
 
     @Override
-    public Order updatePaymentStatus(String orderId, PaymentStatusDto paymentStatusDto) {
-        var order = orderRepository.getOrderById(orderId);
+    public Order updatePaymentStatus(PaymentRequestDto paymentRequestDto) {
+        var order = orderRepository.getOrderById(paymentRequestDto.getOrderId());
 
-        var payment = Payment.builder()
-                .id(order.getPayment().getId())
-                .qrCode(order.getPayment().getQrCode())
-                .qrImage(order.getPayment().getQrImage())
-                .status(PaymentStatusEnum.valueOf(paymentStatusDto.name()))
-                .build();
-
-        order.setPayment(payment);
+        PaymentStatusEnum paymentStatusEnum = PaymentStatusEnum.valueOf(paymentRequestDto.getStatus().name());
+        order.getPayment().setStatus(paymentStatusEnum);
 
         return orderRepository.save(orderToEntity(order));
     }

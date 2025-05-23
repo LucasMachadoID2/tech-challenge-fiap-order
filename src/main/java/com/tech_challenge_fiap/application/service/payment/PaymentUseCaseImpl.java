@@ -15,6 +15,6 @@ public class PaymentUseCaseImpl implements PaymentUseCase {
 
     @Override
     public Order updatePaymentStatus(PaymentRequestDto paymentRequestDto) {
-       return orderUseCase.updatePaymentStatus(paymentRequestDto.getOrderId(), paymentRequestDto.getStatus());
+       return orderUseCase.updatePaymentStatus(paymentRequestDto);
     }
 }

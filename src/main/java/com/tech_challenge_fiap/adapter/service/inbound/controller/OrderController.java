@@ -14,7 +14,7 @@ import java.util.List;
 import static com.tech_challenge_fiap.util.converter.OrderConverter.toResponse;
 
 @RestController
-@RequestMapping("/v1/order")
+@RequestMapping("/v1/orders")
 @AllArgsConstructor
 public class OrderController {
 
@@ -40,7 +40,7 @@ public class OrderController {
         }
     }
 
-    @PatchMapping("update-status")
+    @PatchMapping
     public ResponseEntity<?> updateStatus(@RequestBody OrderUpdateStatusRequestDto orderUpdateStatusRequestDto) {
         try {
             var updatedOrder = orderUseCase.updateStatus(orderUpdateStatusRequestDto);

@@ -55,7 +55,7 @@ public class Order {
 
         private void validateProducts() {
             if(super.products.isEmpty()) {
-                throw new IllegalArgumentException("Product list cannot be empty");
+                throw new IllegalArgumentException("Product list cannot be empty or null");
             }
         }
     }

@@ -1,7 +1,5 @@
 package com.tech_challenge_fiap.adapter.service.outbound.entity;
 
-
-
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

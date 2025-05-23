@@ -12,4 +12,5 @@ public class PaymentResponseDto {
     private String id;
     private String qrImage;
     private String qrCode;
+    private String status;
 }
