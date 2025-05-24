@@ -1,7 +1,6 @@
 package com.tech_challenge_fiap.application.service.order;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderRequestDto;
-import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderUpdateStatusRequestDto;
 import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
 import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
@@ -71,10 +70,10 @@ public class OrderUseCaseImpl implements OrderUseCase {
     }
 
     @Override
-    public Order updateStatus(OrderUpdateStatusRequestDto orderUpdateStatusRequestDto) {
-        Order orderFound = orderRepository.getOrderById(orderUpdateStatusRequestDto.getOrderId());
+    public Order updateStatus(String orderId, OrderStatusEnum status) {
+        Order orderFound = orderRepository.getOrderById(orderId);
 
-        orderFound.setStatus(OrderStatusEnum.valueOf(orderUpdateStatusRequestDto.getNewStatus()));
+        orderFound.setStatus(status);
 
         return orderRepository.save(OrderConverter.orderToEntity(orderFound));
     }

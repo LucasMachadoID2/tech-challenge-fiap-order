@@ -3,6 +3,7 @@ package com.tech_challenge_fiap.core.domain.order;
 import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.payment.Payment;
 import com.tech_challenge_fiap.core.domain.product.Product;
+import com.tech_challenge_fiap.util.exception.OrderProductsCantBeNullOrEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -55,7 +56,7 @@ public class Order {
 
         private void validateProducts() {
             if(super.products.isEmpty()) {
-                throw new IllegalArgumentException("Product list cannot be empty or null");
+                throw new OrderProductsCantBeNullOrEmpty();
             }
         }
     }

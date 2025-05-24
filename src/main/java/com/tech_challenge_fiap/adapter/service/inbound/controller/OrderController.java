@@ -1,8 +1,9 @@
 package com.tech_challenge_fiap.adapter.service.inbound.controller;
 
 import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderRequestDto;
-import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderUpdateStatusRequestDto;
+import com.tech_challenge_fiap.adapter.service.inbound.dto.OrderResponseDto;
 import com.tech_challenge_fiap.core.domain.order.Order;
+import com.tech_challenge_fiap.core.domain.order.OrderStatusEnum;
 import com.tech_challenge_fiap.core.domain.order.OrderUseCase;
 import com.tech_challenge_fiap.util.converter.OrderConverter;
 import lombok.AllArgsConstructor;
@@ -20,33 +21,22 @@ public class OrderController {
 
     private final OrderUseCase orderUseCase;
 
-    @PostMapping("create")
-    public ResponseEntity<?> create(@RequestBody OrderRequestDto orderRequestDTO) {
-        try {
-            var savedOrder = orderUseCase.createOrder(orderRequestDTO);
-            return ResponseEntity.ok(toResponse(savedOrder));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    @PostMapping
+    public ResponseEntity<OrderResponseDto> create(@RequestBody OrderRequestDto orderRequestDTO) {
+        var savedOrder = orderUseCase.createOrder(orderRequestDTO);
+        return ResponseEntity.ok(toResponse(savedOrder));
     }
 
     @GetMapping
-    public ResponseEntity<?> list() {
-        try {
-            List<Order> orders = orderUseCase.findAll();
-            return ResponseEntity.ok(orders.stream().map(OrderConverter::toResponse).toList());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    public ResponseEntity<List<OrderResponseDto>> list() {
+        List<Order> orders = orderUseCase.findAll();
+        return ResponseEntity.ok(orders.stream().map(OrderConverter::toResponse).toList());
     }
 
-    @PatchMapping
-    public ResponseEntity<?> updateStatus(@RequestBody OrderUpdateStatusRequestDto orderUpdateStatusRequestDto) {
-        try {
-            var updatedOrder = orderUseCase.updateStatus(orderUpdateStatusRequestDto);
-            return ResponseEntity.ok(toResponse(updatedOrder));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    @PatchMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable String orderId,
+                                                         @RequestParam OrderStatusEnum status) {
+        var updatedOrder = orderUseCase.updateStatus(orderId, status);
+        return ResponseEntity.ok(toResponse(updatedOrder));
     }
 }
