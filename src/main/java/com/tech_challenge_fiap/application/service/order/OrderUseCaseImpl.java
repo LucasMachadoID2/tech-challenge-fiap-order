@@ -58,7 +58,7 @@ public class OrderUseCaseImpl implements OrderUseCase {
     public Order updatePaymentStatus(PaymentRequestDto paymentRequestDto) {
         var order = orderRepository.getOrderById(paymentRequestDto.getOrderId());
 
-        PaymentStatusEnum paymentStatusEnum = PaymentStatusEnum.valueOf(paymentRequestDto.getStatus().name());
+        PaymentStatusEnum paymentStatusEnum = PaymentStatusEnum.safeValueOf(paymentRequestDto.getStatus());
         order.getPayment().setStatus(paymentStatusEnum);
 
         return orderRepository.save(orderToEntity(order));
