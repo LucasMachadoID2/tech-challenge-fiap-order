@@ -5,6 +5,8 @@ import com.tech_challenge_fiap.util.exception.CpfWrongFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import com.tech_challenge_fiap.util.exception.NameCannotBeNullOrEmptyException;
+import com.tech_challenge_fiap.util.exception.EmailCannotBeNullOrEmptyException;
 
 @Getter
 @Builder
@@ -35,13 +37,13 @@ public class Client {
 
         private void validateName() {
             if (super.name == null || super.name.trim().isEmpty()) {
-                throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+                throw new NameCannotBeNullOrEmptyException();
             }
         }
 
         private void validateEmail() {
             if (super.email == null || super.email.trim().isEmpty()) {
-                throw new IllegalArgumentException("Email não pode ser nulo ou vazio");
+                throw new EmailCannotBeNullOrEmptyException();
             }
         }
 
