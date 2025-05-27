@@ -16,5 +16,5 @@ public class PaymentRequestDto {
     private String orderId;
 
     @NonNull
-    private PaymentStatusDto status;
+    private String status;
 }
