@@ -93,4 +93,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleOrderProductsCantBeNullOrEmpty(CouldNotCreatePaymentException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
+    
+    @ExceptionHandler(NotSupportedPaymentStatusException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleNotSupportedPaymentStatus(NotSupportedPaymentStatusException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
