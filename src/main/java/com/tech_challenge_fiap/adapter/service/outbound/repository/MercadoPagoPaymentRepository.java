@@ -29,26 +29,16 @@ public class MercadoPagoPaymentRepository implements PaymentRepository {
     private final static String IDENTIFICATION_CPF = "CPF";
     private final static String TIMEZONE_BR = "-03:00";
     private final static String PAYMENT_METHOD_PIX = "pix";
+    private final static String CPF_USER_TEST = "85713983056";
+    private final static String MAIL_USER_TEST = "mail@mail.com";
+    private final static String NAME_USER_TEST = "User Test";
 
     @Override
     public com.tech_challenge_fiap.core.domain.payment.Payment createPayment(Order order) {
 
         try {
             PaymentClient paymentClient = new PaymentClient();
-            PaymentPayerRequest paymentPayerRequest = null;
-
-            if(nonNull(order.getClient())) {
-                paymentPayerRequest = PaymentPayerRequest.builder()
-                        .email(order.getClient().getEmail())
-                        .firstName(order.getClient().getName())
-                        .identification(
-                                IdentificationRequest.builder()
-                                        .type(IDENTIFICATION_CPF)
-                                        .number(order.getClient().getCpf())
-                                        .build()
-                        )
-                        .build();
-            }
+            PaymentPayerRequest paymentPayerRequest = createPaymentPayerRequest(order);
 
             PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
                     .transactionAmount(BigDecimal.valueOf(order.getOrderPrice()))
@@ -64,5 +54,31 @@ public class MercadoPagoPaymentRepository implements PaymentRepository {
         } catch (MPException | MPApiException ex) {
             throw new CouldNotCreatePaymentException(order.getId());
         }
+    }
+
+    private PaymentPayerRequest createPaymentPayerRequest(Order order) {
+        if (nonNull(order.getClient())) {
+            return PaymentPayerRequest.builder()
+                    .email(order.getClient().getEmail())
+                    .firstName(order.getClient().getName())
+                    .identification(
+                            IdentificationRequest.builder()
+                                    .type(IDENTIFICATION_CPF)
+                                    .number(order.getClient().getCpf())
+                                    .build()
+                    )
+                    .build();
+        }
+
+        return PaymentPayerRequest.builder()
+                .email(MAIL_USER_TEST)
+                .firstName(NAME_USER_TEST)
+                .identification(
+                        IdentificationRequest.builder()
+                                .type(IDENTIFICATION_CPF)
+                                .number(CPF_USER_TEST)
+                                .build()
+                )
+                .build();
     }
 }
