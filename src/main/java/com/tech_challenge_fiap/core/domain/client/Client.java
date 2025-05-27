@@ -27,8 +27,22 @@ public class Client {
     private static class CustomClientBuilder extends ClientBuilder {
         @Override
         public Client build() {
+            validateName();
+            validateEmail();
             validateCpf();
             return super.build();
+        }
+
+        private void validateName() {
+            if (super.name == null || super.name.trim().isEmpty()) {
+                throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+            }
+        }
+
+        private void validateEmail() {
+            if (super.email == null || super.email.trim().isEmpty()) {
+                throw new IllegalArgumentException("Email não pode ser nulo ou vazio");
+            }
         }
 
         private void validateCpf() {
