@@ -5,6 +5,8 @@ import com.tech_challenge_fiap.util.exception.CpfWrongFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import com.tech_challenge_fiap.util.exception.NameCannotBeNullOrEmptyException;
+import com.tech_challenge_fiap.util.exception.EmailCannotBeNullOrEmptyException;
 
 @Getter
 @Builder
@@ -27,8 +29,22 @@ public class Client {
     private static class CustomClientBuilder extends ClientBuilder {
         @Override
         public Client build() {
+            validateName();
+            validateEmail();
             validateCpf();
             return super.build();
+        }
+
+        private void validateName() {
+            if (super.name == null || super.name.trim().isEmpty()) {
+                throw new NameCannotBeNullOrEmptyException();
+            }
+        }
+
+        private void validateEmail() {
+            if (super.email == null || super.email.trim().isEmpty()) {
+                throw new EmailCannotBeNullOrEmptyException();
+            }
         }
 
         private void validateCpf() {
