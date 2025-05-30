@@ -30,13 +30,13 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 - ✅ Acompanhamento do pedido com os status:
   - Recebido
   - Em preparação
-  - Pronto
+  - Pronto  
   - Finalizado
 
 
 ## ⚙️ Tecnologias Utilizadas
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot**
 - **MongoDB**
 - **Mercado Pago SDK**
@@ -95,6 +95,10 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 
 ## 🚀 Como Executar Localmente
 
+### Passo a Passo
+
+### 🧑‍💻Opção 1: Compilando Manualmente (modo desenvolvedor)
+
 ### Pré-requisitos
 
 - Java 21
@@ -102,30 +106,53 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 - MongoDB (ou Docker Compose)
 - Maven
 
-### Passo a Passo
-
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/LucasMachadoID2/tech-challenge-fiap
+   cd tech-challenge-fiap
 
-2. **Suba o MongoDB com Docker**
-    ```bash
-    docker compose up -d
+2. **Certifique-se de que o MongoDB está rodando localmente**
+    * Exemplo: mongodb://localhost:27017
+    * application.properties
 
-3. **Configure variáveis de ambiente (exemplo já presente no application.properties):**
-
-* mercadopago.access.token
-
-* spring.data.mongodb.username, password, host, database
-
-4. **Execute a aplicação**
-    ```bash
+3. **Execute a aplicação com Maven**
+     ```bash
     ./mvnw spring-boot:run
 
 5. **Para acessar a aplicação:**
 
 Swagger: http://localhost:8080/swagger-ui/index.html
+
+<br>
+
+### 🐳 Opção 2: Executar somente a aplicação via Docker (com MongoDB via docker-compose)
+Se você já iniciou o MongoDB com docker-compose up -d e deseja subir somente a aplicação manualmente com Docker, execute:
+
+#### 1️⃣ Suba o MongoDB com Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+#### 2️⃣ Gere a imagem da aplicação
+
+    docker build -t tech-challenge-app .
+
+Esse comando cria a imagem Docker da aplicação com o nome tech-challenge-app.
+
+#### 3️⃣ Execute a aplicação via Docker
+        docker run -p 8080:8080 \
+        --network tech-challenge-fiap_default \
+        -e SPRING_DATA_MONGODB_HOST=mongodb \
+        -e SPRING_DATA_MONGODB_PORT=27017 \
+        -e SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE=admin \
+        -e SPRING_DATA_MONGODB_USERNAME=admin \
+        -e SPRING_DATA_MONGODB_PASSWORD=password \
+        -e SPRING_DATA_MONGODB_DATABASE=tech-chall \
+        tech-challenge-app
+A aplicação será iniciada e estará acessível em:
+
+http://localhost:8080/swagger-ui/index.html
 
 
 ## 📫 Endpoints Principais
@@ -135,9 +162,7 @@ Swagger: http://localhost:8080/swagger-ui/index.html
 | ------ | ------------- | ------------------------ |
 | GET    | `/v1/clients` | Listar todos os clientes |
 | POST   | `/v1/clients` | Criar um cliente         |
-
-
-
+<br>
 
 **Produtos:**
 | Método | Endpoint                                   | Descrição                |
@@ -145,18 +170,21 @@ Swagger: http://localhost:8080/swagger-ui/index.html
 | GET    | `/v1/products`                             | Listar todos os produtos |
 | POST   | `/v1/products`                             | Criar um produto         |
 | GET    | `/v1/products/category?category=SOBREMESA` | Filtrar por categoria    |
+<br>
 
 **Pedidos:**
 | Método | Endpoint                                | Descrição                  |
 | ------ | --------------------------------------- | -------------------------- |
 | POST   | `/v1/orders`                            | Criar um pedido            |
 | PATCH  | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
+<br>
 
 
 **Pagamentos:**
 | Método | Endpoint       | Descrição                     |
 | ------ | -------------- | ----------------------------- |
 | PATCH  | `/v1/payments` | Atualizar status do pagamento |
+<br>
 
 
 ## 🙋‍♀️ Equipe
