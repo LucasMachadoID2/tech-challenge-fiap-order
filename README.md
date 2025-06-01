@@ -19,7 +19,7 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 
 ### Cliente
 
-- ✅ Cadastro com nome, CPF e e-mail (opcional).
+- ✅ Cadastro com nome, CPF e e-mail (opcional)
 - ✅ Seleção de produtos com visualização de nome, descrição, imagem e preço.
 - ✅ Montagem de pedidos com as categorias:
   - Lanche
