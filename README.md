@@ -97,7 +97,17 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 
 ### Passo a Passo
 
-### 🧑‍💻Opção 1: Compilando Manualmente (modo desenvolvedor)
+### 🐳 Opção 1: Executar via Docker (Aplicação Java Spring +  MongoDB)
+```bash
+docker-compose up -d
+```
+
+#### 2️⃣ Acesse o link swagger
+http://localhost:8080/swagger-ui/index.html
+
+
+
+### 🧑‍💻Opção 2: Compilando Manualmente (modo desenvolvedor)
 
 ### Pré-requisitos
 
@@ -124,36 +134,6 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 Swagger: http://localhost:8080/swagger-ui/index.html
 
 <br>
-
-### 🐳 Opção 2: Executar somente a aplicação via Docker (com MongoDB via docker-compose)
-Se você já iniciou o MongoDB com docker-compose up -d e deseja subir somente a aplicação manualmente com Docker, execute:
-
-#### 1️⃣ Suba o MongoDB com Docker Compose
-
-```bash
-docker-compose up -d
-```
-
-#### 2️⃣ Gere a imagem da aplicação
-
-    docker build -t tech-challenge-app .
-
-Esse comando cria a imagem Docker da aplicação com o nome tech-challenge-app.
-
-#### 3️⃣ Execute a aplicação via Docker
-        docker run -p 8080:8080 \
-        --network tech-challenge-fiap_default \
-        -e SPRING_DATA_MONGODB_HOST=mongodb \
-        -e SPRING_DATA_MONGODB_PORT=27017 \
-        -e SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE=admin \
-        -e SPRING_DATA_MONGODB_USERNAME=admin \
-        -e SPRING_DATA_MONGODB_PASSWORD=password \
-        -e SPRING_DATA_MONGODB_DATABASE=tech-chall \
-        tech-challenge-app
-A aplicação será iniciada e estará acessível em:
-
-http://localhost:8080/swagger-ui/index.html
-
 
 ## 📫 Endpoints Principais
 
