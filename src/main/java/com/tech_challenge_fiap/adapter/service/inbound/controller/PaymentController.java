@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.tech_challenge_fiap.util.converter.OrderConverter.toResponse;
+import static com.tech_challenge_fiap.adapters.OrderAdapter.toResponse;
 
 @RestController
 @RequestMapping("/v1/payments")

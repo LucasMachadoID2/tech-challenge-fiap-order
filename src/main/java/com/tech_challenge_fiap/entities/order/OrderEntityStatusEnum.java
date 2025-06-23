@@ -1,13 +1,13 @@
-package com.tech_challenge_fiap.core.domain.order;
+package com.tech_challenge_fiap.entities.order;
 
-public enum OrderStatusEnum {
+public enum OrderEntityStatusEnum {
     CREATED("Criado"),
     RECEIVED("Recebido"),
     IN_PREPARATION("Em preparação");
 
     public final String description;
 
-    OrderStatusEnum(String description) {
+    OrderEntityStatusEnum(String description) {
         this.description = description;
     }
 }

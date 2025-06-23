@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.core.domain.order;
+package com.tech_challenge_fiap.entities.order;
 
 import com.tech_challenge_fiap.core.domain.client.Client;
 import com.tech_challenge_fiap.core.domain.payment.Payment;
@@ -16,12 +16,12 @@ import static java.util.Objects.nonNull;
 @Getter
 @Setter
 @Builder
-public class Order {
+public class OrderEntity {
 
     private String id;
 
     @NonNull
-    private OrderStatusEnum status;
+    private OrderEntityStatusEnum status;
 
     private Client client;
 
@@ -30,7 +30,7 @@ public class Order {
 
     private Payment payment;
 
-    public static OrderBuilder builder() {
+    public static OrderEntityBuilder builder() {
         return new CustomOrderBuilder();
     }
 
@@ -47,9 +47,9 @@ public class Order {
         return this.products.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
     }
 
-    private static class CustomOrderBuilder extends OrderBuilder {
+    private static class CustomOrderBuilder extends OrderEntityBuilder {
         @Override
-        public Order build() {
+        public OrderEntity build() {
             validateProducts();
             return super.build();
         }

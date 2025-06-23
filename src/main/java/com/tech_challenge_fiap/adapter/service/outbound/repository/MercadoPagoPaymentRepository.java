@@ -7,7 +7,7 @@ import com.mercadopago.client.payment.PaymentPayerRequest;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
-import com.tech_challenge_fiap.core.domain.order.Order;
+import com.tech_challenge_fiap.entities.order.OrderEntity;
 import com.tech_challenge_fiap.core.domain.payment.PaymentRepository;
 import com.tech_challenge_fiap.util.exception.CouldNotCreatePaymentException;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,14 +34,14 @@ public class MercadoPagoPaymentRepository implements PaymentRepository {
     private final static String NAME_USER_TEST = "User Test";
 
     @Override
-    public com.tech_challenge_fiap.core.domain.payment.Payment createPayment(Order order) {
+    public com.tech_challenge_fiap.core.domain.payment.Payment createPayment(OrderEntity orderEntity) {
 
         try {
             PaymentClient paymentClient = new PaymentClient();
-            PaymentPayerRequest paymentPayerRequest = createPaymentPayerRequest(order);
+            PaymentPayerRequest paymentPayerRequest = createPaymentPayerRequest(orderEntity);
 
             PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
-                    .transactionAmount(BigDecimal.valueOf(order.getOrderPrice()))
+                    .transactionAmount(BigDecimal.valueOf(orderEntity.getOrderPrice()))
                     .payer(paymentPayerRequest)
                     .dateOfExpiration(OffsetDateTime.now().plusMinutes(Long.parseLong(pixExpirationTimeMinutes))
                             .withOffsetSameInstant(ZoneOffset.of(TIMEZONE_BR)))
@@ -52,19 +52,19 @@ public class MercadoPagoPaymentRepository implements PaymentRepository {
 
             return toPaymentDomain(payment);
         } catch (MPException | MPApiException ex) {
-            throw new CouldNotCreatePaymentException(order.getId());
+            throw new CouldNotCreatePaymentException(orderEntity.getId());
         }
     }
 
-    private PaymentPayerRequest createPaymentPayerRequest(Order order) {
-        if (nonNull(order.getClient())) {
+    private PaymentPayerRequest createPaymentPayerRequest(OrderEntity orderEntity) {
+        if (nonNull(orderEntity.getClient())) {
             return PaymentPayerRequest.builder()
-                    .email(order.getClient().getEmail())
-                    .firstName(order.getClient().getName())
+                    .email(orderEntity.getClient().getEmail())
+                    .firstName(orderEntity.getClient().getName())
                     .identification(
                             IdentificationRequest.builder()
                                     .type(IDENTIFICATION_CPF)
-                                    .number(order.getClient().getCpf())
+                                    .number(orderEntity.getClient().getCpf())
                                     .build()
                     )
                     .build();
