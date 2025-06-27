@@ -2,20 +2,29 @@ package com.tech_challenge_fiap.dtos;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.tech_challenge_fiap.utils.enums.CategoryEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-
-import java.util.List;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OrderRequestDto {
-    private String clientId;
+public class ProductResponseDto {
+    private String id;
 
-    @NonNull
-    private List<String> productIds;
+    private String name;
+
+    private String description;
+
+    private String image;
+
+    private Long price;
+
+    private Long priceForClient;
+
+    private CategoryEnum category;
+
+    private Long quantity;
 }

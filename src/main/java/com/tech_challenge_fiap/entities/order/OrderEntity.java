@@ -1,9 +1,9 @@
 package com.tech_challenge_fiap.entities.order;
 
-import com.tech_challenge_fiap.core.domain.client.Client;
-import com.tech_challenge_fiap.core.domain.payment.Payment;
-import com.tech_challenge_fiap.core.domain.product.Product;
-import com.tech_challenge_fiap.util.exception.OrderProductsCantBeNullOrEmpty;
+import com.tech_challenge_fiap.entities.client.ClientEntity;
+import com.tech_challenge_fiap.entities.payment.PaymentEntity;
+import com.tech_challenge_fiap.entities.product.ProductEntity;
+import com.tech_challenge_fiap.utils.exceptions.OrderProductsCantBeNullOrEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -17,26 +17,25 @@ import static java.util.Objects.nonNull;
 @Setter
 @Builder
 public class OrderEntity {
-
     private String id;
 
     @NonNull
     private OrderEntityStatusEnum status;
 
-    private Client client;
+    private ClientEntity clientEntity;
 
     @NonNull
-    private List<Product> products;
+    private List<ProductEntity> productEntities;
 
-    private Payment payment;
+    private PaymentEntity paymentEntity;
 
     public static OrderEntityBuilder builder() {
-        return new CustomOrderBuilder();
+        return new CustomOrderEntityBuilder();
     }
 
     public Long getOrderPrice() {
-        if(nonNull(this.client)) {
-            return this.products.stream().map(product -> {
+        if(nonNull(this.clientEntity)) {
+            return this.productEntities.stream().map(product -> {
                 if(nonNull(product.getPriceForClient())) {
                     return product.getPriceForClient();
                 }
@@ -44,10 +43,10 @@ public class OrderEntity {
             }).mapToLong(Long::longValue).sum();
         }
 
-        return this.products.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
+        return this.productEntities.stream().map(ProductEntity::getPrice).mapToLong(Long::longValue).sum();
     }
 
-    private static class CustomOrderBuilder extends OrderEntityBuilder {
+    private static class CustomOrderEntityBuilder extends OrderEntityBuilder {
         @Override
         public OrderEntity build() {
             validateProducts();
@@ -55,7 +54,7 @@ public class OrderEntity {
         }
 
         private void validateProducts() {
-            if(super.products.isEmpty()) {
+            if(super.productEntities.isEmpty()) {
                 throw new OrderProductsCantBeNullOrEmpty();
             }
         }

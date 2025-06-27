@@ -5,17 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-
-import java.util.List;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OrderRequestDto {
-    private String clientId;
+public class ClientRequestDto {
+    private String name;
 
-    @NonNull
-    private List<String> productIds;
+    private String cpf;
+
+    private String email;
 }

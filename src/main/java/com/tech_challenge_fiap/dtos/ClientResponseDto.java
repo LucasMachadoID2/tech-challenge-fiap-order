@@ -1,21 +1,23 @@
 package com.tech_challenge_fiap.dtos;
 
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-
-import java.util.List;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OrderRequestDto {
-    private String clientId;
+public class ClientResponseDto {
+    private String id;
 
-    @NonNull
-    private List<String> productIds;
+    private String name;
+
+    private String cpf;
+
+    private String email;
 }

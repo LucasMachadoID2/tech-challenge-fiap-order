@@ -7,15 +7,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.List;
-
 @Builder
 @Getter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OrderRequestDto {
-    private String clientId;
+public class PaymentRequestDto {
+    @NonNull
+    private String orderId;
 
     @NonNull
-    private List<String> productIds;
+    private String status;
 }

@@ -1,24 +1,20 @@
 package com.tech_challenge_fiap.usecases.order;
 
-import com.tech_challenge_fiap.dtos.OrderRequestDto;
-import com.tech_challenge_fiap.adapter.service.inbound.dto.PaymentRequestDto;
-import com.tech_challenge_fiap.adapters.OrderAdapter;
-import com.tech_challenge_fiap.core.domain.client.Client;
-import com.tech_challenge_fiap.core.domain.client.ClientUseCase;
-import com.tech_challenge_fiap.core.domain.payment.Payment;
-import com.tech_challenge_fiap.core.domain.payment.PaymentRepository;
-import com.tech_challenge_fiap.core.domain.payment.PaymentStatusEnum;
-import com.tech_challenge_fiap.core.domain.product.Product;
-import com.tech_challenge_fiap.core.domain.product.ProductUseCase;
+import com.tech_challenge_fiap.entities.client.ClientEntity;
 import com.tech_challenge_fiap.entities.order.OrderEntity;
 import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
+import com.tech_challenge_fiap.entities.payment.PaymentEntity;
+import com.tech_challenge_fiap.entities.payment.PaymentStatusEnum;
+import com.tech_challenge_fiap.entities.product.ProductEntity;
 import com.tech_challenge_fiap.gateways.order.OrderGateway;
+import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
+import com.tech_challenge_fiap.usecases.client.ClientUseCase;
+import com.tech_challenge_fiap.usecases.product.ProductUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.tech_challenge_fiap.adapters.OrderAdapter.orderEntityToDataModel;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -31,33 +27,32 @@ public class OrderUseCaseImpl implements OrderUseCase {
     private final PaymentRepository paymentRepository;
 
     @Override
-    public OrderEntity createOrder(OrderRequestDto orderRequestDto) {
-        Client client = findClientOrNull(orderRequestDto.getClientId());
+    public OrderEntity createOrder(String clientId, List<String> productIds) {
+        ClientEntity clientEntity = findClientOrNull(clientId);
 
-        List<Product> products =
-                orderRequestDto.getProductIds().stream().map(productUseCase::findById).toList();
+        List<ProductEntity> productEntities = productIds.stream().map(productUseCase::findById).toList();
 
         OrderEntity orderEntity = OrderEntity.builder()
                 .status(OrderEntityStatusEnum.CREATED)
-                .client(client)
-                .products(products)
+                .clientEntity(clientEntity)
+                .productEntities(productEntities)
                 .build();
 
-        Payment payment = paymentRepository.createPayment(orderEntity);
+        PaymentEntity paymentEntity = paymentRepository.createPayment(orderEntity);
 
-        orderEntity.setPayment(payment);
+        orderEntity.setPaymentEntity(paymentEntity);
 
-        return orderGateway.save(orderEntityToDataModel(orderEntity));
+        return orderGateway.save(orderEntity);
     }
 
     @Override
-    public OrderEntity updatePaymentStatus(PaymentRequestDto paymentRequestDto) {
-        var order = orderGateway.getOrderById(paymentRequestDto.getOrderId());
+    public OrderEntity updatePaymentStatus(String orderId, String status) {
+        var order = orderGateway.getOrderById(orderId);
 
-        PaymentStatusEnum paymentStatusEnum = PaymentStatusEnum.safeValueOf(paymentRequestDto.getStatus());
-        order.getPayment().setStatus(paymentStatusEnum);
+        PaymentStatusEnum paymentStatusEnum = PaymentStatusEnum.safeValueOf(status);
+        order.getPaymentEntity().setStatus(paymentStatusEnum);
 
-        return orderGateway.save(orderEntityToDataModel(order));
+        return orderGateway.save(order);
     }
 
     @Override
@@ -71,12 +66,12 @@ public class OrderUseCaseImpl implements OrderUseCase {
 
         orderEntityFound.setStatus(status);
 
-        return orderGateway.save(OrderAdapter.orderEntityToDataModel(orderEntityFound));
+        return orderGateway.save(orderEntityFound);
     }
 
-    private Client findClientOrNull(String clientId) {
+    private ClientEntity findClientOrNull(String clientId) {
         if (nonNull(clientId)) {
-           return clientUseCase.findById(clientId);
+            return clientUseCase.findById(clientId);
         }
 
         return null;
