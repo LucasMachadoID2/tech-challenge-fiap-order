@@ -3,12 +3,14 @@ package com.tech_challenge_fiap.api;
 import com.tech_challenge_fiap.controller.client.ClientController;
 import com.tech_challenge_fiap.dtos.ClientRequestDto;
 import com.tech_challenge_fiap.dtos.ClientResponseDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Client", description = "Operations related to client management")
 @RestController
 @RequestMapping("/v1/clients")
 @RequiredArgsConstructor

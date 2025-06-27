@@ -4,12 +4,14 @@ import com.tech_challenge_fiap.controller.product.ProductController;
 import com.tech_challenge_fiap.dtos.ProductRequestDto;
 import com.tech_challenge_fiap.dtos.ProductResponseDto;
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Product", description = "Operations related to product management")
 @RestController
 @RequestMapping("/v1/products")
 @RequiredArgsConstructor

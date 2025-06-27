@@ -2,6 +2,7 @@ package com.tech_challenge_fiap.api;
 
 import com.tech_challenge_fiap.controller.payment.PaymentController;
 import com.tech_challenge_fiap.dtos.PaymentRequestDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Payment", description = "Operations related to payment management")
 @RestController
 @RequestMapping("/v1/payments")
 @AllArgsConstructor
