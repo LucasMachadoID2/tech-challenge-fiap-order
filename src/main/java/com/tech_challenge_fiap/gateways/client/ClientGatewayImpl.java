@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.tech_challenge_fiap.adapters.ClientAdapter.toDataModel;
 import static com.tech_challenge_fiap.adapters.ClientAdapter.toEntity;
+import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
@@ -46,6 +47,6 @@ public class ClientGatewayImpl implements ClientGateway {
     @Override
     public ClientEntity findByCpf(String cpf) {
         ClientDataModel client = clientRepository.findByCpf(cpf);
-        return toEntity(client);
+        return isNull(client) ? null : toEntity(client);
     }
 }
