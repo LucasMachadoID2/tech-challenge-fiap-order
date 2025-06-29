@@ -1,0 +1,42 @@
+package com.tech_challenge_fiap.adapters;
+
+import com.tech_challenge_fiap.data.models.OrderDataModel;
+import com.tech_challenge_fiap.dtos.OrderResponseDto;
+import com.tech_challenge_fiap.entities.order.OrderEntity;
+import lombok.experimental.UtilityClass;
+
+import static java.util.Objects.nonNull;
+
+@UtilityClass
+public class OrderAdapter {
+
+    public static OrderEntity toEntity(OrderDataModel orderDataModel) {
+        return OrderEntity.builder()
+                .id(orderDataModel.getId())
+                .status(orderDataModel.getStatus())
+                .clientEntity(nonNull(orderDataModel.getClient()) ? ClientAdapter.toEntity(orderDataModel.getClient()) : null)
+                .productEntities(orderDataModel.getProducts().stream().map(ProductAdapter::toEntity).toList())
+                .paymentEntity(PaymentAdapter.toEntity(orderDataModel.getPayment()))
+                .build();
+    }
+
+    public static OrderDataModel toDataModel(OrderEntity orderEntity) {
+        return OrderDataModel.builder()
+                .id(orderEntity.getId())
+                .status(orderEntity.getStatus())
+                .client(nonNull(orderEntity.getClientEntity()) ? ClientAdapter.toDataModel(orderEntity.getClientEntity()) : null)
+                .products(orderEntity.getProductEntities().stream().map(ProductAdapter::toDataModel).toList())
+                .payment(PaymentAdapter.toDataModel(orderEntity.getPaymentEntity()))
+                .build();
+    }
+
+    public static OrderResponseDto toResponse(OrderEntity orderEntity) {
+        return OrderResponseDto.builder()
+                .id(orderEntity.getId())
+                .status(orderEntity.getStatus().name())
+                .client(nonNull(orderEntity.getClientEntity()) ? ClientAdapter.toResponse(orderEntity.getClientEntity()) : null)
+                .products(orderEntity.getProductEntities().stream().map(ProductAdapter::toResponse).toList())
+                .payment(PaymentAdapter.toResponse(orderEntity.getPaymentEntity()))
+                .build();
+    }
+}

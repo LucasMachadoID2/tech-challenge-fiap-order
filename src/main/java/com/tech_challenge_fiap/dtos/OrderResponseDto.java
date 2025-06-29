@@ -1,0 +1,22 @@
+package com.tech_challenge_fiap.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
+
+@Getter
+@Builder
+@AllArgsConstructor
+public class OrderResponseDto {
+    private String id;
+    
+    private String status;
+    
+    private ClientResponseDto client;
+    
+    private List<ProductResponseDto> products;
+
+    private PaymentResponseDto payment;
+}

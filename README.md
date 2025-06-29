@@ -147,9 +147,9 @@ Swagger: http://localhost:8080/swagger-ui/index.html
 **Produtos:**
 | Método | Endpoint                                   | Descrição                |
 | ------ | ------------------------------------------ | ------------------------ |
-| GET    | `/v1/products`                             | Listar todos os produtos |
-| POST   | `/v1/products`                             | Criar um produto         |
-| GET    | `/v1/products/category?category=SOBREMESA` | Filtrar por categoria    |
+| GET    | `/v1/productEntities`                             | Listar todos os produtos |
+| POST   | `/v1/productEntities`                             | Criar um produto         |
+| GET    | `/v1/productEntities/category?category=SOBREMESA` | Filtrar por categoria    |
 <br>
 
 **Pedidos:**
