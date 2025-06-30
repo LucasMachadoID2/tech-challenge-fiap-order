@@ -52,6 +52,7 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 - `application`: implementação dos casos de uso.
 - `infrastructure`: configurações externas (ex: Mercado Pago).
 - `util`: enums, exceptions e conversores.
+- `k8s`: arquivos de configuração do Kubernetes.
 
 ## 🏗️ Arquitetura da Solução
 
@@ -132,6 +133,30 @@ http://localhost:8080/swagger-ui/index.html
 5. **Para acessar a aplicação:**
 
 Swagger: http://localhost:8080/swagger-ui/index.html
+
+### 🧑‍💻Opção 3: Subindo no Kubernets (Minikube)
+
+### Pré-requisitos
+
+- Minikube
+- Docker Hub
+
+1. **Inicie o Minikube**
+   ```bash
+   minikube start --driver=docker
+
+2. **Crie e publique a imagem Docker**
+  ```bash
+   docker build -t gabitriferreira/tech-challenge-app:latest .
+   docker push gabitriferreira/tech-challenge-app:latest
+
+3. **Aplique os manifestos Kubernets**
+  ```bash
+   kubectl apply -f k8s/
+
+4. **Acesse a aplicação via Minikube**
+  ```bash
+   minikube service tech-chall-service
 
 <br>
 
