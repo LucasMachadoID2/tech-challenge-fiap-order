@@ -19,7 +19,7 @@ public class MercadoPagoWebhook {
     private final PaymentController paymentController;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PaymentRequestDto paymentRequestDto) {
+    public ResponseEntity<?> update(@RequestBody PaymentRequestDto paymentRequestDto) {
         paymentController.updateStatus(paymentRequestDto);
         return ResponseEntity.ok().build();
     }
