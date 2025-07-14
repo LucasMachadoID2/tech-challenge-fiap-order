@@ -2,37 +2,73 @@
 
 Este é um sistema de autoatendimento para uma lanchonete em expansão, desenvolvido como parte do **Tech Challenge da FIAP**, que integra conhecimentos de todas as disciplinas da fase. O projeto é essencial para automatizar e organizar o processo de pedidos, desde a escolha dos produtos até a entrega ao cliente.
 
----
+# 📌 Requisitos de Negócio
 
-## 📌 Objetivo
+### 🧑‍💼 Cliente (Autoatendimento)
 
-Criar uma aplicação de autoatendimento estilo fast-food que:
+- Pode se identificar por CPF
+- Pode se cadastrar (nome, e-mail)
+- Pode continuar sem se identificar
 
-- Permita ao cliente realizar pedidos de forma autônoma.
-- Integre pagamento via QRCode utilizando **Mercado Pago**.
-- Acompanhe o status dos pedidos.
-- Forneça ao administrador funcionalidades de gerenciamento de produtos, categorias e clientes.
+### Montagem do Pedido
 
----
+- Selecionar **Lanche** (nome, descrição, preço)
+- Selecionar **Acompanhamento** (nome, descrição, preço)
+- Selecionar **Bebida** (nome, descrição, preço)
 
-## 🛠️ Funcionalidades
+### Resumo e Confirmação do Pedido
 
-### Cliente
+- Exibir os itens selecionados e o valor total antes de pagar
 
-- ✅ Cadastro com nome, CPF e e-mail (opcional)
-- ✅ Seleção de produtos com visualização de nome, descrição, imagem e preço.
-- ✅ Montagem de pedidos com as categorias:
+### Pagamento
+
+- Integrado via **QRCode do Mercado Pago**
+
+### Acompanhamento do Pedido (pelo cliente)
+
+- Visualizar o status:
+  - Recebido
+  - Em preparação
+  - Pronto
+  - Finalizado
+
+### Notificação para Retirada
+
+- O cliente é notificado quando o pedido está pronto
+
+### 👨‍🍳 Cozinha
+
+- Visualizar pedidos recebidos
+- Atualizar o status do pedido:
+  - Em preparação
+  - Pronto
+  - Finalizado
+
+### 🛠️ Administrador (Painel de Gestão)
+
+- Cadastrar/editar/excluir produtos com:
+  - Nome
+  - Descrição
+  - Preço
+  - Imagem
+  - Categoria
+    - Lanche
+    - Acompanhamento
+    - Bebida
+    - Sobremesa
+
+### Gerenciar Categorias
+
+- Categorias:
   - Lanche
   - Acompanhamento
   - Bebida
   - Sobremesa
-- ✅ Pagamento via QRCode (Mercado Pago).
-- ✅ Acompanhamento do pedido com os status:
-  - Recebido
-  - Em preparação
-  - Pronto  
-  - Finalizado
 
+### Acompanhar Pedidos em Tempo Real
+
+- Ver status atual dos pedidos
+- Ver tempo de espera por pedido
 
 ## ⚙️ Tecnologias Utilizadas
 
@@ -42,8 +78,7 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 - **Mercado Pago SDK**
 - **Docker**
 - **Lombok**
-
----
+- **Kubernets**
 
 ## 📁 Estrutura do Projeto
 
@@ -91,114 +126,91 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 +----------------+                     +------------------+
 ```
 
+## 🏗️ Arquitetura da infraestrutura
 
----
+<img src="./docs/k8s.gif" alt="Descrição do GIF" width="800">
 
-## 🚀 Como Executar Localmente
-
-### Passo a Passo
-
-### 🐳 Opção 1: Executar via Docker (Aplicação Java Spring +  MongoDB)
-```bash
-docker-compose up -d
-```
-
-#### 2️⃣ Acesse o link swagger
-http://localhost:8080/swagger-ui/index.html
-
-
-
-### 🧑‍💻Opção 2: Compilando Manualmente (modo desenvolvedor)
-
-### Pré-requisitos
-
-- Java 21
-- Docker
-- MongoDB (ou Docker Compose)
-- Maven
-
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/LucasMachadoID2/tech-challenge-fiap
-   cd tech-challenge-fiap
-
-2. **Certifique-se de que o MongoDB está rodando localmente**
-    * Exemplo: mongodb://localhost:27017
-    * application.properties
-
-3. **Execute a aplicação com Maven**
-     ```bash
-    ./mvnw spring-boot:run
-
-5. **Para acessar a aplicação:**
-
-Swagger: http://localhost:8080/swagger-ui/index.html
-
-### 🧑‍💻Opção 3: Subindo no Kubernets (Minikube)
+## 🚀 Como Executar
 
 ### Pré-requisitos
 
 - Minikube
-- Docker Hub
 
-1. **Inicie o Minikube**
+### Passo a Passo
+
+1. **Clone o repositório**
+
+   ```bash
+   git clone https://github.com/LucasMachadoID2/tech-challenge-fiap
+   cd tech-challenge-fiap
+   ```
+
+2. **Inicie o Minikube**
    ```bash
    minikube start --driver=docker
-
-2. **Crie e publique a imagem Docker**
-  ```bash
-   docker build -t gabitriferreira/tech-challenge-app:latest .
-   docker push gabitriferreira/tech-challenge-app:latest
-
+   ```
 3. **Aplique os manifestos Kubernets**
-  ```bash
-   kubectl apply -f k8s/
 
-4. **Acesse a aplicação via Minikube**
-  ```bash
+   ```bash
+   kubectl apply -f k8s/
+   ```
+
+4. **Confirme se tudo esta rodandos**
+
+   ```bash
+   kubectl get all
+   ```
+
+5. **Acesse o link swagger**
+
+   ```bash
+   http://localhost:8080/swagger-ui/index.html
+   ```
+
+   ou execute o comando
+
+   ```bash
    minikube service tech-chall-service
+   ```
 
 <br>
 
 ## 📫 Endpoints Principais
 
 **Clientes:**
-| Método | Endpoint      | Descrição                |
+| Método | Endpoint | Descrição |
 | ------ | ------------- | ------------------------ |
-| GET    | `/v1/clients` | Listar todos os clientes |
-| POST   | `/v1/clients` | Criar um cliente         |
+| GET | `/v1/clients` | Listar todos os clientes |
+| POST | `/v1/clients` | Criar um cliente |
 <br>
 
 **Produtos:**
-| Método | Endpoint                                   | Descrição                |
+| Método | Endpoint | Descrição |
 | ------ | ------------------------------------------ | ------------------------ |
-| GET    | `/v1/productEntities`                             | Listar todos os produtos |
-| POST   | `/v1/productEntities`                             | Criar um produto         |
-| GET    | `/v1/productEntities/category?category=SOBREMESA` | Filtrar por categoria    |
+| GET | `/v1/productEntities` | Listar todos os produtos |
+| POST | `/v1/productEntities` | Criar um produto |
+| GET | `/v1/productEntities/category?category=SOBREMESA` | Filtrar por categoria |
 <br>
 
 **Pedidos:**
-| Método | Endpoint                                | Descrição                  |
+| Método | Endpoint | Descrição |
 | ------ | --------------------------------------- | -------------------------- |
-| POST   | `/v1/orders`                            | Criar um pedido            |
-| PATCH  | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
+| POST | `/v1/orders` | Criar um pedido |
+| PATCH | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
 <br>
-
 
 **Pagamentos:**
-| Método | Endpoint       | Descrição                     |
+| Método | Endpoint | Descrição |
 | ------ | -------------- | ----------------------------- |
-| PATCH  | `/v1/payments` | Atualizar status do pagamento |
+| PATCH | `/v1/payments` | Atualizar status do pagamento |
 <br>
-
 
 ## 🙋‍♀️ Equipe
 
-| Nome | RA      | Nome Discord                |
-| ------ | ------------- | ------------------------ |
-| Danilo Augusto Pereira     | 364411 | Danilo Augusto -  RM364411|
-| Gabriela Trindade Ferreira   | 364756 | Gabriela Ferreira - RM364756|
-| Guilherme Garcia Dos Santos Moraes   | 364613 | Guilherme Garcia - RM364613|
-| Lucas Matheus Monteiro Machado   | 361059 | Lucas Machado - RM361059|
-| Marjory Bispo Matos   | 361150 | Marjory Matos - RM361150|
-
+| Nome                               | RA     | Nome Discord                 |
+| ---------------------------------- | ------ | ---------------------------- |
+| Danilo Augusto Pereira             | 364411 | Danilo Augusto - RM364411    |
+| Gabriela Trindade Ferreira         | 364756 | Gabriela Ferreira - RM364756 |
+| Guilherme Garcia Dos Santos Moraes | 364613 | Guilherme Garcia - RM364613  |
+| Lucas Matheus Monteiro Machado     | 361059 | Lucas Machado - RM361059     |
+| Marjory Bispo Matos                | 361150 | Marjory Matos - RM361150     |
