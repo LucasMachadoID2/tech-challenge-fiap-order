@@ -8,8 +8,6 @@ import java.util.List;
 public interface OrderUseCase {
     OrderEntity createOrder(String clientId, List<String> productIds);
 
-    OrderEntity updatePaymentStatus(String orderId, String status);
-
     List<OrderEntity> findAll();
 
     OrderEntity updateStatus(String orderId, OrderEntityStatusEnum status);
