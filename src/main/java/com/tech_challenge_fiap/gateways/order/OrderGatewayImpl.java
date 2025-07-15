@@ -3,12 +3,14 @@ package com.tech_challenge_fiap.gateways.order;
 import com.tech_challenge_fiap.adapters.OrderAdapter;
 import com.tech_challenge_fiap.data.models.OrderDataModel;
 import com.tech_challenge_fiap.entities.order.OrderEntity;
+import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
 import com.tech_challenge_fiap.repositories.order.MongoOrderRepository;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
 import com.tech_challenge_fiap.utils.exceptions.OrdersNotFoundExpection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
