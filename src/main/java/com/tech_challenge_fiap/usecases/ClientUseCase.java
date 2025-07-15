@@ -1,25 +1,18 @@
-package com.tech_challenge_fiap.usecases.client;
+package com.tech_challenge_fiap.usecases;
 
 import com.tech_challenge_fiap.entities.client.ClientEntity;
 import com.tech_challenge_fiap.gateways.client.ClientGateway;
 import com.tech_challenge_fiap.utils.exceptions.ClientNotFoundException;
 import com.tech_challenge_fiap.utils.exceptions.CpfAlreadyExistsException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-@Service
-@RequiredArgsConstructor
-public class ClientUseCaseImpl implements ClientUseCase {
+public class ClientUseCase {
 
-    private final ClientGateway clientGateway;
-
-    @Override
-    public ClientEntity create(ClientEntity clientEntity) {
+    public static ClientEntity create(ClientEntity clientEntity, ClientGateway clientGateway) {
         ClientEntity client = clientGateway.findByCpf(clientEntity.getCpf());
 
         if (nonNull(client)) {
@@ -29,8 +22,8 @@ public class ClientUseCaseImpl implements ClientUseCase {
         return clientGateway.save(clientEntity);
     }
 
-    @Override
-    public ClientEntity update(String id, ClientEntity clientEntity) {
+
+    public static ClientEntity update(String id, ClientEntity clientEntity, ClientGateway clientGateway) {
         if (isNull(clientGateway.findById(id))) {
             throw new ClientNotFoundException("Cliente não encontrado para o id: " + id);
         }
@@ -39,8 +32,8 @@ public class ClientUseCaseImpl implements ClientUseCase {
         return clientGateway.save(clientEntity);
     }
 
-    @Override
-    public void delete(String id) {
+
+    public static void delete(String id, ClientGateway clientGateway) {
         if (isNull(clientGateway.findById(id))) {
             throw new ClientNotFoundException("Cliente não encontrado para o id: " + id);
         }
@@ -48,8 +41,8 @@ public class ClientUseCaseImpl implements ClientUseCase {
         clientGateway.deleteById(id);
     }
 
-    @Override
-    public ClientEntity findById(String id) {
+
+    public static ClientEntity findById(String id, ClientGateway clientGateway) {
         ClientEntity client = clientGateway.findById(id);
 
         if (isNull(client)) {
@@ -59,8 +52,7 @@ public class ClientUseCaseImpl implements ClientUseCase {
         return clientGateway.findById(id);
     }
 
-    @Override
-    public List<ClientEntity> findAll() {
+    public static List<ClientEntity> findAll(ClientGateway clientGateway) {
         return clientGateway.findAll();
     }
 }

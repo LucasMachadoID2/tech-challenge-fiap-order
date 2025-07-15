@@ -4,7 +4,8 @@ import com.tech_challenge_fiap.adapters.ClientAdapter;
 import com.tech_challenge_fiap.dtos.ClientRequestDto;
 import com.tech_challenge_fiap.dtos.ClientResponseDto;
 import com.tech_challenge_fiap.entities.client.ClientEntity;
-import com.tech_challenge_fiap.usecases.client.ClientUseCase;
+import com.tech_challenge_fiap.gateways.client.ClientGateway;
+import com.tech_challenge_fiap.usecases.ClientUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,34 +19,34 @@ import static com.tech_challenge_fiap.adapters.ClientAdapter.toResponse;
 @RequiredArgsConstructor
 public class ClientControllerImpl implements ClientController {
 
-    private final ClientUseCase clientUseCase;
+    private final ClientGateway clientGateway;
 
     @Override
     public ClientResponseDto create(ClientRequestDto clientRequest) {
-        ClientEntity client = clientUseCase.create(toEntity(clientRequest));
+        ClientEntity client = ClientUseCase.create(toEntity(clientRequest), clientGateway);
         return toResponse(client);
     }
 
     @Override
     public ClientResponseDto update(String id, ClientRequestDto clientRequest) {
-        ClientEntity client = clientUseCase.update(id, toEntity(clientRequest));
+        ClientEntity client = ClientUseCase.update(id, toEntity(clientRequest), clientGateway);
         return toResponse(client);
     }
 
     @Override
     public void delete(String id) {
-        clientUseCase.delete(id);
+        ClientUseCase.delete(id, clientGateway);
     }
 
     @Override
     public ClientResponseDto findById(String id) {
-        ClientEntity client = clientUseCase.findById(id);
+        ClientEntity client = ClientUseCase.findById(id, clientGateway);
         return toResponse(client);
     }
 
     @Override
     public List<ClientResponseDto> findAll() {
-        List<ClientEntity> clientEntities = clientUseCase.findAll();
+        List<ClientEntity> clientEntities = ClientUseCase.findAll(clientGateway);
         return clientEntities.stream().map(ClientAdapter::toResponse).collect(Collectors.toList());
     }
 }
