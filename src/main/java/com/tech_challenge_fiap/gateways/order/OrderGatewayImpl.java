@@ -41,6 +41,10 @@ public class OrderGatewayImpl implements OrderGateway {
             throw new OrdersNotFoundExpection();
         }
 
-        return orderEntities.stream().map(OrderAdapter::toEntity).collect(Collectors.toList());
+        return orderEntities.stream()
+            .filter(order -> order.getStatus() != OrderEntityStatusEnum.FINALIZED)
+            .sorted(Comparator.comparing(OrderDataModel::getId))
+            .map(OrderAdapter::toEntity)
+            .collect(Collectors.toList());
     }
 }
