@@ -1,11 +1,15 @@
 package com.tech_challenge_fiap.entities.payment;
 
 import com.tech_challenge_fiap.utils.exceptions.NotSupportedPaymentStatusException;
+import lombok.Getter;
 
+@Getter
 public enum PaymentStatusEnum {
-    CRIADO,
-    PAGO,
-    RECUSADO;
+    CREATED("Criado"),
+    PAID("Pago"),
+    REFUSED("Recusado");
+
+    public final String description;
 
     public static PaymentStatusEnum safeValueOf(String status) {
         try {
@@ -13,5 +17,9 @@ public enum PaymentStatusEnum {
         } catch(Exception e) {
             throw new NotSupportedPaymentStatusException(status);
         }
+    }
+
+    PaymentStatusEnum(String description) {
+        this.description = description;
     }
 }

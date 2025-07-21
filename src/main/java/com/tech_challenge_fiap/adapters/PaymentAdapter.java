@@ -14,7 +14,7 @@ public class PaymentAdapter {
         return PaymentEntity.builder()
                 .qrImage(payment.getPointOfInteraction().getTransactionData().getQrCodeBase64())
                 .qrCode(payment.getPointOfInteraction().getTransactionData().getQrCode())
-                .status(PaymentStatusEnum.CRIADO)
+                .status(PaymentStatusEnum.CREATED)
                 .build();
     }
 
@@ -41,7 +41,7 @@ public class PaymentAdapter {
                 .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
-                .status(paymentEntity.getStatus().name())
+                .status(paymentEntity.getStatus().getDescription())
                 .build();
     }
 }
