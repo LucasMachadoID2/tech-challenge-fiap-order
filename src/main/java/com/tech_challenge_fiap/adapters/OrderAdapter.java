@@ -35,7 +35,7 @@ public class OrderAdapter {
     public static OrderResponseDto toResponse(OrderEntity orderEntity) {
         return OrderResponseDto.builder()
                 .id(orderEntity.getId())
-                .status(orderEntity.getStatus().name())
+                .status(orderEntity.getStatus().getDescription())
                 .client(nonNull(orderEntity.getClientEntity()) ? ClientAdapter.toResponse(orderEntity.getClientEntity()) : null)
                 .products(orderEntity.getProductEntities().stream().map(ProductAdapter::toResponse).toList())
                 .payment(PaymentAdapter.toResponse(orderEntity.getPaymentEntity()))

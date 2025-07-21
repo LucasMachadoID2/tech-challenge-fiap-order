@@ -1,5 +1,8 @@
 package com.tech_challenge_fiap.entities.order;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderEntityStatusEnum {
     CREATED("Criado"),
     RECEIVED("Recebido"),

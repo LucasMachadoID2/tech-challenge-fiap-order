@@ -9,6 +9,7 @@ import com.tech_challenge_fiap.utils.exceptions.OrdersNotFoundExpection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class OrderGatewayImpl implements OrderGateway {
 
     @Override
     public OrderEntity save(OrderEntity order) {
+        order.setCreatedAt(LocalDateTime.now());
         var savedOrder = mongoOrderRepository.save(toDataModel(order));
         return toEntity(savedOrder);
     }
@@ -35,8 +37,8 @@ public class OrderGatewayImpl implements OrderGateway {
     }
 
     @Override
-    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized() {
-        List<OrderDataModel> orderEntities = mongoOrderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
+    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
+        List<OrderDataModel> orderEntities = mongoOrderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
         if (orderEntities.isEmpty()) {
             throw new OrdersNotFoundExpection();

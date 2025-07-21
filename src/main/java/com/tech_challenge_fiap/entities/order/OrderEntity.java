@@ -54,7 +54,6 @@ public class OrderEntity {
         @Override
         public OrderEntity build() {
             validateProducts();
-             this.createdAt(LocalDateTime.now());
 
             return super.build();
         }
