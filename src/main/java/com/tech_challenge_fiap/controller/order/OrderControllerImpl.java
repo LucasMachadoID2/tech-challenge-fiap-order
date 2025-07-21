@@ -24,8 +24,8 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
-    public List<OrderResponseDto> findAll() {
-        var orders = orderUseCase.findAll();
+    public List<OrderResponseDto> findAllOrderedByStatusAndCreatedAtIgnoringFinalized() {
+        var orders = orderUseCase.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
         return orders.stream().map(OrderAdapter::toResponse).collect(Collectors.toList());
     }
 
