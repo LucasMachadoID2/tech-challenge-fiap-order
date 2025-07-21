@@ -9,5 +9,5 @@ public interface OrderGateway {
 
     OrderEntity getOrderById(String id);
 
-    List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
+    List<OrderEntity> findAll();
 }

@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @EqualsAndHashCode
@@ -27,7 +26,4 @@ public class OrderDataModel {
 
     @NonNull
     private PaymentDataModel payment;
-
-    @NonNull
-    private LocalDateTime createdAt;
 }

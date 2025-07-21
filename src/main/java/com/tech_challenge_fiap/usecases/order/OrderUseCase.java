@@ -10,7 +10,7 @@ public interface OrderUseCase {
 
     OrderEntity updatePaymentStatus(String orderId, String status);
 
-    List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
+    List<OrderEntity> findAll();
 
     OrderEntity updateStatus(String orderId, OrderEntityStatusEnum status);
 }
