@@ -13,6 +13,7 @@ import com.tech_challenge_fiap.usecases.product.ProductUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -36,6 +37,7 @@ public class OrderUseCaseImpl implements OrderUseCase {
                 .status(OrderEntityStatusEnum.CREATED)
                 .clientEntity(clientEntity)
                 .productEntities(productEntities)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         PaymentEntity paymentEntity = paymentRepository.createPayment(orderEntity);
