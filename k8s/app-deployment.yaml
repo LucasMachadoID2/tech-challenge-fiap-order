@@ -46,8 +46,11 @@ spec:
                   key: SPRING_DATA_MONGODB_PASSWORD
           resources:
             requests:
-              cpu: "10m"
-              memory: "256Mi"
-            limits:
-              cpu: "100m"
+              cpu: "500m"
               memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+
+
+              
