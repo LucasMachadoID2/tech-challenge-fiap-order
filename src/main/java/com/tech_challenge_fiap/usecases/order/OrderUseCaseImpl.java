@@ -56,8 +56,8 @@ public class OrderUseCaseImpl implements OrderUseCase {
     }
 
     @Override
-    public List<OrderEntity> findAll() {
-        return orderGateway.findAll();
+    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized() {
+        return orderGateway.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
     }
 
     @Override

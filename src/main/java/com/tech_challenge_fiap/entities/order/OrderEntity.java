@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -28,6 +29,9 @@ public class OrderEntity {
     private List<ProductEntity> productEntities;
 
     private PaymentEntity paymentEntity;
+
+    @NonNull
+    private LocalDateTime createdAt;
 
     public static OrderEntityBuilder builder() {
         return new CustomOrderEntityBuilder();
@@ -50,6 +54,8 @@ public class OrderEntity {
         @Override
         public OrderEntity build() {
             validateProducts();
+             this.createdAt(LocalDateTime.now());
+
             return super.build();
         }
 

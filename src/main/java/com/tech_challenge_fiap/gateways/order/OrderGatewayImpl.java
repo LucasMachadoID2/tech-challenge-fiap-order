@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.adapters.OrderAdapter.toEntity;
 import static com.tech_challenge_fiap.adapters.OrderAdapter.toDataModel;
+import static com.tech_challenge_fiap.adapters.OrderAdapter.toEntity;
 
 @RequiredArgsConstructor
 @Component
@@ -35,8 +35,9 @@ public class OrderGatewayImpl implements OrderGateway {
     }
 
     @Override
-    public List<OrderEntity> findAll() {
-        List<OrderDataModel> orderEntities = mongoOrderRepository.findAll();
+    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized() {
+        List<OrderDataModel> orderEntities = mongoOrderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
+
         if (orderEntities.isEmpty()) {
             throw new OrdersNotFoundExpection();
         }
