@@ -1,9 +1,30 @@
 # 🧾 Tech Challenge - Sistema de Autoatendimento para Lanchonete
 
-Este é um sistema de autoatendimento para uma lanchonete em expansão, desenvolvido como parte do **Tech Challenge da FIAP**, que integra conhecimentos de todas as disciplinas da fase. O projeto é essencial para automatizar e organizar o processo de pedidos, desde a escolha dos produtos até a entrega ao cliente.
+Este repositório contém o backend do sistema de autoatendimento de fast food desenvolvido para o **Tech Challenge** (Fase 1 e Fase 2), que integra conhecimentos de todas as disciplinas da fase. O projeto endereça o problema de escalabilidade e organização de pedidos de uma lanchonete em expansão, evitando perda de pedidos, atrasos e inconsistências entre atendimento e cozinha.
 
-# 📌 Requisitos de Negócio
+Na **Fase 1** construímos um **monólito** seguindo **Arquitetura Hexagonal**, entregando as operações essenciais de cadastro de clientes, catálogo e fluxo inicial de pedidos com fila em banco. 
+Na **Fase 2** evoluímos o código aplicando princípios de **Clean Code** e **Clean Architecture**, adicionando ordenação avançada da lista de pedidos, criação de webhook e desenho/infraestrutura em **Kubernetes** com HPA, ConfigMaps e Secrets.
 
+## Diferenças Principais entre Fase 1 e Fase 2
+
+- **Arquitetura**: de monólito hexagonal (Fase 1) para estrutura reorientada em camadas limpas (interfaces, application/use cases, domain, infrastructure) visando menor acoplamento. 
+- **Webhook de pagamento**: tratamento explícito de aprovação/recusa para transicionar estado inicial do pedido. 
+- **Lista de pedidos**: ordenação: (Pronto > Em Preparação > Recebido) e dentro de cada grupo, mais antigos primeiro; pedidos Finalizados excluídos da listagem ativa. 
+- **Infra**: containerização já existente (Dockerfile + docker-compose) expandida para **manifestos Kubernetes** com Deployment, Service, HPA, ConfigMaps e Secrets.
+- **Documentação ampliada**: desenho de arquitetura + guia completo de execução + vídeo demonstrando infra e endpoints. 
+
+
+## 📌 Objetivo
+
+Criar uma aplicação de autoatendimento estilo fast-food que:
+
+- Permita ao cliente realizar pedidos de forma autônoma.
+- Integre pagamento via QRCode utilizando **Mercado Pago**.
+- Acompanhe o status dos pedidos.
+- Forneça ao administrador funcionalidades de gerenciamento de produtos, categorias e clientes.
+
+
+## 📚 Requisitos de Negócio
 ### 🧑‍💼 Cliente (Autoatendimento)
 
 - Pode se identificar por CPF
@@ -52,7 +73,7 @@ Este é um sistema de autoatendimento para uma lanchonete em expansão, desenvol
   - Preço
   - Imagem
   - Categoria
-    - Lanche
+    - Lanchef
     - Acompanhamento
     - Bebida
     - Sobremesa
@@ -70,6 +91,29 @@ Este é um sistema de autoatendimento para uma lanchonete em expansão, desenvol
 - Ver status atual dos pedidos
 - Ver tempo de espera por pedido
 
+## 🧩 Domínio
+<img src="./docs/Dominio.png" alt="Domínio"  width="800">
+
+
+## 📝 Domain Storytelling
+### Catálogos de produtos
+<img src="./docs/CatalogosProdutos.png" alt="Catálogos de produtos">
+
+### Pedido e montagem
+<img src="./docs/PedidoMontagem.png" alt="Pedido e montagem">
+
+### Campanhas promocionais
+<img src="./docs/CampanhasPromocionais.png" alt="Campanhas promocionais">
+
+
+## 💡 Event Storming
+Acesse nosso Miro para análise do processo: [Miro - Tech Challenge](https://miro.com/app/board/uXjVIGfJ2wI=/?share_link_id=33320449721)
+
+<img src="./docs/EventStorming.png" alt="Event Storming" width="800">
+
+
+
+
 ## ⚙️ Tecnologias Utilizadas
 
 - **Java 21**
@@ -79,6 +123,12 @@ Este é um sistema de autoatendimento para uma lanchonete em expansão, desenvol
 - **Docker**
 - **Lombok**
 - **Kubernets**
+
+---
+
+### Documentação
+- **Swagger/OpenAPI** exposto em `/swagger-ui`. 
+
 
 ## 📁 Estrutura do Projeto
 
@@ -125,12 +175,13 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 |   MongoDB      |                     |  Mercado Pago    |
 +----------------+                     +------------------+
 ```
+## 🧱 Arquitetura da infraestrutura
 
-## 🏗️ Arquitetura da infraestrutura
 
 <img src="./docs/k8s.gif" alt="Descrição do GIF" width="800">
+---
 
-## 🚀 Como Executar
+## 🚀 Como Executar Localmente
 
 ### Pré-requisitos
 
@@ -139,78 +190,82 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 ### Passo a Passo
 
 1. **Clone o repositório**
-
    ```bash
    git clone https://github.com/LucasMachadoID2/tech-challenge-fiap
    cd tech-challenge-fiap
-   ```
 
 2. **Inicie o Minikube**
-   ```bash
+    ```bash
    minikube start --driver=docker
-   ```
-3. **Aplique os manifestos Kubernets**
 
-   ```bash
-   kubectl apply -f k8s/
-   ```
+3. **Aplique os manifestos Kubernets**
+     ```bash
+    kubectl apply -f k8s/
 
 4. **Confirme se tudo esta rodandos**
+     ```bash
+    kubectl get all
 
-   ```bash
-   kubectl get all
-   ```
+5. **Para acessar a aplicação:**
 
-5. **Acesse o link swagger**
+    ```bash
+    http://localhost:8080/swagger-ui/index.html
+    ```
 
-   ```bash
-   http://localhost:8080/swagger-ui/index.html
-   ```
+    ou execute o comando
 
-   ou execute o comando
-
-   ```bash
-   minikube service tech-chall-service
-   ```
+    ```bash
+    minikube service tech-chall-service
+    ```
 
 <br>
+
 
 ## 📫 Endpoints Principais
 
 **Clientes:**
-| Método | Endpoint | Descrição |
-| ------ | ------------- | ------------------------ |
-| GET | `/v1/clients` | Listar todos os clientes |
-| POST | `/v1/clients` | Criar um cliente |
+| Método | Endpoint              | Descrição                              | Corpo (Request)        | 
+|--------|-----------------------|----------------------------------------|------------------------|
+| GET    | `/v1/clients`         | Listar todos os clientes               | —                      | 
+| POST   | `/v1/clients`         | Criar um cliente                       | `ClientRequestDto`     | 
 <br>
 
 **Produtos:**
-| Método | Endpoint | Descrição |
-| ------ | ------------------------------------------ | ------------------------ |
-| GET | `/v1/productEntities` | Listar todos os produtos |
-| POST | `/v1/productEntities` | Criar um produto |
-| GET | `/v1/productEntities/category?category=SOBREMESA` | Filtrar por categoria |
+| Método | Endpoint                               | Descrição                                 | Parâmetros / Corpo            |
+|--------|-----------------------------------------|-------------------------------------------|-------------------------------|
+| GET    | `/v1/products`                         | Listar todos os produtos                  | —                             | 
+| GET    | `/v1/products/category?category={category}`   | Listar produtos por categoria             | `category` (enum)             | 
+| POST   | `/v1/products`                         | Criar um produto                          | `ProductRequestDto`           | 
+
+**Categorias (CategoryEnum)**: `LANCHE`, `ACOMPANHAMENTO`, `BEBIDA`, `SOBREMESA`.
+
 <br>
 
 **Pedidos:**
-| Método | Endpoint | Descrição |
-| ------ | --------------------------------------- | -------------------------- |
-| POST | `/v1/orders` | Criar um pedido |
-| PATCH | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
+| Método | Endpoint                                | Descrição                  | Parâmetros
+| ------ | --------------------------------------- | -------------------------- |--------------------------|
+| POST   | `/v1/orders`                            | Criar um pedido            | `OrderRequestDto` |
+| PATCH  | `/v1/orders/{id}?status={status}` | Atualizar status do pedido | `status` (query param)|
+
+**Status de Pedido (OrderEntityStatusEnum)**: `CRIADO`, `RECEBIDO`, `EM PREPARAÇÃO`.
 <br>
 
+
 **Pagamentos:**
-| Método | Endpoint | Descrição |
+| Método | Endpoint       | Descrição                     |
 | ------ | -------------- | ----------------------------- |
-| PATCH | `/v1/payments` | Atualizar status do pagamento |
+| PATCH  | `/v1/payments` | Atualizar status do pagamento |
+| POST | `/v1/webhooks` | Webhook (Mercado Pago) para atualizar pedido pagamento do pedido |
 <br>
+
 
 ## 🙋‍♀️ Equipe
 
-| Nome                               | RA     | Nome Discord                 |
-| ---------------------------------- | ------ | ---------------------------- |
-| Danilo Augusto Pereira             | 364411 | Danilo Augusto - RM364411    |
-| Gabriela Trindade Ferreira         | 364756 | Gabriela Ferreira - RM364756 |
-| Guilherme Garcia Dos Santos Moraes | 364613 | Guilherme Garcia - RM364613  |
-| Lucas Matheus Monteiro Machado     | 361059 | Lucas Machado - RM361059     |
-| Marjory Bispo Matos                | 361150 | Marjory Matos - RM361150     |
+| Nome | RA      | Nome Discord                |
+| ------ | ------------- | ------------------------ |
+| Danilo Augusto Pereira     | 364411 | Danilo Augusto -  RM364411|
+| Gabriela Trindade Ferreira   | 364756 | Gabriela Ferreira - RM364756|
+| Guilherme Garcia Dos Santos Moraes   | 364613 | Guilherme Garcia - RM364613|
+| Lucas Matheus Monteiro Machado   | 361059 | Lucas Machado - RM361059|
+| Marjory Bispo Matos   | 361150 | Marjory Matos - RM361150|
+
