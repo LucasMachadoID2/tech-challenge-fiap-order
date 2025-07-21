@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,6 +19,4 @@ public class OrderResponseDto {
     private List<ProductResponseDto> products;
 
     private PaymentResponseDto payment;
-
-    private LocalDateTime createdAt;
 }
