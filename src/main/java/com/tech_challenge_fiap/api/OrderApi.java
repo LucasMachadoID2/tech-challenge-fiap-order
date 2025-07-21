@@ -27,7 +27,7 @@ public class OrderApi {
 
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> list() {
-        List<OrderResponseDto> orderEntities = orderController.findAll();
+        List<OrderResponseDto> orderEntities = orderController.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
         return ResponseEntity.ok(orderEntities);
     }
 
