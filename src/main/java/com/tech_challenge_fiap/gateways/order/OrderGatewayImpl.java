@@ -35,8 +35,8 @@ public class OrderGatewayImpl implements OrderGateway {
     }
 
     @Override
-    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalized() {
-        List<OrderDataModel> orderEntities = mongoOrderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalized();
+    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
+        List<OrderDataModel> orderEntities = mongoOrderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
         if (orderEntities.isEmpty()) {
             throw new OrdersNotFoundExpection();

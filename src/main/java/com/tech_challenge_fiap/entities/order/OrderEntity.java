@@ -46,7 +46,6 @@ public class OrderEntity {
                 return product.getPrice();
             }).mapToLong(Long::longValue).sum();
         }
-
         return this.productEntities.stream().map(ProductEntity::getPrice).mapToLong(Long::longValue).sum();
     }
 
@@ -54,7 +53,6 @@ public class OrderEntity {
         @Override
         public OrderEntity build() {
             validateProducts();
-             this.createdAt(LocalDateTime.now());
 
             return super.build();
         }

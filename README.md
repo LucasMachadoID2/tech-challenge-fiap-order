@@ -73,7 +73,7 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
   - Preço
   - Imagem
   - Categoria
-    - Lanchef
+    - Lanche
     - Acompanhamento
     - Bebida
     - Sobremesa
