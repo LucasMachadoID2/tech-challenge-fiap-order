@@ -10,6 +10,7 @@ import com.tech_challenge_fiap.gateways.product.ProductGateway;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
 import com.tech_challenge_fiap.usecases.CreateOrderUseCase;
 import com.tech_challenge_fiap.usecases.OrderUseCase;
+import com.tech_challenge_fiap.usecases.context.CreateOrderContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,14 +28,16 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequestDTO) {
-        var order = CreateOrderUseCase.createOrder(
-                orderRequestDTO.getClientId(),
-                orderRequestDTO.getProductIds(),
-                clientGateway,
-                productGateway,
-                paymentRepository,
-                orderGateway
-        );
+        CreateOrderContext createOrderContext = CreateOrderContext.builder()
+                .clientId(orderRequestDTO.getClientId())
+                .productIds(orderRequestDTO.getProductIds())
+                .clientGateway(clientGateway)
+                .productGateway(productGateway)
+                .paymentRepository(paymentRepository)
+                .orderGateway(orderGateway)
+                .build();
+
+        var order = CreateOrderUseCase.createOrder(createOrderContext);
         return OrderAdapter.toResponse(order);
     }
 

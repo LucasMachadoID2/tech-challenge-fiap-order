@@ -6,9 +6,7 @@ import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
 import com.tech_challenge_fiap.entities.payment.PaymentEntity;
 import com.tech_challenge_fiap.entities.product.ProductEntity;
 import com.tech_challenge_fiap.gateways.client.ClientGateway;
-import com.tech_challenge_fiap.gateways.order.OrderGateway;
-import com.tech_challenge_fiap.gateways.product.ProductGateway;
-import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
+import com.tech_challenge_fiap.usecases.context.CreateOrderContext;
 import com.tech_challenge_fiap.usecases.validator.product.ProductValidator;
 
 import java.time.LocalDateTime;
@@ -18,13 +16,12 @@ import static java.util.Objects.nonNull;
 
 public class CreateOrderUseCase {
 
-    public static OrderEntity createOrder(String clientId, List<String> productIds, ClientGateway clientGateway,
-                                          ProductGateway productGateway, PaymentRepository paymentRepository,
-                                          OrderGateway orderGateway) {
-        ClientEntity clientEntity = findClientOrNull(clientId, clientGateway);
+    public static OrderEntity createOrder(CreateOrderContext createOrderContext) {
+        ClientEntity clientEntity =
+                findClientOrNull(createOrderContext.getClientId(), createOrderContext.getClientGateway());
 
-        List<ProductEntity> productEntities = productIds.stream().map(it ->
-                ProductValidator.findById(productGateway, it)
+        List<ProductEntity> productEntities = createOrderContext.getProductIds().stream().map(it ->
+                ProductValidator.findById(createOrderContext.getProductGateway(), it)
         ).toList();
 
         OrderEntity orderEntity = OrderEntity.builder()
@@ -34,11 +31,11 @@ public class CreateOrderUseCase {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        PaymentEntity paymentEntity = paymentRepository.createPayment(orderEntity);
+        PaymentEntity paymentEntity = createOrderContext.getPaymentRepository().createPayment(orderEntity);
 
         orderEntity.setPaymentEntity(paymentEntity);
 
-        return orderGateway.save(orderEntity);
+        return createOrderContext.getOrderGateway().save(orderEntity);
     }
 
     private static ClientEntity findClientOrNull(String clientId, ClientGateway clientGateway) {
