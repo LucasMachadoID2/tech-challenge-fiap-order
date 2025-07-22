@@ -5,7 +5,7 @@ import com.tech_challenge_fiap.dtos.ProductRequestDto;
 import com.tech_challenge_fiap.dtos.ProductResponseDto;
 import com.tech_challenge_fiap.entities.product.ProductEntity;
 import com.tech_challenge_fiap.gateways.product.ProductGateway;
-import com.tech_challenge_fiap.usecases.product.ProductUseCase;
+import com.tech_challenge_fiap.usecases.ProductUseCase;
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

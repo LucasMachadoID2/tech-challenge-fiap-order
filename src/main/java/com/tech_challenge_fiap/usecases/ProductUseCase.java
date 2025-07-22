@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.usecases.product;
+package com.tech_challenge_fiap.usecases;
 
 import com.tech_challenge_fiap.entities.product.ProductEntity;
 import com.tech_challenge_fiap.gateways.product.ProductGateway;
