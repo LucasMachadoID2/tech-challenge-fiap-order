@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.usecases.order;
+package com.tech_challenge_fiap.usecases;
 
 import com.tech_challenge_fiap.entities.client.ClientEntity;
 import com.tech_challenge_fiap.entities.order.OrderEntity;
@@ -10,26 +10,18 @@ import com.tech_challenge_fiap.gateways.order.OrderGateway;
 import com.tech_challenge_fiap.gateways.product.ProductGateway;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
 import com.tech_challenge_fiap.usecases.validator.product.ProductValidator;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-@Service
-@RequiredArgsConstructor
-public class OrderUseCaseImpl implements OrderUseCase {
+public class CreateOrderUseCase {
 
-    private final OrderGateway orderGateway;
-    private final ProductGateway productGateway;
-    private final ClientGateway clientGateway;
-    private final PaymentRepository paymentRepository;
-
-    @Override
-    public OrderEntity createOrder(String clientId, List<String> productIds) {
-        ClientEntity clientEntity = findClientOrNull(clientId);
+    public static OrderEntity createOrder(String clientId, List<String> productIds, ClientGateway clientGateway,
+                                          ProductGateway productGateway, PaymentRepository paymentRepository,
+                                          OrderGateway orderGateway) {
+        ClientEntity clientEntity = findClientOrNull(clientId, clientGateway);
 
         List<ProductEntity> productEntities = productIds.stream().map(it ->
                 ProductValidator.findById(productGateway, it)
@@ -49,23 +41,9 @@ public class OrderUseCaseImpl implements OrderUseCase {
         return orderGateway.save(orderEntity);
     }
 
-    @Override
-    public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
-        return orderGateway.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
-    }
-
-    @Override
-    public OrderEntity updateStatus(String orderId, OrderEntityStatusEnum status) {
-        OrderEntity orderEntityFound = orderGateway.getOrderById(orderId);
-
-        orderEntityFound.setStatus(status);
-
-        return orderGateway.save(orderEntityFound);
-    }
-
-    private ClientEntity findClientOrNull(String clientId) {
+    private static ClientEntity findClientOrNull(String clientId, ClientGateway clientGateway) {
         if (nonNull(clientId)) {
-            return clientGateway.findById(clientId);
+            return ClientUseCase.findById(clientId, clientGateway);
         }
 
         return null;
