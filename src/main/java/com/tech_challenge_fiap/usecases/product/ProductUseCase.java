@@ -1,20 +1,35 @@
 package com.tech_challenge_fiap.usecases.product;
 
 import com.tech_challenge_fiap.entities.product.ProductEntity;
+import com.tech_challenge_fiap.gateways.product.ProductGateway;
+import com.tech_challenge_fiap.usecases.validator.product.ProductValidator;
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
 
 import java.util.List;
 
-public interface ProductUseCase {
-    ProductEntity create(ProductEntity productEntity);
+public class ProductUseCase {
 
-    ProductEntity update(ProductEntity productEntity);
+    public static ProductEntity create(ProductEntity productEntity, ProductGateway productGateway) {
+        return productGateway.save(productEntity);
+    }
 
-    void delete(String id);
+    public static ProductEntity update(ProductEntity productEntity, ProductGateway productGateway) {
+        return productGateway.save(productEntity);
+    }
 
-    ProductEntity findById(String id);
+    public static void delete(String id, ProductGateway productGateway) {
+        productGateway.deleteById(id);
+    }
 
-    List<ProductEntity> findAll();
+    public static ProductEntity findById(String id, ProductGateway productGateway) {
+        return ProductValidator.findById(productGateway, id);
+    }
 
-    List<ProductEntity> findByCategory(CategoryEnum category);
+    public static List<ProductEntity> findAll(ProductGateway productGateway) {
+        return productGateway.findAll();
+    }
+
+    public static List<ProductEntity> findByCategory(CategoryEnum category, ProductGateway productGateway) {
+        return productGateway.findByCategory(category);
+    }
 }

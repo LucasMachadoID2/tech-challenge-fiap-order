@@ -4,6 +4,7 @@ import com.tech_challenge_fiap.adapters.ProductAdapter;
 import com.tech_challenge_fiap.dtos.ProductRequestDto;
 import com.tech_challenge_fiap.dtos.ProductResponseDto;
 import com.tech_challenge_fiap.entities.product.ProductEntity;
+import com.tech_challenge_fiap.gateways.product.ProductGateway;
 import com.tech_challenge_fiap.usecases.product.ProductUseCase;
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,11 @@ import static com.tech_challenge_fiap.adapters.ProductAdapter.toResponse;
 @RequiredArgsConstructor
 public class ProductControllerImpl implements ProductController {
 
-    private final ProductUseCase productUseCase;
+    private final ProductGateway productGateway;
 
     @Override
     public ProductResponseDto create(ProductRequestDto request) {
-        ProductEntity product = productUseCase.create(toEntity(request));
+        ProductEntity product = ProductUseCase.create(toEntity(request), productGateway);
         return toResponse(product);
     }
 
@@ -31,30 +32,30 @@ public class ProductControllerImpl implements ProductController {
     public ProductResponseDto update(String id, ProductRequestDto request) {
         ProductEntity productEntity = toEntity(request);
         productEntity.setId(id);
-        ProductEntity product = productUseCase.update(productEntity);
+        ProductEntity product = ProductUseCase.update(productEntity, productGateway);
         return toResponse(product);
     }
 
     @Override
     public void delete(String id) {
-        productUseCase.delete(id);
+        ProductUseCase.delete(id, productGateway);
     }
 
     @Override
     public ProductResponseDto findById(String id) {
-        ProductEntity product = productUseCase.findById(id);
+        ProductEntity product = ProductUseCase.findById(id, productGateway);
         return toResponse(product);
     }
 
     @Override
     public List<ProductResponseDto> findAll() {
-        List<ProductEntity> products = productUseCase.findAll();
+        List<ProductEntity> products = ProductUseCase.findAll(productGateway);
         return products.stream().map(ProductAdapter::toResponse).collect(Collectors.toList());
     }
 
     @Override
     public List<ProductResponseDto> findByCategory(CategoryEnum category) {
-        List<ProductEntity> products = productUseCase.findByCategory(category);
+        List<ProductEntity> products = ProductUseCase.findByCategory(category, productGateway);
         return products.stream().map(ProductAdapter::toResponse).collect(Collectors.toList());
     }
 }
