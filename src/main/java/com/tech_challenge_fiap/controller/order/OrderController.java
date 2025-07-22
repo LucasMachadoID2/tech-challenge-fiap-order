@@ -9,7 +9,7 @@ import java.util.List;
 public interface OrderController {
     OrderResponseDto createOrder(OrderRequestDto orderRequestDTO);
 
-    List<OrderResponseDto> findAll();
+    List<OrderResponseDto> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
     OrderResponseDto updateStatus(String orderId, OrderEntityStatusEnum status);
 }

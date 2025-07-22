@@ -17,6 +17,7 @@ public class OrderAdapter {
                 .clientEntity(nonNull(orderDataModel.getClient()) ? ClientAdapter.toEntity(orderDataModel.getClient()) : null)
                 .productEntities(orderDataModel.getProducts().stream().map(ProductAdapter::toEntity).toList())
                 .paymentEntity(PaymentAdapter.toEntity(orderDataModel.getPayment()))
+                .createdAt(orderDataModel.getCreatedAt())
                 .build();
     }
 
@@ -27,16 +28,18 @@ public class OrderAdapter {
                 .client(nonNull(orderEntity.getClientEntity()) ? ClientAdapter.toDataModel(orderEntity.getClientEntity()) : null)
                 .products(orderEntity.getProductEntities().stream().map(ProductAdapter::toDataModel).toList())
                 .payment(PaymentAdapter.toDataModel(orderEntity.getPaymentEntity()))
+                .createdAt(orderEntity.getCreatedAt())
                 .build();
     }
 
     public static OrderResponseDto toResponse(OrderEntity orderEntity) {
         return OrderResponseDto.builder()
                 .id(orderEntity.getId())
-                .status(orderEntity.getStatus().name())
+                .status(orderEntity.getStatus().getDescription())
                 .client(nonNull(orderEntity.getClientEntity()) ? ClientAdapter.toResponse(orderEntity.getClientEntity()) : null)
                 .products(orderEntity.getProductEntities().stream().map(ProductAdapter::toResponse).toList())
                 .payment(PaymentAdapter.toResponse(orderEntity.getPaymentEntity()))
+                .createdAt(orderEntity.getCreatedAt())
                 .build();
     }
 }

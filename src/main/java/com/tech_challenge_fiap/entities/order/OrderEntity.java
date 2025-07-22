@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -29,6 +30,9 @@ public class OrderEntity {
 
     private PaymentEntity paymentEntity;
 
+    @NonNull
+    private LocalDateTime createdAt;
+
     public static OrderEntityBuilder builder() {
         return new CustomOrderEntityBuilder();
     }
@@ -42,7 +46,6 @@ public class OrderEntity {
                 return product.getPrice();
             }).mapToLong(Long::longValue).sum();
         }
-
         return this.productEntities.stream().map(ProductEntity::getPrice).mapToLong(Long::longValue).sum();
     }
 
@@ -50,6 +53,7 @@ public class OrderEntity {
         @Override
         public OrderEntity build() {
             validateProducts();
+
             return super.build();
         }
 

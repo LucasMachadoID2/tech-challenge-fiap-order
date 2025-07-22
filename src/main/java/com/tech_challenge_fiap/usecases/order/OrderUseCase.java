@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderUseCase {
     OrderEntity createOrder(String clientId, List<String> productIds);
 
-    List<OrderEntity> findAll();
+    List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
     OrderEntity updateStatus(String orderId, OrderEntityStatusEnum status);
 }
