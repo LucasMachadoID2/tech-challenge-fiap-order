@@ -31,7 +31,7 @@ public class CreateOrderUseCase {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        PaymentEntity paymentEntity = createOrderContext.getPaymentRepository().createPayment(orderEntity);
+        PaymentEntity paymentEntity = createOrderContext.getPaymentGateway().createPayment(orderEntity);
 
         orderEntity.setPaymentEntity(paymentEntity);
 

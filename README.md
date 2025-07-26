@@ -133,49 +133,71 @@ Acesse nosso Miro para análise do processo: [Miro - Tech Challenge](https://mir
 
 ## 📁 Estrutura do Projeto
 
-- `adapter`: camada de interface (controllers, DTOs, handlers).
-- `core`: domínio (casos de uso, entidades, interfaces).
-- `application`: implementação dos casos de uso.
-- `infrastructure`: configurações externas (ex: Mercado Pago).
+- `api`: Camada responsavel por expor os endpoints da aplicação.
+- `controller`: Camada responsavel por distribuir as chamadas externas recebidas para os usecases.
+- `gateway`: Camada responsavel por interagir com a camada de repositories.
+- `usecase`: Camada responsavel por conter a regra da aplicação.
+- `entity`: Camadas responsavel por conter as regras de negocios da aplicação.
+- `adapter`: Camada responsavel por fazer adaptação dos dados entre camadas.
+- `data model`: ODMs da aplicação.
+- `infrastructure`: configurações da aplicação (ex: Mercado Pago).
+- `repositories`: Camada responsavel por fazer chamadas externas necessarias para determinadas regras da aplicação.
+- `webhook`: Camada responsavel por receber eventos do mundo externo.
 - `util`: enums, exceptions e conversores.
 - `k8s`: arquivos de configuração do Kubernetes.
 
 ## 🏗️ Arquitetura da Solução
 
-### 🧱 Arquitetura Hexagonal (Ports and Adapters)
+### 🧱 Arquitetura Clean (controller, gateway, usecase, entity)
 
-O projeto adota a arquitetura hexagonal para promover separação de responsabilidades, facilitar testes e permitir a substituição de tecnologias externas com baixo acoplamento.
+O projeto adota a arquitetura clean para promover separação de responsabilidades, facilitar testes e permitir a substituição de tecnologias externas com baixo acoplamento e de forma limpa.
 
-- **Camada de entrada (Inbound Adapter)**: Controladores REST responsáveis por receber requisições HTTP e convertê-las para os casos de uso da aplicação.
-- **Camada de aplicação (Use Cases)**: Contém a lógica central de negócios e orquestra as chamadas entre o domínio e os adaptadores.
-- **Camada de saída (Outbound Adapter)**: Implementações de acesso a dados (MongoDB), integração com serviços externos (Mercado Pago), entre outros.
+- **Camada de entrada (API)**: Controladores REST responsáveis por receber requisições HTTP e convertê-las para os casos de uso da aplicação.
+- **Camada de distribuição de chamadas (controller)**: Classes responsaveis por distribuir as chamadas externas para seus devidos usecases.
+- **Camada de regras da aplicação (Use Cases)**: Contém a lógica central da aplicação.
+- **Camada de comunicação com o externo (Gateway)**: Classes responsaveis por distribuir em quais repositorios buscar os dados necessarios para o usecase.
+- **Camada de saída (Repository)**: Classes responsaveis por buscar dados externos.
 - **Banco de Dados**: MongoDB, utilizado para persistência dos dados de clientes, produtos, pedidos e pagamentos.
 - **Pagamento**: Integração com a API do Mercado Pago utilizando QRCode.
 - **Containers**: O MongoDB é executado em container Docker para facilitar o desenvolvimento e testes locais.
-
 ```
-               +-------------------------+
-               |   Interface do Cliente  |
-               |     (HTTP REST API)     |
-               +------------+------------+
-                            |
-            +---------------v---------------+
-            |        Camada de Entrada      |
-            |     (Controllers REST - API)  |
-            +---------------+---------------+
-                            |
-            +---------------v---------------+
-            |       Casos de Uso (Core)     |
-            |   Regras de Negócio e Fluxos  |
-            +---------------+---------------+
-                            |
-        +-------------------+-------------------+
-        |                                       |
-+-------v--------+                     +--------v--------+
-| Banco de Dados |                     | Serviços Externos|
-|   MongoDB      |                     |  Mercado Pago    |
-+----------------+                     +------------------+
-```
+                      +-------------------------+
+                      |   Interface do Cliente  |
+                      |     (HTTP REST API)     |
+                      +------------+------------+
+                                   |
+                   +---------------v---------------+
+                   |        Camada de Entrada      |
+                   |         (API REST - API)      |
+                   +---------------+---------------+
+                                   |
+            +----------------------v----------------------+
+            | Camada de distribuição de responsabilidades |
+            |         (Controllers REST - API)            |
+            +----------------------+----------------------+
+                                   |
+                   +---------------v---------------+
+                   |       Casos de Uso (Core)     |
+                   |   Regras de Negócio e Fluxos  |
+                   +---------------+---------------+
+                                   |
+              +--------------------v--------------------+
+              |            Camada de Gateway            |
+              |   Chamada dos repositorios necessarios  |
+              +--------------------+--------------------+
+                                   |
+              +--------------------v--------------------+
+              |          Camada de Repository           |
+              |    Chamada externas para buscar dados   |
+              +--------------------+--------------------+
+                                   |
+               +-------------------+-------------------+
+               |                                       |
+       +-------v--------+                     +--------v--------+
+       | Banco de Dados |                     | Serviços Externos|
+       |   MongoDB      |                     |  Mercado Pago    |
+       +----------------+                     +------------------+
+   ```
 
 ## 🧱 Arquitetura da infraestrutura
 
