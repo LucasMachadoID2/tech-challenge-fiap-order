@@ -5,6 +5,10 @@ Este repositório contém o backend do sistema de autoatendimento de fast food d
 Na **Fase 1** construímos um **monólito** seguindo **Arquitetura Hexagonal**, entregando as operações essenciais de cadastro de clientes, catálogo e fluxo inicial de pedidos com fila em banco.
 Na **Fase 2** evoluímos o código aplicando princípios de **Clean Code** e **Clean Architecture**, adicionando ordenação avançada da lista de pedidos, criação de webhook e desenho/infraestrutura em **Kubernetes** com HPA, ConfigMaps e Secrets.
 
+## Vídeo de Demonstração
+[![Assista ao vídeo](https://img.youtube.com/vi/FjibaGp5C4Y/0.jpg)](https://www.youtube.com/watch?v=FjibaGp5C4Y)
+
+
 ## Diferenças Principais entre Fase 1 e Fase 2
 
 - **Arquitetura**: de monólito hexagonal (Fase 1) para estrutura reorientada em camadas limpas (interfaces, application/use cases, domain, infrastructure) visando menor acoplamento.
