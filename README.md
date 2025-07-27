@@ -236,7 +236,7 @@ O projeto adota a arquitetura clean para promover separação de responsabilidad
 4. **Confirme se tudo esta rodandos**
 
    ```bash
-   kubectl get all
+   watch kubectl get all
 
    ```
 
