@@ -43,3 +43,4 @@ jobs:
 
     - name: Push image docker
       run: docker push gabitriferreira/tech-challenge-app
+
