@@ -1,5 +1,7 @@
 package com.tech_challenge_fiap.adapters;
 
+import java.util.UUID;
+
 import com.tech_challenge_fiap.data.models.PaymentDataModel;
 import com.tech_challenge_fiap.dtos.PaymentResponseDto;
 import com.tech_challenge_fiap.entities.payment.PaymentEntity;
@@ -23,7 +25,7 @@ public class PaymentAdapter {
                 .id(paymentDataModel.getId())
                 .qrImage(paymentDataModel.getQrImage())
                 .qrCode(paymentDataModel.getQrCode())
-                .status(PaymentStatusEnum.safeValueOf(paymentDataModel.getStatus().name()))
+                .status(convertStatusToDomain(paymentDataModel.getStatus()))
                 .build();
     }
 
@@ -32,7 +34,16 @@ public class PaymentAdapter {
                 .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
-                .status(PaymentStatusEnumEntity.valueOf(paymentEntity.getStatus().name()))
+                .status(convertStatusToEntity(paymentEntity.getStatus()))
+                .build();
+    }
+
+    public static PaymentDataModel toDataModelWithId(PaymentEntity paymentEntity) {
+        return PaymentDataModel.builder()
+                .id(paymentEntity.getId() != null ? paymentEntity.getId() : UUID.randomUUID().toString())
+                .qrImage(paymentEntity.getQrImage())
+                .qrCode(paymentEntity.getQrCode())
+                .status(convertStatusToEntity(paymentEntity.getStatus()))
                 .build();
     }
 
@@ -41,7 +52,48 @@ public class PaymentAdapter {
                 .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
-                .status(paymentEntity.getStatus().getDescription())
+                .status(paymentEntity.getStatus().name())
                 .build();
+    }
+
+    public static PaymentResponseDto toResponse(PaymentDataModel paymentDataModel) {
+        return PaymentResponseDto.builder()
+                .id(paymentDataModel.getId())
+                .qrImage(paymentDataModel.getQrImage())
+                .qrCode(paymentDataModel.getQrCode())
+                .status(paymentDataModel.getStatus().name())
+                .build();
+    }
+
+    private static PaymentStatusEnum convertStatusToDomain(PaymentStatusEnumEntity statusEntity) {
+        if (statusEntity == null)
+            return null;
+
+        switch (statusEntity) {
+            case CREATED:
+                return PaymentStatusEnum.CREATED;
+            case PAID:
+                return PaymentStatusEnum.PAID;
+            case REFUSED:
+                return PaymentStatusEnum.REFUSED;
+            default:
+                return PaymentStatusEnum.CREATED;
+        }
+    }
+
+    private static PaymentStatusEnumEntity convertStatusToEntity(PaymentStatusEnum status) {
+        if (status == null)
+            return null;
+
+        switch (status) {
+            case CREATED:
+                return PaymentStatusEnumEntity.CREATED;
+            case PAID:
+                return PaymentStatusEnumEntity.PAID;
+            case REFUSED:
+                return PaymentStatusEnumEntity.REFUSED;
+            default:
+                return PaymentStatusEnumEntity.CREATED;
+        }
     }
 }

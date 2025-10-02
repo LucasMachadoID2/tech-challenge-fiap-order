@@ -2,32 +2,81 @@ package com.tech_challenge_fiap.data.models;
 
 import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@EqualsAndHashCode
+@DynamoDbBean
 @Getter
 @Setter
-@Document(collection = "order")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDataModel {
-    @Id
+
     private String id;
-
-    @NonNull
     private OrderEntityStatusEnum status;
-
     private ClientDataModel client;
-
-    @NonNull
     private List<ProductDataModel> products;
-
-    @NonNull
     private PaymentDataModel payment;
-
-    @NonNull
     private LocalDateTime createdAt;
+
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @DynamoDbAttribute("order_status")
+    public OrderEntityStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderEntityStatusEnum status) {
+        this.status = status;
+    }
+
+    @DynamoDbAttribute("client")
+    public ClientDataModel getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDataModel client) {
+        this.client = client;
+    }
+
+    @DynamoDbAttribute("products")
+    public List<ProductDataModel> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductDataModel> products) {
+        this.products = products;
+    }
+
+    @DynamoDbAttribute("payment")
+    public PaymentDataModel getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentDataModel payment) {
+        this.payment = payment;
+    }
+
+
+    @DynamoDbAttribute("createdAt")
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

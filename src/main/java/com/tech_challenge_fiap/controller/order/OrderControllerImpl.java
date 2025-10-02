@@ -13,10 +13,14 @@ import com.tech_challenge_fiap.usecases.OrderUseCase;
 import com.tech_challenge_fiap.usecases.context.CreateOrderContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class OrderControllerImpl implements OrderController {
@@ -27,7 +31,9 @@ public class OrderControllerImpl implements OrderController {
     private final PaymentGateway paymentGateway;
 
     @Override
-    public OrderResponseDto createOrder(OrderRequestDto orderRequestDTO) {
+    public OrderResponseDto createOrder(@Valid @RequestBody OrderRequestDto orderRequestDTO) {
+        log.info("[Controller] Recebido DTO: client={}, products={}, ",
+                orderRequestDTO.getClientId(), orderRequestDTO.getProductIds());
         CreateOrderContext createOrderContext = CreateOrderContext.builder()
                 .clientId(orderRequestDTO.getClientId())
                 .productIds(orderRequestDTO.getProductIds())
