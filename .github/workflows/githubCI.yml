@@ -1,7 +1,7 @@
 name: Pipeline CI
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
@@ -32,3 +32,4 @@ jobs:
           else
             echo "✅ Build concluída com sucesso! Não há erros de compilação."
           fi
+
