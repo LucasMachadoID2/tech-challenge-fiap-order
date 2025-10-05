@@ -2,24 +2,61 @@ package com.tech_challenge_fiap.data.models;
 
 import com.tech_challenge_fiap.utils.enums.PaymentStatusEnumEntity;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode
 @Getter
 @Setter
-@Document(collection = "payment")
+@DynamoDbBean
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentDataModel {
-    @Id
-    String id;
 
-    String qrImage;
+    private String id;
+    private String qrImage;
+    private String qrCode;
+    private PaymentStatusEnumEntity status;
 
-    String qrCode;
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("id")
+    public String getId() {
+        return id;
+    }
 
-    PaymentStatusEnumEntity status;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @DynamoDbAttribute("qrImage")
+    public String getQrImage() {
+        return qrImage;
+    }
+
+    public void setQrImage(String qrImage) {
+        this.qrImage = qrImage;
+    }
+
+    @DynamoDbAttribute("qrCode")
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    @DynamoDbAttribute("payment_status")
+    public PaymentStatusEnumEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatusEnumEntity status) {
+        this.status = status;
+    }
 }

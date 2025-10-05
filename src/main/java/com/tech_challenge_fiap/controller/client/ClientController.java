@@ -15,4 +15,6 @@ public interface ClientController {
     ClientResponseDto findById(String id);
 
     List<ClientResponseDto> findAll();
+
+    ClientResponseDto findByCpf(String cpf);
 }

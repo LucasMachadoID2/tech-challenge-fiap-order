@@ -23,8 +23,10 @@ public class ClientGatewayImpl implements ClientGateway {
 
     @Override
     public ClientEntity save(ClientEntity clientEntity) {
-        ClientDataModel client = clientRepository.save(toDataModel(clientEntity));
-        return toEntity(client);
+        ClientDataModel clientData = toDataModel(clientEntity);
+        ClientDataModel savedClient = clientRepository.save(clientData);
+        var savedEntity = toEntity(savedClient);
+        return savedEntity;
     }
 
     @Override
@@ -33,6 +35,11 @@ public class ClientGatewayImpl implements ClientGateway {
     }
 
     @Override
+    public void deleteByCpf(String cpf) {
+        clientRepository.deleteByCpf(cpf);
+    }
+
+   @Override
     public ClientEntity findById(String id) {
         Optional<ClientDataModel> client = clientRepository.findById(id);
         return client.map(ClientAdapter::toEntity).orElse(null);
