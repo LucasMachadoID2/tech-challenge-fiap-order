@@ -1,4 +1,4 @@
-name: Pipeline CD
+name: Pipeline CI
 
 on:
   push:
@@ -32,13 +32,3 @@ jobs:
           else
             echo "✅ Build concluída com sucesso! Não há erros de compilação."
           fi
-
-      - name: Login Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Build docker image
-        run: docker build -t gabitriferreira/tech-challenge-app .
-
-      - name: Push image docker
-        run: docker push gabitriferreira/tech-challenge-app
-
