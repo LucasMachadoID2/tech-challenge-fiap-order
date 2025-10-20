@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.dtos;
+package com.tech_challenge_fiap.dtos.internal;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

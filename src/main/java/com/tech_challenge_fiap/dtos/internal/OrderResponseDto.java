@@ -1,4 +1,4 @@
-package com.tech_challenge_fiap.dtos;
+package com.tech_challenge_fiap.dtos.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

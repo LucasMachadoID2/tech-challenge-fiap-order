@@ -1,7 +1,7 @@
 package com.tech_challenge_fiap.adapters;
 
 import com.tech_challenge_fiap.data.models.OrderDataModel;
-import com.tech_challenge_fiap.dtos.OrderResponseDto;
+import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.order.OrderEntity;
 import lombok.experimental.UtilityClass;
 
@@ -70,17 +70,4 @@ public class OrderAdapter {
                         .createdAt(orderEntity.getCreatedAt())
                         .build();
         }
-
-    public static OrderResponseDto toResponse(OrderDataModel orderDataModel) {
-        return OrderResponseDto.builder()
-                .id(orderDataModel.getId())
-                .status(orderDataModel.getStatus().name())
-                .client(nonNull(orderDataModel.getClient()) ? ClientAdapter.toResponse(orderDataModel.getClient())
-                        : null)
-                .products(orderDataModel.getProducts().stream().map(ProductAdapter::toResponse).toList())
-                .payment(nonNull(orderDataModel.getPayment()) ? PaymentAdapter.toResponse(orderDataModel.getPayment())
-                        : null)
-                .createdAt(orderDataModel.getCreatedAt())
-                .build();
-    }
 }

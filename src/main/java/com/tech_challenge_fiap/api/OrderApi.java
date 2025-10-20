@@ -1,8 +1,8 @@
 package com.tech_challenge_fiap.api;
 
 import com.tech_challenge_fiap.controller.order.OrderController;
-import com.tech_challenge_fiap.dtos.OrderRequestDto;
-import com.tech_challenge_fiap.dtos.OrderResponseDto;
+import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
+import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

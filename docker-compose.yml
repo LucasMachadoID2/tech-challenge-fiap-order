@@ -1,13 +1,23 @@
-version: '3.8'
-
 services:
-  app:
-    build: .
+  db:
+    image: postgres:17
+    container_name: tech-chall
     environment:
-      AWS_REGION: us-east-1
-      DYNAMODB_TABLE_USERS: tech-challenge-users
-      DYNAMODB_TABLE_ORDERS: tech-challenge-orders
-      DYNAMODB_TABLE_PRODUCTS: tech-challenge-products
-      DYNAMODB_TABLE_PAYMENTS: tech-challenge-payments
+      POSTGRES_DB: tech-chall
+      POSTGRES_USER: tech-chall
+      POSTGRES_PASSWORD: secret
     ports:
-      - 8080:8080
+      - "5432:5432"
+
+#  app:
+#    depends_on:
+#      - db
+#    build: .
+#    environment:
+#      AWS_REGION: us-east-1
+#      DYNAMODB_TABLE_USERS: tech-challenge-users
+#      DYNAMODB_TABLE_ORDERS: tech-challenge-orders
+#      DYNAMODB_TABLE_PRODUCTS: tech-challenge-products
+#      DYNAMODB_TABLE_PAYMENTS: tech-challenge-payments
+#    ports:
+#      - 8080:8080

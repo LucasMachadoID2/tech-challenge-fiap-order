@@ -1,9 +1,8 @@
 package com.tech_challenge_fiap.adapters;
 
-import java.util.UUID;
-
 import com.tech_challenge_fiap.data.models.PaymentDataModel;
-import com.tech_challenge_fiap.dtos.PaymentResponseDto;
+import com.tech_challenge_fiap.dtos.external.PaymentDTO;
+import com.tech_challenge_fiap.dtos.internal.PaymentResponseDto;
 import com.tech_challenge_fiap.entities.payment.PaymentEntity;
 import com.tech_challenge_fiap.entities.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.utils.enums.PaymentStatusEnumEntity;
@@ -11,14 +10,6 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PaymentAdapter {
-
-    public static PaymentEntity toEntity(com.mercadopago.resources.payment.Payment payment) {
-        return PaymentEntity.builder()
-                .qrImage(payment.getPointOfInteraction().getTransactionData().getQrCodeBase64())
-                .qrCode(payment.getPointOfInteraction().getTransactionData().getQrCode())
-                .status(PaymentStatusEnum.CREATED)
-                .build();
-    }
 
     public static PaymentEntity toEntity(PaymentDataModel paymentDataModel) {
         return PaymentEntity.builder()
@@ -38,15 +29,6 @@ public class PaymentAdapter {
                 .build();
     }
 
-    public static PaymentDataModel toDataModelWithId(PaymentEntity paymentEntity) {
-        return PaymentDataModel.builder()
-                .id(paymentEntity.getId() != null ? paymentEntity.getId() : UUID.randomUUID().toString())
-                .qrImage(paymentEntity.getQrImage())
-                .qrCode(paymentEntity.getQrCode())
-                .status(convertStatusToEntity(paymentEntity.getStatus()))
-                .build();
-    }
-
     public static PaymentResponseDto toResponse(PaymentEntity paymentEntity) {
         return PaymentResponseDto.builder()
                 .id(paymentEntity.getId())
@@ -56,12 +38,12 @@ public class PaymentAdapter {
                 .build();
     }
 
-    public static PaymentResponseDto toResponse(PaymentDataModel paymentDataModel) {
-        return PaymentResponseDto.builder()
-                .id(paymentDataModel.getId())
-                .qrImage(paymentDataModel.getQrImage())
-                .qrCode(paymentDataModel.getQrCode())
-                .status(paymentDataModel.getStatus().name())
+    public static PaymentEntity toEntity(PaymentDTO paymentDTO) {
+        return PaymentEntity.builder()
+                .id(paymentDTO.getId())
+                .qrImage(paymentDTO.getQrImage())
+                .qrCode(paymentDTO.getQrCode())
+                .status(convertStatusToDomain(PaymentStatusEnumEntity.valueOf(paymentDTO.getStatus())))
                 .build();
     }
 

@@ -1,22 +1,26 @@
-package com.tech_challenge_fiap.data.models;
+package com.tech_challenge_fiap.dtos.external;
 
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
-import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
-@Builder
-@Table(name = "product")
-public class ProductDataModel {
+public class ProductDTO {
 
     private String id;
-    private CategoryEnum category;
+
     private String name;
+
     private String description;
+
     private String image;
+
     private Long price;
+
     private Long priceForClient;
+
+    private CategoryEnum category;
+
     private Long quantity;
-    private String hasPromotion;
 }

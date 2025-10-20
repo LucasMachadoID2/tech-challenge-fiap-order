@@ -7,7 +7,6 @@ import com.tech_challenge_fiap.entities.payment.PaymentEntity;
 import com.tech_challenge_fiap.entities.product.ProductEntity;
 import com.tech_challenge_fiap.gateways.client.ClientGateway;
 import com.tech_challenge_fiap.usecases.context.CreateOrderContext;
-import com.tech_challenge_fiap.usecases.validator.product.ProductValidator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ public class CreateOrderUseCase {
                 findClientOrNull(createOrderContext.getClientId(), createOrderContext.getClientGateway());
 
         List<ProductEntity> productEntities = createOrderContext.getProductIds().stream().map(it ->
-                ProductValidator.findById(createOrderContext.getProductGateway(), it)
+                createOrderContext.getProductGateway().findById(it)
         ).toList();
 
         OrderEntity orderEntity = OrderEntity.builder()
@@ -46,7 +45,7 @@ public class CreateOrderUseCase {
 
     private static ClientEntity findClientOrNull(String clientId, ClientGateway clientGateway) {
         if (nonNull(clientId)) {
-            return ClientUseCase.findById(clientId, clientGateway);
+            return clientGateway.findById(clientId);
         }
 
         return null;

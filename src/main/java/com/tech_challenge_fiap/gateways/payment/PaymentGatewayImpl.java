@@ -1,5 +1,6 @@
 package com.tech_challenge_fiap.gateways.payment;
 
+import com.tech_challenge_fiap.dtos.external.PaymentDTO;
 import com.tech_challenge_fiap.entities.order.OrderEntity;
 import com.tech_challenge_fiap.entities.payment.PaymentEntity;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
@@ -7,7 +8,8 @@ import com.tech_challenge_fiap.utils.exceptions.CouldNotCreatePaymentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+
+import static com.tech_challenge_fiap.adapters.PaymentAdapter.toEntity;
 
 
 @Slf4j
@@ -15,16 +17,16 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 @Component
 public class PaymentGatewayImpl implements PaymentGateway {
 
-    private final DynamoDbEnhancedClient dynamoDbEnhancedClient;
     private final PaymentRepository paymentRepository;
-    private final String tableName = "tech-challenge-payments"; 
 
     @Override
     public PaymentEntity createPayment(OrderEntity orderEntity) {
         try {
             log.info("Creating payment for order: {}", orderEntity.getId());
+
+            PaymentDTO paymentDto = paymentRepository.createPayment(orderEntity);
             
-            return paymentRepository.createPayment(orderEntity);
+            return toEntity(paymentDto);
 
         } catch (Exception e) {
             log.error("Failed to create payment for order: {}", orderEntity.getId(), e);

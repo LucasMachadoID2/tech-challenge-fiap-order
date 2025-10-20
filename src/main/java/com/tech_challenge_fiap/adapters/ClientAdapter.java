@@ -1,12 +1,11 @@
 package com.tech_challenge_fiap.adapters;
 
 import com.tech_challenge_fiap.data.models.ClientDataModel;
-import com.tech_challenge_fiap.dtos.ClientRequestDto;
-import com.tech_challenge_fiap.dtos.ClientResponseDto;
+import com.tech_challenge_fiap.dtos.external.ClientDTO;
+import com.tech_challenge_fiap.dtos.internal.ClientRequestDto;
+import com.tech_challenge_fiap.dtos.internal.ClientResponseDto;
 import com.tech_challenge_fiap.entities.client.ClientEntity;
 import lombok.experimental.UtilityClass;
-
-import java.util.UUID;
 
 @UtilityClass
 public class ClientAdapter {
@@ -37,15 +36,6 @@ public class ClientAdapter {
                 .build();
     }
 
-    public static ClientDataModel toDataModelWithId(ClientEntity clientEntity) {
-        return ClientDataModel.builder()
-                .id(UUID.randomUUID().toString()) 
-                .name(clientEntity.getName())
-                .cpf(clientEntity.getCpf())
-                .email(clientEntity.getEmail())
-                .build();
-    }
-
     public static ClientResponseDto toResponse(ClientEntity clientEntity) {
         return ClientResponseDto.builder()
                 .id(clientEntity.getId())
@@ -55,12 +45,11 @@ public class ClientAdapter {
                 .build();
     }
 
-    public static ClientResponseDto toResponse(ClientDataModel dataModel) {
-        return ClientResponseDto.builder()
-                .id(dataModel.getId())
-                .name(dataModel.getName())
-                .cpf(dataModel.getCpf())
-                .email(dataModel.getEmail())
+    public static ClientEntity toEntity(ClientDTO dto) {
+        return ClientEntity.builder()
+                .name(dto.getName())
+                .cpf(dto.getCpf())
+                .email(dto.getEmail())
                 .build();
     }
 }
