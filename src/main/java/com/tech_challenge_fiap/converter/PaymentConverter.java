@@ -8,7 +8,7 @@ import com.tech_challenge_fiap.entities.PaymentEntity;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class PaymentAdapter {
+public class PaymentConverter {
 
     public static Payment toDomain(PaymentEntity paymentEntity) {
         return Payment.builder()

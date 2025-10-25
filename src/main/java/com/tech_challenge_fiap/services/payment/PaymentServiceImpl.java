@@ -10,8 +10,8 @@ import com.tech_challenge_fiap.utils.exceptions.CouldNotCreatePaymentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.tech_challenge_fiap.converter.PaymentAdapter.toDomain;
-import static com.tech_challenge_fiap.converter.PaymentAdapter.toEntity;
+import static com.tech_challenge_fiap.converter.PaymentConverter.toDomain;
+import static com.tech_challenge_fiap.converter.PaymentConverter.toEntity;
 
 @Service
 @RequiredArgsConstructor

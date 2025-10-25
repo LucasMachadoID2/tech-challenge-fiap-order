@@ -2,13 +2,12 @@ package com.tech_challenge_fiap.converter;
 
 import com.tech_challenge_fiap.domains.client.Client;
 import com.tech_challenge_fiap.dtos.external.ClientDTO;
-import com.tech_challenge_fiap.dtos.internal.ClientRequestDto;
 import com.tech_challenge_fiap.dtos.internal.ClientResponseDto;
 import com.tech_challenge_fiap.entities.ClientEntity;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class ClientAdapter {
+public class ClientConverter {
 
     public static Client toDomain(ClientEntity entity) {
         return Client.builder()

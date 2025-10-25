@@ -1,14 +1,12 @@
 package com.tech_challenge_fiap.converter;
 
 import com.tech_challenge_fiap.entities.ProductEntity;
-import com.tech_challenge_fiap.dtos.external.ProductDTO;
-import com.tech_challenge_fiap.dtos.internal.ProductRequestDto;
 import com.tech_challenge_fiap.dtos.internal.ProductResponseDto;
 import com.tech_challenge_fiap.domains.product.Product;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class ProductAdapter {
+public class ProductConverter {
 
     public static Product toDomain(ProductEntity entity) {
         return Product.builder()

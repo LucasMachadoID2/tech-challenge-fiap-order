@@ -1,6 +1,6 @@
 package com.tech_challenge_fiap.services.order;
 
-import com.tech_challenge_fiap.converter.OrderAdapter;
+import com.tech_challenge_fiap.converter.OrderConverter;
 import com.tech_challenge_fiap.domains.client.Client;
 import com.tech_challenge_fiap.domains.order.Order;
 import com.tech_challenge_fiap.domains.order.OrderStatusEnum;
@@ -12,7 +12,6 @@ import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.OrderEntity;
 import com.tech_challenge_fiap.repositories.client.ClientRepository;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
-import com.tech_challenge_fiap.repositories.payment.PaymentRepositoryCustom;
 import com.tech_challenge_fiap.repositories.product.ProductRepository;
 import com.tech_challenge_fiap.services.payment.PaymentService;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
@@ -24,8 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.converter.OrderAdapter.toDomain;
-import static com.tech_challenge_fiap.converter.OrderAdapter.toEntity;
+import static com.tech_challenge_fiap.converter.OrderConverter.toDomain;
+import static com.tech_challenge_fiap.converter.OrderConverter.toEntity;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -40,13 +39,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto createOrder(@RequestBody OrderRequestDto orderRequestDTO) {
         var order = createOrder(orderRequestDTO.getClientId(), orderRequestDTO.getProductIds());
-        return OrderAdapter.toResponse(order);
+        return OrderConverter.toResponse(order);
     }
 
     @Override
     public List<OrderResponseDto> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
         List<OrderEntity> orderEntities = orderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
-        return orderEntities.stream().map(OrderAdapter::toResponse).collect(Collectors.toList());
+        return orderEntities.stream().map(OrderConverter::toResponse).collect(Collectors.toList());
     }
 
     @Override
@@ -56,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
         var orderSaved = orderRepository.save(orderFound);
         var order = toDomain(orderSaved);
-        return OrderAdapter.toResponse(order);
+        return OrderConverter.toResponse(order);
     }
 
     public void updatePaymentStatus(Long paymentId, PaymentStatusEnum status) {
