@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-chall-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-chall-app
+  template:
+    metadata:
+      labels:
+        app: tech-chall-app
+    spec:
+      containers:
+        - name: tech-chall-container
+          image: lucasmachadoid/fiap-tech-chall:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_HOST
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_PORT
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_NAME
+            - name: APP_USER_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: APP_USER_DATABASE
+            - name: APP_PASSWORD_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: APP_PASSWORD_DATABASE
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+
+
