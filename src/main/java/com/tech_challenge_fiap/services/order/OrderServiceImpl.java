@@ -10,10 +10,11 @@ import com.tech_challenge_fiap.domains.product.Product;
 import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
 import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.OrderEntity;
+import com.tech_challenge_fiap.repositories.client.ClientRepository;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
-import com.tech_challenge_fiap.services.client.ClientService;
+import com.tech_challenge_fiap.repositories.payment.PaymentRepositoryCustom;
+import com.tech_challenge_fiap.repositories.product.ProductRepository;
 import com.tech_challenge_fiap.services.payment.PaymentService;
-import com.tech_challenge_fiap.services.product.ProductService;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final ClientService clientService;
-    private final ProductService productService;
+    private final ClientRepository clientRepository;
+    private final ProductRepository productRepository;
     private final PaymentService paymentService;
     private final OrderRepository orderRepository;
 
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     private Order createOrder(Long clientId, List<Long> productIds) {
         Client client = findClientOrNull(clientId);
 
-        List<Product> productEntities = productIds.stream().map(productService::findById).toList();
+        List<Product> productEntities = productIds.stream().map(productRepository::getProductbyId).toList();
 
         Order order = Order.builder()
                 .status(OrderStatusEnum.CREATED)
@@ -85,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Client findClientOrNull(Long clientId) {
         if (nonNull(clientId)) {
-            return clientService.findById(clientId);
+            return clientRepository.getClientById(clientId);
         }
 
         return null;

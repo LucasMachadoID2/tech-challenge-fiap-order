@@ -1,7 +1,8 @@
 package com.tech_challenge_fiap.repositories.client;
 
-import com.tech_challenge_fiap.entities.ClientEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.tech_challenge_fiap.domains.client.Client;
 
-public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
+public interface ClientRepository {
+
+    Client getClientById(Long clientId);
 }
