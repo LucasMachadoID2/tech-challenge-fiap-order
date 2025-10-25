@@ -28,14 +28,6 @@ public class ClientAdapter {
                 .build();
     }
 
-    public static Client toDomain(ClientRequestDto dto) {
-        return Client.builder()
-                .name(dto.getName())
-                .cpf(dto.getCpf())
-                .email(dto.getEmail())
-                .build();
-    }
-
     public static ClientResponseDto toResponse(Client client) {
         return ClientResponseDto.builder()
                 .id(client.getId())
