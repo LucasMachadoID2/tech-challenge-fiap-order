@@ -13,6 +13,7 @@ public class PaymentRepositoryImpl implements PaymentRepositoryCustom {
 
     @Override
     public PaymentDTO createPayment(Order order) {
+        // TODO: request para o microserviço de pagamentos
         return new PaymentDTO();
     }
 }

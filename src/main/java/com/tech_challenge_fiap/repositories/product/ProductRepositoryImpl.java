@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 public class ProductRepositoryImpl implements ProductRepository {
 
     public Product getProductbyId(Long productId) {
+        // TODO: request para o microserviço de produtos
         return null;
     }
 }

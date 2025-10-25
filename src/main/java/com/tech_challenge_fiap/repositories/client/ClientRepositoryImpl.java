@@ -8,6 +8,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public Client getClientById(Long clientId) {
+        // TODO: request para o microserviço de clientes
         return null;
     }
 }
