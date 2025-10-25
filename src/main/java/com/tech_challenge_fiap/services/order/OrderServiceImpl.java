@@ -29,7 +29,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final ClientService clientService;
     private final ProductService productService;
@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService{
         orderFound.setStatus(status);
 
         var orderSaved = orderRepository.save(orderFound);
-        var order =  toDomain(orderSaved);
+        var order = toDomain(orderSaved);
         return OrderAdapter.toResponse(order);
     }
 
@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService{
         paymentService.updatePaymentStatus(paymentId, status);
     }
 
-    private Order createOrder(String clientId, List<Long> productIds) {
+    private Order createOrder(Long clientId, List<Long> productIds) {
         Client client = findClientOrNull(clientId);
 
         List<Product> productEntities = productIds.stream().map(productService::findById).toList();
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService{
         return toDomain(orderSaved);
     }
 
-    private Client findClientOrNull(String clientId) {
+    private Client findClientOrNull(Long clientId) {
         if (nonNull(clientId)) {
             return clientService.findById(clientId);
         }

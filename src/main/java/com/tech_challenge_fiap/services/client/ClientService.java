@@ -4,5 +4,5 @@ import com.tech_challenge_fiap.domains.client.Client;
 
 public interface ClientService {
 
-    Client findById(String id);
+    Client findById(Long id);
 }

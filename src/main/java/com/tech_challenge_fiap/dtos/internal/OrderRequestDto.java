@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class OrderRequestDto {
-    private String clientId;
+    private Long clientId;
 
     @NotEmpty(message = "A lista de produtos não pode estar vazia")
     private List<Long> productIds;
