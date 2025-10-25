@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PaymentDTO {
 
-    String id;
+    Long id;
 
     String qrImage;
 

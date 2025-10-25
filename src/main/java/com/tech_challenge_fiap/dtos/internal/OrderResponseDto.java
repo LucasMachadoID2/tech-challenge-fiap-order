@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class OrderResponseDto {
-    private String id;
+    private Long id;
     
     private String status;
     

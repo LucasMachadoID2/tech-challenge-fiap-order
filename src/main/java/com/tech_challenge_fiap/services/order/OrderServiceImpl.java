@@ -1,0 +1,93 @@
+package com.tech_challenge_fiap.services.order;
+
+import com.tech_challenge_fiap.converter.OrderAdapter;
+import com.tech_challenge_fiap.domains.client.Client;
+import com.tech_challenge_fiap.domains.order.Order;
+import com.tech_challenge_fiap.domains.order.OrderStatusEnum;
+import com.tech_challenge_fiap.domains.payment.Payment;
+import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
+import com.tech_challenge_fiap.domains.product.Product;
+import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
+import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
+import com.tech_challenge_fiap.entities.OrderEntity;
+import com.tech_challenge_fiap.repositories.order.OrderRepository;
+import com.tech_challenge_fiap.services.client.ClientService;
+import com.tech_challenge_fiap.services.payment.PaymentService;
+import com.tech_challenge_fiap.services.product.ProductService;
+import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.tech_challenge_fiap.converter.OrderAdapter.toDomain;
+import static com.tech_challenge_fiap.converter.OrderAdapter.toEntity;
+import static java.util.Objects.nonNull;
+
+@Service
+@RequiredArgsConstructor
+public class OrderServiceImpl implements OrderService{
+
+    private final ClientService clientService;
+    private final ProductService productService;
+    private final PaymentService paymentService;
+    private final OrderRepository orderRepository;
+
+    @Override
+    public OrderResponseDto createOrder(@RequestBody OrderRequestDto orderRequestDTO) {
+        var order = createOrder(orderRequestDTO.getClientId(), orderRequestDTO.getProductIds());
+        return OrderAdapter.toResponse(order);
+    }
+
+    @Override
+    public List<OrderResponseDto> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
+        List<OrderEntity> orderEntities = orderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
+        return orderEntities.stream().map(OrderAdapter::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderResponseDto updateStatus(Long orderId, OrderStatusEnum status) {
+        OrderEntity orderFound = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
+        orderFound.setStatus(status);
+
+        var orderSaved = orderRepository.save(orderFound);
+        var order =  toDomain(orderSaved);
+        return OrderAdapter.toResponse(order);
+    }
+
+    public void updatePaymentStatus(Long paymentId, PaymentStatusEnum status) {
+        paymentService.updatePaymentStatus(paymentId, status);
+    }
+
+    private Order createOrder(String clientId, List<Long> productIds) {
+        Client client = findClientOrNull(clientId);
+
+        List<Product> productEntities = productIds.stream().map(productService::findById).toList();
+
+        Order order = Order.builder()
+                .status(OrderStatusEnum.CREATED)
+                .client(client)
+                .productEntities(productEntities)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        Payment payment = paymentService.createPayment(order);
+
+        order.setPayment(payment);
+
+        var orderSaved = orderRepository.save(toEntity(order));
+
+        return toDomain(orderSaved);
+    }
+
+    private Client findClientOrNull(String clientId) {
+        if (nonNull(clientId)) {
+            return clientService.findById(clientId);
+        }
+
+        return null;
+    }
+}

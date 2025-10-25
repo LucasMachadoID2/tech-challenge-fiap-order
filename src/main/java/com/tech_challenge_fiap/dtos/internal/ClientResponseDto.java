@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ClientResponseDto {
-    private String id;
+    private Long id;
 
     private String name;
 

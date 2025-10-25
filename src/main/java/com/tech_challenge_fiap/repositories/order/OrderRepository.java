@@ -1,20 +1,15 @@
 package com.tech_challenge_fiap.repositories.order;
 
-import com.tech_challenge_fiap.data.models.OrderDataModel;
-import com.tech_challenge_fiap.entities.order.OrderEntityStatusEnum;
+import com.tech_challenge_fiap.domains.order.OrderStatusEnum;
+import com.tech_challenge_fiap.entities.OrderEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface OrderRepository {
+public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
-    OrderDataModel save(OrderDataModel order);
+    List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
-    Optional<OrderDataModel> findById(String id);
-
-    List<OrderDataModel> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
-
-    List<OrderDataModel> findByStatus(OrderEntityStatusEnum status);
-
-    List<OrderDataModel> findByClientId(String clientId);
+    List<OrderEntity> findByClientId(String clientId);
 }

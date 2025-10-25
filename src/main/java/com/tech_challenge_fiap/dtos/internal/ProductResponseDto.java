@@ -2,7 +2,7 @@ package com.tech_challenge_fiap.dtos.internal;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.tech_challenge_fiap.utils.enums.CategoryEnum;
+import com.tech_challenge_fiap.domains.product.CategoryEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductResponseDto {
-    private String id;
+    private Long id;
 
     private String name;
 

@@ -1,8 +1,7 @@
 package com.tech_challenge_fiap.repositories.payment;
 
-import com.tech_challenge_fiap.dtos.external.PaymentDTO;
-import com.tech_challenge_fiap.entities.order.OrderEntity;
+import com.tech_challenge_fiap.entities.PaymentEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PaymentRepository {
-    PaymentDTO createPayment(OrderEntity orderEntity);
+public interface PaymentRepository extends JpaRepository<PaymentEntity, Long>, PaymentRepositoryCustom {
 }

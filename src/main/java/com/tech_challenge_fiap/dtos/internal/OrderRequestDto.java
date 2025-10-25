@@ -18,5 +18,5 @@ public class OrderRequestDto {
     private String clientId;
 
     @NotEmpty(message = "A lista de produtos não pode estar vazia")
-    private List<String> productIds;
+    private List<Long> productIds;
 }
