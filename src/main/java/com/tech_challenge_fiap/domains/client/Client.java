@@ -5,7 +5,6 @@ import com.tech_challenge_fiap.utils.exceptions.EmailCannotBeNullOrEmptyExceptio
 import com.tech_challenge_fiap.utils.exceptions.NameCannotBeNullOrEmptyException;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import static java.util.Objects.isNull;
@@ -16,13 +15,10 @@ public class Client {
     @Setter
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
     private String cpf;
 
-    @NonNull
     private String email;
 
     public static ClientBuilder builder() {
@@ -51,6 +47,10 @@ public class Client {
         }
 
         private void validateCpf() {
+            if (isNull(super.cpf)) {
+                throw new IllegalArgumentException("CPF cannot be null");
+            }
+
             var cpfFormated = super.cpf.replaceAll("[^0-9]", "");
 
             if (cpfFormated.length() != 11) {

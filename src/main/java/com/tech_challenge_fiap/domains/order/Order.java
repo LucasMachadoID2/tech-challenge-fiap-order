@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Getter
@@ -25,8 +26,7 @@ public class Order {
 
     private Client client;
 
-    @NonNull
-    private List<Product> productEntities;
+    private List<Product> products;
 
     private Payment payment;
 
@@ -39,14 +39,14 @@ public class Order {
 
     public Long getOrderPrice() {
         if(nonNull(this.client)) {
-            return this.productEntities.stream().map(product -> {
+            return this.products.stream().map(product -> {
                 if(nonNull(product.getPriceForClient())) {
                     return product.getPriceForClient();
                 }
                 return product.getPrice();
             }).mapToLong(Long::longValue).sum();
         }
-        return this.productEntities.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
+        return this.products.stream().map(Product::getPrice).mapToLong(Long::longValue).sum();
     }
 
     private static class CustomOrderBuilder extends OrderBuilder {
@@ -58,7 +58,7 @@ public class Order {
         }
 
         private void validateProducts() {
-            if(super.productEntities.isEmpty()) {
+            if(isNull(super.products) || super.products.isEmpty()) {
                 throw new OrderProductsCantBeNullOrEmpty();
             }
         }
