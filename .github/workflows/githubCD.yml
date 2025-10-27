@@ -7,38 +7,31 @@ on:
 
 jobs:
   build:
-    name: Maven Build
+    name: Integration
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configurar JDK
+      - name: Configuration
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
 
-      - name: Build com Maven
-        run: mvn -B clean verify
-
-      - name: Verificar erros de compilação
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "❌ A build falhou. Verifique os erros acima."
-            exit 1
-          else
-            echo "✅ Build concluída com sucesso! Não há erros de compilação."
-          fi
+      - name: Build
+        run:  mvn -B clean compile
 
       - name: Login Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build docker image
-        run: docker build -t gabitriferreira/tech-challenge-app .
+        run: docker build -t lucasmachadoid/fiap-tech-chall .
 
       - name: Push image docker
-        run: docker push gabitriferreira/tech-challenge-app
-
+        run: docker push lucasmachadoid/fiap-tech-chall
