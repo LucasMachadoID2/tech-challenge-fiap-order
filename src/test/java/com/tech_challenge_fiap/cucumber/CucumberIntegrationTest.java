@@ -11,6 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features")
 @CucumberContextConfiguration
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CucumberIntegrationTest {
 }
