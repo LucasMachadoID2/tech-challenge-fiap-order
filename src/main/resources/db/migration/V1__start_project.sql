@@ -1,6 +1,6 @@
 CREATE TABLE clients
 (
-    id INTEGER PRIMARY KEY,
+    id PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     cpf VARCHAR(11),
     email VARCHAR(100)
@@ -8,7 +8,7 @@ CREATE TABLE clients
 
 CREATE TABLE payments
 (
-    id INTEGER PRIMARY KEY,
+    id PRIMARY KEY DEFAULT gen_random_uuid(),
     qrCode TEXT,
     qrImage TEXT,
     status VARCHAR(50)
@@ -16,7 +16,7 @@ CREATE TABLE payments
 
 CREATE TABLE products
 (
-    id INTEGER PRIMARY KEY,
+    id PRIMARY KEY DEFAULT gen_random_uuid(),
     category VARCHAR(50),
     name VARCHAR(255),
     description VARCHAR(500),
@@ -28,7 +28,7 @@ CREATE TABLE products
 
 CREATE TABLE orders
 (
-    id INTEGER PRIMARY KEY,
+    id PRIMARY KEY DEFAULT gen_random_uuid(),
     status VARCHAR(50),
     client_id INTEGER,
     payment_id INTEGER,

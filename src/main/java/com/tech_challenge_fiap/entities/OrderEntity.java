@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -16,8 +17,7 @@ import java.util.List;
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     @Setter
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;

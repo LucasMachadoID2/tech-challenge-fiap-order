@@ -1,17 +1,17 @@
-package com.tech_challenge_fiap.repositories.payment;
+package com.tech_challenge_fiap.http.clients.payment;
 
 import com.tech_challenge_fiap.domains.order.Order;
 import com.tech_challenge_fiap.dtos.external.PaymentDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-@Slf4j
-@Repository
+@Component
 @RequiredArgsConstructor
-public class PaymentRepositoryImpl implements PaymentRepositoryCustom {
+public class PaymentClient {
 
-    @Override
+    private final RestTemplate restTemplate;
+
     public PaymentDTO createPayment(Order order) {
         // TODO: request para o microserviço de pagamentos
         return new PaymentDTO();

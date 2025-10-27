@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(SpringExtension.class)
@@ -12,7 +14,7 @@ public class PaymentTest {
     @Test
     void shouldCreatePaymentWithSuccess() {
         assertDoesNotThrow(() -> Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Test")
                 .qrCode("Test")
                 .status(PaymentStatusEnum.CREATED)

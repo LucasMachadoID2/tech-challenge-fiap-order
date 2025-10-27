@@ -6,6 +6,7 @@ import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
 import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OrderService {
 
@@ -13,7 +14,7 @@ public interface OrderService {
 
     List<OrderResponseDto> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
-    OrderResponseDto updateStatus(Long orderId, OrderStatusEnum status);
+    OrderResponseDto updateStatus(UUID orderId, OrderStatusEnum status);
 
-    void updatePaymentStatus(Long paymentId, PaymentStatusEnum status);
+    void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status);
 }

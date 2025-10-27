@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -14,7 +16,7 @@ public class ClientConverterTest {
     @Test
     void shouldConvertToDomainFromEntity() {
         var entity = ClientEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
@@ -31,7 +33,7 @@ public class ClientConverterTest {
     @Test
     void shouldConvertToEntityFromDomain() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
@@ -48,7 +50,7 @@ public class ClientConverterTest {
     @Test
     void shouldConvertToResponseFromDomain() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
@@ -65,7 +67,7 @@ public class ClientConverterTest {
     @Test
     void shouldConvertToResponseFromEntity() {
         var entity = ClientEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")

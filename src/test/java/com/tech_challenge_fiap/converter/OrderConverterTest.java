@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +27,7 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToDomainFromEntityWithNullClientAndPayment() {
         var productEntity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -37,7 +38,7 @@ public class OrderConverterTest {
                 .build();
 
         var orderEntity = OrderEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(null)
                 .products(List.of(productEntity))
@@ -57,21 +58,21 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToDomainFromEntityWithClientAndPayment() {
         var clientEntity = ClientEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var paymentEntity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var productEntity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -82,7 +83,7 @@ public class OrderConverterTest {
                 .build();
 
         var orderEntity = OrderEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(clientEntity)
                 .products(List.of(productEntity))
@@ -102,7 +103,7 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToEntityFromDomainWithNullClientAndPayment() {
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -113,7 +114,7 @@ public class OrderConverterTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(null)
                 .products(List.of(product))
@@ -133,21 +134,21 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToEntityFromDomainWithClientAndPayment() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -158,7 +159,7 @@ public class OrderConverterTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
                 .products(List.of(product))
@@ -178,14 +179,14 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToResponseFromDomainWithoutClient() {
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -196,7 +197,7 @@ public class OrderConverterTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(null)
                 .products(List.of(product))
@@ -216,21 +217,21 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToResponseFromDomainWithClientAndPayment() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -241,7 +242,7 @@ public class OrderConverterTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
                 .products(List.of(product))
@@ -261,14 +262,14 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToResponseFromEntityWithoutClient() {
         var paymentEntity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var productEntity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -279,7 +280,7 @@ public class OrderConverterTest {
                 .build();
 
         var orderEntity = OrderEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(null)
                 .products(List.of(productEntity))
@@ -299,21 +300,21 @@ public class OrderConverterTest {
     @Test
     void shouldConvertToResponseFromDomainWithClient() {
         var clientEntity = ClientEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var paymentEntity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var productEntity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -324,7 +325,7 @@ public class OrderConverterTest {
                 .build();
 
         var orderEntity = OrderEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(clientEntity)
                 .products(List.of(productEntity))

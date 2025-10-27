@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -15,7 +17,7 @@ public class PaymentConverterTest {
     @Test
     void shouldConvertToDomainFromEntity() {
         var entity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
@@ -32,7 +34,7 @@ public class PaymentConverterTest {
     @Test
     void shouldConvertToEntityFromDomain() {
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
@@ -49,7 +51,7 @@ public class PaymentConverterTest {
     @Test
     void shouldConvertToResponseFromDomain() {
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)

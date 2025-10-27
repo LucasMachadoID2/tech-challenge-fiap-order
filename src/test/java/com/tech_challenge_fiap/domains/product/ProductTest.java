@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -14,7 +16,7 @@ public class ProductTest {
     @Test
     void shouldBuildProductWithSuccess() {
         assertDoesNotThrow(() -> Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .description("Test")
                 .image("Test")
@@ -28,7 +30,7 @@ public class ProductTest {
     @Test
     void shouldThrowPriceMustBePositiveExceptionWhenPriceIsNull() {
         assertThrows(PriceMustBePositiveException.class, () -> Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .description("Test")
                 .image("Test")
@@ -42,7 +44,7 @@ public class ProductTest {
     @Test
     void shouldThrowPriceMustBePositiveExceptionWhenPriceIsNegative() {
         assertThrows(PriceMustBePositiveException.class, () -> Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .description("Test")
                 .image("Test")

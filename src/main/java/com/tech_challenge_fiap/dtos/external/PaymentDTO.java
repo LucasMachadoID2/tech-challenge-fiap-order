@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class PaymentDTO {
 
-    Long id;
+    UUID id;
 
     String qrImage;
 

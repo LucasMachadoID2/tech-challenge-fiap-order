@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Order", description = "Operations related to order management")
 @RestController
@@ -33,16 +34,16 @@ public class OrderController {
     }
 
     @PatchMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable Long orderId,
+    public ResponseEntity<OrderResponseDto> updateStatus(@PathVariable String orderId,
                                                          @RequestParam OrderStatusEnum status) {
-        var updatedOrder = orderService.updateStatus(orderId, status);
+        var updatedOrder = orderService.updateStatus(UUID.fromString(orderId), status);
         return ResponseEntity.ok(updatedOrder);
     }
 
     @PatchMapping("/update-payment-status/{paymentId}")
-    public ResponseEntity<?> updatePaymentStatus(@PathVariable Long paymentId,
+    public ResponseEntity<?> updatePaymentStatus(@PathVariable String paymentId,
                                                                 @RequestParam PaymentStatusEnum status) {
-        orderService.updatePaymentStatus(paymentId, status);
+        orderService.updatePaymentStatus(UUID.fromString(paymentId), status);
         return ResponseEntity.ok().build();
     }
 }

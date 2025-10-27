@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -19,7 +20,7 @@ import static java.util.Objects.nonNull;
 @Setter
 @Builder
 public class Order {
-    private Long id;
+    private UUID id;
 
     @NonNull
     private OrderStatusEnum status;
@@ -38,9 +39,9 @@ public class Order {
     }
 
     public Long getOrderPrice() {
-        if(nonNull(this.client)) {
+        if (nonNull(this.client)) {
             return this.products.stream().map(product -> {
-                if(nonNull(product.getPriceForClient())) {
+                if (nonNull(product.getPriceForClient())) {
                     return product.getPriceForClient();
                 }
                 return product.getPrice();
@@ -58,7 +59,7 @@ public class Order {
         }
 
         private void validateProducts() {
-            if(isNull(super.products) || super.products.isEmpty()) {
+            if (isNull(super.products) || super.products.isEmpty()) {
                 throw new OrderProductsCantBeNullOrEmpty();
             }
         }
