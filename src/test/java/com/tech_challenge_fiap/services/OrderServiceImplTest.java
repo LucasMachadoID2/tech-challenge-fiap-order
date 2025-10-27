@@ -221,7 +221,7 @@ public class OrderServiceImplTest {
         doNothing().when(paymentService).updatePaymentStatus(any(), any());
 
         assertDoesNotThrow(() -> {
-            orderService.updatePaymentStatus(any(), PaymentStatusEnum.PAID);
+            orderService.updatePaymentStatus(any(), any());
         });
 
         verify(paymentService, times(1)).updatePaymentStatus(any(), any());
