@@ -25,7 +25,8 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run SonarCloud analysis
-        run: mvn -B sonar:sonar \
+        run: |
+          mvn -B sonar:sonar \
           -Dsonar.projectKey=LucasMachadoID2_tech-challenge-fiap-order \
           -Dsonar.organization=lucasmachadoid2 \
           -Dsonar.host.url=https://sonarcloud.io \
