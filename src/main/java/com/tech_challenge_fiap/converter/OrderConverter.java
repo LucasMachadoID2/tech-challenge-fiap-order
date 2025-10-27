@@ -16,7 +16,7 @@ public class OrderConverter {
                 .status(orderEntity.getStatus())
                 .client(
                         nonNull(orderEntity.getClient()) ? ClientConverter.toDomain(orderEntity.getClient()) : null)
-                .productEntities(orderEntity.getProducts().stream().map(ProductConverter::toDomain).toList())
+                .products(orderEntity.getProducts().stream().map(ProductConverter::toDomain).toList())
                 .payment(
                         nonNull(orderEntity.getPayment()) ? PaymentConverter.toDomain(orderEntity.getPayment())
                                 : null)
@@ -31,7 +31,7 @@ public class OrderConverter {
                 .client(nonNull(order.getClient())
                         ? ClientConverter.toEntity(order.getClient())
                         : null)
-                .products(order.getProductEntities().stream().map(ProductConverter::toEntity).toList())
+                .products(order.getProducts().stream().map(ProductConverter::toEntity).toList())
                 .payment(nonNull(order.getPayment())
                         ? PaymentConverter.toEntity(order.getPayment())
                         : null)
@@ -45,7 +45,7 @@ public class OrderConverter {
                 .status(order.getStatus().name())
                 .client(nonNull(order.getClient()) ? ClientConverter.toResponse(order.getClient())
                         : null)
-                .products(order.getProductEntities().stream().map(ProductConverter::toResponse).toList())
+                .products(order.getProducts().stream().map(ProductConverter::toResponse).toList())
                 .payment(nonNull(order.getPayment())
                         ? PaymentConverter.toResponse(order.getPayment())
                         : null)

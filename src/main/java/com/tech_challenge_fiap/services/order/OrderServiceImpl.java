@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
-                .productEntities(productEntities)
+                .products(productEntities)
                 .createdAt(LocalDateTime.now())
                 .build();
 
