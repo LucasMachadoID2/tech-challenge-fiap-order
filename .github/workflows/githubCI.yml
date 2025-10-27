@@ -24,7 +24,13 @@ jobs:
       - name: Build com Maven
         run: mvn -B clean verify
 
-      - name: Run SonarCloud analysis
+  sonar:
+    name: Sonarqube
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Run SonarQube
         run: |
           mvn -B sonar:sonar \
           -Dsonar.projectKey=LucasMachadoID2_tech-challenge-fiap-order \
