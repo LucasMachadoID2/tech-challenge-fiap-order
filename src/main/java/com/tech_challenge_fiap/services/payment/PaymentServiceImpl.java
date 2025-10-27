@@ -7,6 +7,7 @@ import com.tech_challenge_fiap.dtos.external.PaymentDTO;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
 import com.tech_challenge_fiap.utils.exceptions.CouldNotCreatePaymentException;
+import com.tech_challenge_fiap.utils.exceptions.PaymentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void updatePaymentStatus(Long paymentId, PaymentStatusEnum status) {
-        PaymentEntity paymentEntity = paymentRepository.findById(paymentId).orElseThrow();
+        PaymentEntity paymentEntity = paymentRepository.findById(paymentId).orElseThrow(() -> new PaymentNotFoundException(paymentId));
         paymentEntity.setStatus(status);
         paymentRepository.save(paymentEntity);
     }

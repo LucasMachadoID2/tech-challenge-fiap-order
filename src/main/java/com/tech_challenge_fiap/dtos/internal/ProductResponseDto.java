@@ -24,7 +24,7 @@ public class ProductResponseDto {
 
     private Long priceForClient;
 
-    private CategoryEnum category;
+    private String category;
 
     private Long quantity;
 }

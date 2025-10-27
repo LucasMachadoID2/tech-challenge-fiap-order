@@ -42,7 +42,7 @@ public class ProductConverter {
                 .image(product.getImage())
                 .price(product.getPrice())
                 .priceForClient(product.getPriceForClient())
-                .category(product.getCategory())
+                .category(product.getCategory().name())
                 .quantity(product.getQuantity())
                 .build();
     }
@@ -55,7 +55,7 @@ public class ProductConverter {
                 .image(product.getImage())
                 .price(product.getPrice())
                 .priceForClient(product.getPriceForClient())
-                .category(product.getCategory())
+                .category(product.getCategory().name())
                 .quantity(product.getQuantity())
                 .build();
     }
