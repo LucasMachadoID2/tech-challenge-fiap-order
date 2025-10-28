@@ -7,8 +7,9 @@ import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.domains.product.CategoryEnum;
 import com.tech_challenge_fiap.domains.product.Product;
-import com.tech_challenge_fiap.dtos.external.PaymentDTO;
+import com.tech_challenge_fiap.dtos.external.PaymentDto;
 import com.tech_challenge_fiap.entities.PaymentEntity;
+import com.tech_challenge_fiap.http.clients.payment.PaymentClient;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
 import com.tech_challenge_fiap.services.payment.PaymentServiceImpl;
 import com.tech_challenge_fiap.utils.exceptions.CouldNotCreatePaymentException;
@@ -22,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,27 +36,30 @@ public class PaymentServiceImplTest {
     @Mock
     private PaymentRepository paymentRepository;
 
+    @Mock
+    private PaymentClient paymentClient;
+
     @InjectMocks
     private PaymentServiceImpl paymentService;
 
     @Test
     void shouldCreatePaymentSuccessfully() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -65,7 +70,7 @@ public class PaymentServiceImplTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
                 .products(List.of(product))
@@ -73,49 +78,49 @@ public class PaymentServiceImplTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        var paymentDto = PaymentDTO.builder()
-                .id(1L)
+        var paymentDto = PaymentDto.builder()
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status("CREATED")
                 .build();
 
         var paymentEntity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
-        when(paymentRepository.createPayment(order)).thenReturn(paymentDto);
+        when(paymentClient.createPayment(order)).thenReturn(paymentDto);
         when(paymentRepository.save(any())).thenReturn(paymentEntity);
 
         assertDoesNotThrow(() -> {
             paymentService.createPayment(order);
         });
 
-        verify(paymentRepository, times(1)).createPayment(any());
+        verify(paymentClient, times(1)).createPayment(any());
         verify(paymentRepository, times(1)).save(any());
     }
 
     @Test
     void shouldThrowsCouldNotCreatePaymentExceptionWhenErrorOccur() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("123.456.789-00")
                 .email("mail@mail.com.br")
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -126,7 +131,7 @@ public class PaymentServiceImplTest {
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
                 .products(List.of(product))
@@ -134,30 +139,30 @@ public class PaymentServiceImplTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        when(paymentRepository.createPayment(order)).thenThrow(CouldNotCreatePaymentException.class);
+        when(paymentClient.createPayment(order)).thenThrow(CouldNotCreatePaymentException.class);
 
         assertThrows(CouldNotCreatePaymentException.class, () -> {
             paymentService.createPayment(order);
         });
 
-        verify(paymentRepository, times(1)).createPayment(any());
+        verify(paymentClient, times(1)).createPayment(any());
         verify(paymentRepository, times(0)).save(any());
     }
 
     @Test
     void shouldUpdatePaymentStatusSuccessfully() {
         var paymentEntity = PaymentEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
-        when(paymentRepository.findById(1L)).thenReturn(Optional.of(paymentEntity));
+        when(paymentRepository.findById(paymentEntity.getId())).thenReturn(Optional.of(paymentEntity));
         when(paymentRepository.save(any())).thenReturn(paymentEntity);
 
         assertDoesNotThrow(() -> {
-            paymentService.updatePaymentStatus(1L, PaymentStatusEnum.PAID);
+            paymentService.updatePaymentStatus(paymentEntity.getId(), PaymentStatusEnum.PAID);
         });
 
         verify(paymentRepository, times(1)).findById(any());
@@ -166,10 +171,10 @@ public class PaymentServiceImplTest {
 
     @Test
     void shouldThrowsPaymentNotFoundExceptionWhenNotFoundPayment() {
-        when(paymentRepository.findById(1L)).thenReturn(Optional.empty());
+        when(paymentRepository.findById(any())).thenReturn(Optional.empty());
 
         assertThrows(PaymentNotFoundException.class, () -> {
-            paymentService.updatePaymentStatus(1L, PaymentStatusEnum.PAID);
+            paymentService.updatePaymentStatus(any(), PaymentStatusEnum.PAID);
         });
 
         verify(paymentRepository, times(1)).findById(any());

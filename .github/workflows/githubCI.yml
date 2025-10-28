@@ -7,29 +7,30 @@ on:
 
 jobs:
   build:
-    name: Maven Build
+    name: Integration
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configurar JDK
+      - name: Configuration
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
 
-      - name: Build com Maven
-        run: mvn -B clean verify
+      - name: Build
+        run:  mvn -B clean compile
 
-      - name: Verificar erros de compilação
+      - name: Test
+        run: mvn -B test
+
+      - name: Sonarqube
         run: |
-          if [ $? -ne 0 ]; then
-            echo "❌ A build falhou. Verifique os erros acima."
-            exit 1
-          else
-            echo "✅ Build concluída com sucesso! Não há erros de compilação."
-          fi
-
+          mvn -B sonar:sonar \
+          -Dsonar.projectKey=LucasMachadoID2_tech-challenge-fiap-order \
+          -Dsonar.organization=lucasmachadoid2 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}

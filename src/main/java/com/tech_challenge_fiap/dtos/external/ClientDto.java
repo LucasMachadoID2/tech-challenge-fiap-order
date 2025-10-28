@@ -7,7 +7,7 @@ import lombok.NonNull;
 
 @NoArgsConstructor
 @Getter
-public class ClientDTO {
+public class ClientDto {
     @Nonnull
     private String id;
 

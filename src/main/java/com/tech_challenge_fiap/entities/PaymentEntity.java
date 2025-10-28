@@ -4,6 +4,8 @@ import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @Entity
@@ -13,8 +15,7 @@ import lombok.*;
 public class PaymentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private String qrImage;
     private String qrCode;
     @Setter

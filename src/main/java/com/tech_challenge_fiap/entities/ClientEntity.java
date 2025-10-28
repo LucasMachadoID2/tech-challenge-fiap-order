@@ -1,10 +1,14 @@
 package com.tech_challenge_fiap.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -14,8 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClientEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private String name;
     private String cpf;
     private String email;

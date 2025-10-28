@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @Entity
@@ -16,8 +18,7 @@ import lombok.NoArgsConstructor;
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     @Enumerated(EnumType.STRING)
     private CategoryEnum category;
     private String name;

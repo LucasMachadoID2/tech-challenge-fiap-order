@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,7 +23,7 @@ public class OrderTest {
     @Test
     void shouldCreateOrderWithoutClientAndPriceWithoutPromotion() {
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .description("Test")
                 .image("Test")
@@ -33,14 +34,14 @@ public class OrderTest {
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Test")
                 .qrCode("Test")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(null)
                 .products(List.of(product))
@@ -54,14 +55,14 @@ public class OrderTest {
     @Test
     void shouldCreateOrderWithClientAndPriceWithPromotion() {
         var client = Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("111.111.111-11")
                 .email("mail@mail.com.br")
                 .build();
 
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .description("Test")
                 .image("Test")
@@ -72,14 +73,14 @@ public class OrderTest {
                 .build();
 
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Test")
                 .qrCode("Test")
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
         var order = Order.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .status(OrderStatusEnum.CREATED)
                 .client(client)
                 .products(List.of(product))
@@ -93,7 +94,7 @@ public class OrderTest {
     @Test
     void shouldThrowOrderProductsCantBeNullOrEmptyWhenProductsAreNull() {
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Test")
                 .qrCode("Test")
                 .status(PaymentStatusEnum.CREATED)
@@ -101,7 +102,7 @@ public class OrderTest {
 
         assertThrows(OrderProductsCantBeNullOrEmpty.class, () -> {
             Order.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .status(OrderStatusEnum.CREATED)
                     .client(null)
                     .products(null)
@@ -114,7 +115,7 @@ public class OrderTest {
     @Test
     void shouldThrowOrderProductsCantBeNullOrEmptyWhenProductsAreEmpty() {
         var payment = Payment.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .qrImage("Test")
                 .qrCode("Test")
                 .status(PaymentStatusEnum.CREATED)
@@ -122,7 +123,7 @@ public class OrderTest {
 
         assertThrows(OrderProductsCantBeNullOrEmpty.class, () -> {
             Order.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .status(OrderStatusEnum.CREATED)
                     .client(null)
                     .products(List.of())

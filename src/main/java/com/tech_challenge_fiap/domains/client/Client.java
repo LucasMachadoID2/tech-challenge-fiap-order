@@ -7,13 +7,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 import static java.util.Objects.isNull;
 
 @Getter
 @Builder
 public class Client {
     @Setter
-    private Long id;
+    private UUID id;
 
     private String name;
 

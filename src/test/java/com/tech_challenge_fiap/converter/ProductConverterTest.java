@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -15,7 +17,7 @@ public class ProductConverterTest {
     @Test
     void shouldConvertToDomainFromEntity() {
         var entity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -40,7 +42,7 @@ public class ProductConverterTest {
     @Test
     void shouldConvertToEntityFromDomain() {
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -65,7 +67,7 @@ public class ProductConverterTest {
     @Test
     void shouldConvertToResponseFromDomain() {
         var product = Product.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")
@@ -90,7 +92,7 @@ public class ProductConverterTest {
     @Test
     void shouldConvertToResponseFromEntity() {
         var entity = ProductEntity.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Product Name")
                 .description("Product Description")
                 .image("product-image.jpg")

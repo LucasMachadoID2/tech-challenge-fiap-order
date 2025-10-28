@@ -10,9 +10,9 @@ import com.tech_challenge_fiap.domains.product.Product;
 import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
 import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.OrderEntity;
-import com.tech_challenge_fiap.repositories.client.ClientRepository;
+import com.tech_challenge_fiap.http.clients.client.ClientClient;
+import com.tech_challenge_fiap.http.clients.product.ProductClient;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
-import com.tech_challenge_fiap.repositories.product.ProductRepository;
 import com.tech_challenge_fiap.services.payment.PaymentService;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.tech_challenge_fiap.converter.OrderConverter.toDomain;
@@ -31,8 +32,8 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final ClientRepository clientRepository;
-    private final ProductRepository productRepository;
+    private final ClientClient clientClient;
+    private final ProductClient productClient;
     private final PaymentService paymentService;
     private final OrderRepository orderRepository;
 
@@ -49,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto updateStatus(Long orderId, OrderStatusEnum status) {
+    public OrderResponseDto updateStatus(UUID orderId, OrderStatusEnum status) {
         OrderEntity orderFound = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
         orderFound.setStatus(status);
 
@@ -58,14 +59,14 @@ public class OrderServiceImpl implements OrderService {
         return OrderConverter.toResponse(order);
     }
 
-    public void updatePaymentStatus(Long paymentId, PaymentStatusEnum status) {
+    public void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status) {
         paymentService.updatePaymentStatus(paymentId, status);
     }
 
-    private Order createOrder(Long clientId, List<Long> productIds) {
+    private Order createOrder(UUID clientId, List<UUID> productIds) {
         Client client = findClientOrNull(clientId);
 
-        List<Product> productEntities = productIds.stream().map(productRepository::getProductbyId).toList();
+        List<Product> productEntities = productIds.stream().map(productClient::getProductbyId).toList();
 
         Order order = Order.builder()
                 .status(OrderStatusEnum.CREATED)
@@ -83,9 +84,9 @@ public class OrderServiceImpl implements OrderService {
         return toDomain(orderSaved);
     }
 
-    private Client findClientOrNull(Long clientId) {
+    private Client findClientOrNull(UUID clientId) {
         if (nonNull(clientId)) {
-            return clientRepository.getClientById(clientId);
+            return clientClient.getClientById(clientId);
         }
 
         return null;

@@ -1,8 +1,11 @@
 package com.tech_challenge_fiap.repositories.product;
 
-import com.tech_challenge_fiap.domains.product.Product;
+import com.tech_challenge_fiap.entities.ProductEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepository {
+import java.util.UUID;
 
-    Product getProductbyId(Long productId);
+@Repository
+public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 }

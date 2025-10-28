@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,7 +19,7 @@ public class ClientTest {
     @Test
     void shouldBuildClassWithSuccess() {
         assertDoesNotThrow(() -> Client.builder()
-                .id(1L)
+                .id(UUID.randomUUID())
                 .name("Test")
                 .cpf("111.111.111-11")
                 .email("mail@mail.com.br")
@@ -28,7 +30,7 @@ public class ClientTest {
     void shouldThrowsNameCannotBeNullOrEmptyExceptionWhenNameIsNull() {
         assertThrows(NameCannotBeNullOrEmptyException.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name(null)
                     .cpf("11111111111")
                     .email("mail@mail.com.br")
@@ -40,7 +42,7 @@ public class ClientTest {
     void shouldThrowsNameCannotBeNullOrEmptyExceptionWhenNameIsEmpty() {
         assertThrows(NameCannotBeNullOrEmptyException.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name(EMPTY)
                     .cpf("11111111111")
                     .email("mail@mail.com.br")
@@ -52,7 +54,7 @@ public class ClientTest {
     void shouldThrowsEmailCannotBeNullOrEmptyExceptionWhenEmailIsNull() {
         assertThrows(EmailCannotBeNullOrEmptyException.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name("Test")
                     .cpf("11111111111")
                     .email(null)
@@ -64,7 +66,7 @@ public class ClientTest {
     void shouldThrowsEmailCannotBeNullOrEmptyExceptionWhenEmailIsEmpty() {
         assertThrows(EmailCannotBeNullOrEmptyException.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name("Test")
                     .cpf("11111111111")
                     .email(EMPTY)
@@ -76,7 +78,7 @@ public class ClientTest {
     void shouldThrowsIllegalArgumentExceptionWhenCpfIsNull() {
         assertThrows(IllegalArgumentException.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name("Test")
                     .cpf(null)
                     .email("mail@mail.com.br")
@@ -88,7 +90,7 @@ public class ClientTest {
     void shouldThrowsCpfWrongFormatWhenCpfDoesntContains11Numbers() {
         assertThrows(CpfWrongFormat.class, () -> {
             Client.builder()
-                    .id(1L)
+                    .id(UUID.randomUUID())
                     .name("Test")
                     .cpf("1231231231231")
                     .email("mail@mail.com.br")

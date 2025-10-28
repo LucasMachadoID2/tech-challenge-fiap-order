@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 public class Product {
     @Setter
-    private Long id;
+    private UUID id;
 
     private String name;
 
