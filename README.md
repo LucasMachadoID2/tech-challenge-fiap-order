@@ -336,5 +336,3 @@ A migração do MongoDB para o Amazon DynamoDB foi motivada pela necessidade de 
 | Guilherme Garcia Dos Santos Moraes | 364613 | Guilherme Garcia - RM364613  |
 | Lucas Matheus Monteiro Machado     | 361059 | Lucas Machado - RM361059     |
 | Marjory Bispo Matos                | 361150 | Marjory Matos - RM361150     |
-
-
