@@ -3,7 +3,7 @@ package com.tech_challenge_fiap.services.payment;
 import com.tech_challenge_fiap.domains.order.Order;
 import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
-import com.tech_challenge_fiap.dtos.external.PaymentDTO;
+import com.tech_challenge_fiap.dtos.external.PaymentDto;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import com.tech_challenge_fiap.http.clients.payment.PaymentClient;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment createPayment(Order order) {
         try {
-            PaymentDTO paymentDto = paymentClient.createPayment(order);
+            PaymentDto paymentDto = paymentClient.createPayment(order);
             Payment payment = toDomain(paymentDto);
             PaymentEntity savedPayment = paymentRepository.save(toEntity(payment));
 

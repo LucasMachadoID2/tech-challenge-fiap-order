@@ -2,7 +2,7 @@ package com.tech_challenge_fiap.converter;
 
 import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
-import com.tech_challenge_fiap.dtos.external.PaymentDTO;
+import com.tech_challenge_fiap.dtos.external.PaymentDto;
 import com.tech_challenge_fiap.dtos.internal.PaymentResponseDto;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import lombok.experimental.UtilityClass;
@@ -47,7 +47,7 @@ public class PaymentConverter {
                 .build();
     }
 
-    public static Payment toDomain(PaymentDTO paymentDTO) {
+    public static Payment toDomain(PaymentDto paymentDTO) {
         return Payment.builder()
                 .id(paymentDTO.getId())
                 .qrImage(paymentDTO.getQrImage())

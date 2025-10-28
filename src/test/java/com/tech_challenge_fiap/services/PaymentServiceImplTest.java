@@ -7,7 +7,7 @@ import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.domains.product.CategoryEnum;
 import com.tech_challenge_fiap.domains.product.Product;
-import com.tech_challenge_fiap.dtos.external.PaymentDTO;
+import com.tech_challenge_fiap.dtos.external.PaymentDto;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import com.tech_challenge_fiap.http.clients.payment.PaymentClient;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
@@ -78,7 +78,7 @@ public class PaymentServiceImplTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        var paymentDto = PaymentDTO.builder()
+        var paymentDto = PaymentDto.builder()
                 .id(UUID.randomUUID())
                 .qrImage("Image base64")
                 .qrCode("Image code")
