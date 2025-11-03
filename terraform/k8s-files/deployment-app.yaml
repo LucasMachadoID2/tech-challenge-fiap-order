@@ -17,7 +17,7 @@ spec:
           image: lucasmachadoid/fiap-tech-chall:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8083
           env:
             - name: DATABASE_NAME
               valueFrom:
