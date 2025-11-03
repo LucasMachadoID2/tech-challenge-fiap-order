@@ -1,8 +1,10 @@
 package com.tech_challenge_fiap.http.clients.client;
 
-import com.tech_challenge_fiap.domains.client.Client;
+import com.tech_challenge_fiap.http.clients.client.response.ClientResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
@@ -12,9 +14,16 @@ import java.util.UUID;
 public class ClientClient {
 
     private final RestTemplate restTemplate;
+    @Value("${client-client-url}")
+    private String clientServiceUrl;
 
-    public Client getClientById(UUID clientId) {
-        // TODO: request para o microserviço de clientes
-        return null;
+    public ClientResponseDto getClientById(UUID clientId) {
+        try {
+            return restTemplate.getForEntity(
+                    clientServiceUrl + "v1/clients/" + clientId, ClientResponseDto.class
+            ).getBody();
+        } catch (HttpClientErrorException.NotFound e) {
+            return null;
+        }
     }
 }

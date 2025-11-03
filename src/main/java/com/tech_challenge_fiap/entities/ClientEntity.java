@@ -1,5 +1,6 @@
 package com.tech_challenge_fiap.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -22,4 +23,6 @@ public class ClientEntity {
     private String name;
     private String cpf;
     private String email;
+    @Column(name = "client_id")
+    private String clientId;
 }

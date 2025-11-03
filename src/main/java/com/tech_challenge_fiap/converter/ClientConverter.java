@@ -14,6 +14,7 @@ public class ClientConverter {
                 .name(entity.getName())
                 .cpf(entity.getCpf())
                 .email(entity.getEmail())
+                .clientId(entity.getClientId())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class ClientConverter {
                 .name(client.getName())
                 .cpf(client.getCpf())
                 .email(client.getEmail())
+                .clientId(client.getClientId())
                 .build();
     }
 
@@ -32,6 +34,7 @@ public class ClientConverter {
                 .name(client.getName())
                 .cpf(client.getCpf())
                 .email(client.getEmail())
+                .clientId(client.getClientId())
                 .build();
     }
 
@@ -41,6 +44,17 @@ public class ClientConverter {
                 .name(client.getName())
                 .cpf(client.getCpf())
                 .email(client.getEmail())
+                .clientId(client.getClientId())
+                .build();
+    }
+
+    public static Client toClient(
+            com.tech_challenge_fiap.http.clients.client.response.ClientResponseDto clientResponseDto) {
+        return Client.builder()
+                .name(clientResponseDto.getName())
+                .cpf(clientResponseDto.getCpf())
+                .email(clientResponseDto.getEmail())
+                .clientId(clientResponseDto.getId())
                 .build();
     }
 }

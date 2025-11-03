@@ -23,6 +23,8 @@ public class Client {
 
     private String email;
 
+    private String clientId;
+
     public static ClientBuilder builder() {
         return new CustomClientBuilder();
     }

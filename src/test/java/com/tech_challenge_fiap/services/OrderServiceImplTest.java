@@ -1,19 +1,18 @@
 package com.tech_challenge_fiap.services;
 
 import com.tech_challenge_fiap.converter.PaymentConverter;
-import com.tech_challenge_fiap.converter.ProductConverter;
-import com.tech_challenge_fiap.domains.client.Client;
 import com.tech_challenge_fiap.domains.order.OrderStatusEnum;
 import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.domains.product.CategoryEnum;
-import com.tech_challenge_fiap.domains.product.Product;
 import com.tech_challenge_fiap.dtos.internal.OrderRequestDto;
 import com.tech_challenge_fiap.entities.OrderEntity;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import com.tech_challenge_fiap.entities.ProductEntity;
 import com.tech_challenge_fiap.http.clients.client.ClientClient;
+import com.tech_challenge_fiap.http.clients.client.response.ClientResponseDto;
 import com.tech_challenge_fiap.http.clients.product.ProductClient;
+import com.tech_challenge_fiap.http.clients.product.response.ProductResponseDto;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
 import com.tech_challenge_fiap.services.order.OrderServiceImpl;
 import com.tech_challenge_fiap.services.payment.PaymentService;
@@ -29,6 +28,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.tech_challenge_fiap.converter.ProductConverter.toDomain;
+import static com.tech_challenge_fiap.converter.ProductConverter.toEntity;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,14 +38,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 public class OrderServiceImplTest {
 
-    private static final Product genericProduct = Product.builder()
-            .id(UUID.randomUUID())
+    private static final ProductResponseDto genericProduct = ProductResponseDto.builder()
+            .id(UUID.randomUUID().toString())
             .name("Test")
             .description("Test")
             .image("Test")
             .price(1L)
             .priceForClient(null)
-            .category(CategoryEnum.ACOMPANHAMENTO)
+            .category("ACOMPANHAMENTO")
             .quantity(1L)
             .build();
 
@@ -55,8 +56,8 @@ public class OrderServiceImplTest {
             .status(PaymentStatusEnum.CREATED)
             .build();
 
-    private static final Client gerenicClient = Client.builder()
-            .id(UUID.randomUUID())
+    private static final ClientResponseDto gerenicClient = ClientResponseDto.builder()
+            .id(UUID.randomUUID().toString())
             .name("Test")
             .cpf("111.111.111-11")
             .email("mail@mail.com.br")
@@ -83,7 +84,7 @@ public class OrderServiceImplTest {
                 .status(OrderStatusEnum.CREATED)
                 .createdAt(LocalDateTime.now())
                 .client(null)
-                .products(List.of(ProductConverter.toEntity(genericProduct)))
+                .products(List.of(toEntity(toDomain(genericProduct))))
                 .payment(PaymentConverter.toEntity(gerenicPayment))
                 .build();
 
@@ -91,7 +92,7 @@ public class OrderServiceImplTest {
 
         var request = OrderRequestDto.builder()
                 .clientId(UUID.randomUUID())
-                .productIds(List.of(UUID.randomUUID()))
+                .productIds(List.of(UUID.randomUUID().toString()))
                 .build();
 
         orderService.createOrder(request);
@@ -111,7 +112,7 @@ public class OrderServiceImplTest {
                 .status(OrderStatusEnum.CREATED)
                 .createdAt(LocalDateTime.now())
                 .client(null)
-                .products(List.of(ProductConverter.toEntity(genericProduct)))
+                .products(List.of(toEntity(toDomain(genericProduct))))
                 .payment(PaymentConverter.toEntity(gerenicPayment))
                 .build();
 
@@ -119,7 +120,7 @@ public class OrderServiceImplTest {
 
         var request = OrderRequestDto.builder()
                 .clientId(null)
-                .productIds(List.of(UUID.randomUUID()))
+                .productIds(List.of(UUID.randomUUID().toString()))
                 .build();
 
         orderService.createOrder(request);

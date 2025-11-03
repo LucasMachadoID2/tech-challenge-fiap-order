@@ -1,6 +1,7 @@
 package com.tech_challenge_fiap.services.order;
 
 import com.tech_challenge_fiap.converter.OrderConverter;
+import com.tech_challenge_fiap.converter.ProductConverter;
 import com.tech_challenge_fiap.domains.client.Client;
 import com.tech_challenge_fiap.domains.order.Order;
 import com.tech_challenge_fiap.domains.order.OrderStatusEnum;
@@ -12,6 +13,7 @@ import com.tech_challenge_fiap.dtos.internal.OrderResponseDto;
 import com.tech_challenge_fiap.entities.OrderEntity;
 import com.tech_challenge_fiap.http.clients.client.ClientClient;
 import com.tech_challenge_fiap.http.clients.product.ProductClient;
+import com.tech_challenge_fiap.http.clients.product.response.ProductResponseDto;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
 import com.tech_challenge_fiap.services.payment.PaymentService;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.tech_challenge_fiap.converter.ClientConverter.toClient;
 import static com.tech_challenge_fiap.converter.OrderConverter.toDomain;
 import static com.tech_challenge_fiap.converter.OrderConverter.toEntity;
 import static java.util.Objects.nonNull;
@@ -63,10 +66,10 @@ public class OrderServiceImpl implements OrderService {
         paymentService.updatePaymentStatus(paymentId, status);
     }
 
-    private Order createOrder(UUID clientId, List<UUID> productIds) {
+    private Order createOrder(UUID clientId, List<String> productIds) {
         Client client = findClientOrNull(clientId);
 
-        List<Product> productEntities = productIds.stream().map(productClient::getProductbyId).toList();
+        List<Product> productEntities = productIds.stream().map(this::findProduct).toList();
 
         Order order = Order.builder()
                 .status(OrderStatusEnum.CREATED)
@@ -86,9 +89,15 @@ public class OrderServiceImpl implements OrderService {
 
     private Client findClientOrNull(UUID clientId) {
         if (nonNull(clientId)) {
-            return clientClient.getClientById(clientId);
+            var clientResponseDto = clientClient.getClientById(clientId);
+            return toClient(clientResponseDto);
         }
 
         return null;
+    }
+
+    private Product findProduct(String productId) {
+        ProductResponseDto productResponseDto = productClient.getProductbyId(productId);
+        return ProductConverter.toDomain(productResponseDto);
     }
 }

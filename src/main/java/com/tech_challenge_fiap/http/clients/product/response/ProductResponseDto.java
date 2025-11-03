@@ -1,19 +1,16 @@
-package com.tech_challenge_fiap.dtos.internal;
+package com.tech_challenge_fiap.http.clients.product.response;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
-@Builder
-@Getter
 @AllArgsConstructor
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@NoArgsConstructor
+@Getter
+@Builder
 public class ProductResponseDto {
-    private UUID id;
+    private String id;
 
     private String name;
 
@@ -28,6 +25,4 @@ public class ProductResponseDto {
     private String category;
 
     private Long quantity;
-
-    private String productId;
 }
