@@ -8,16 +8,3 @@ services:
       POSTGRES_PASSWORD: secret
     ports:
       - "5433:5432"
-
-#  app:
-#    depends_on:
-#      - db
-#    build: .
-#    environment:
-#      AWS_REGION: us-east-1
-#      DYNAMODB_TABLE_USERS: tech-challenge-users
-#      DYNAMODB_TABLE_ORDERS: tech-challenge-orders
-#      DYNAMODB_TABLE_PRODUCTS: tech-challenge-products
-#      DYNAMODB_TABLE_PAYMENTS: tech-challenge-payments
-#    ports:
-#      - 8080:8080
