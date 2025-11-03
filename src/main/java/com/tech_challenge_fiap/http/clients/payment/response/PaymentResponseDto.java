@@ -1,25 +1,20 @@
-package com.tech_challenge_fiap.dtos.external;
+package com.tech_challenge_fiap.http.clients.payment.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class PaymentDto {
-
-    UUID id;
+@Builder
+public class PaymentResponseDto {
+    String id;
 
     String qrImage;
 
     String qrCode;
 
     String status;
-
-    String paymentId;
 }

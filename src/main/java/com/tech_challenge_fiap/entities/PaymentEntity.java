@@ -21,4 +21,6 @@ public class PaymentEntity {
     @Setter
     @Enumerated(EnumType.STRING)
     private PaymentStatusEnum status;
+    @Column(name = "payment_id")
+    private String paymentId;
 }

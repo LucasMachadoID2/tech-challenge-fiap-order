@@ -16,6 +16,7 @@ public class PaymentConverter {
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
                 .status(paymentEntity.getStatus())
+                .paymentId(paymentEntity.getPaymentId())
                 .build();
     }
 
@@ -25,6 +26,7 @@ public class PaymentConverter {
                 .qrImage(payment.getQrImage())
                 .qrCode(payment.getQrCode())
                 .status(payment.getStatus())
+                .paymentId(payment.getPaymentId())
                 .build();
     }
 
@@ -34,6 +36,7 @@ public class PaymentConverter {
                 .qrImage(payment.getQrImage())
                 .qrCode(payment.getQrCode())
                 .status(payment.getStatus().name())
+                .paymentId(payment.getPaymentId())
                 .build();
     }
 
@@ -44,6 +47,7 @@ public class PaymentConverter {
                 .qrImage(payment.getQrImage())
                 .qrCode(payment.getQrCode())
                 .status(payment.getStatus().name())
+                .paymentId(payment.getPaymentId())
                 .build();
     }
 
@@ -53,6 +57,16 @@ public class PaymentConverter {
                 .qrImage(paymentDTO.getQrImage())
                 .qrCode(paymentDTO.getQrCode())
                 .status(PaymentStatusEnum.valueOf(paymentDTO.getStatus()))
+                .paymentId(paymentDTO.getPaymentId())
+                .build();
+    }
+
+    public static Payment toDomain(com.tech_challenge_fiap.http.clients.payment.response.PaymentResponseDto paymentResponseDto) {
+        return Payment.builder()
+                .qrImage(paymentResponseDto.getQrImage())
+                .qrCode(paymentResponseDto.getQrCode())
+                .status(PaymentStatusEnum.valueOf(paymentResponseDto.getStatus()))
+                .paymentId(paymentResponseDto.getId())
                 .build();
     }
 }

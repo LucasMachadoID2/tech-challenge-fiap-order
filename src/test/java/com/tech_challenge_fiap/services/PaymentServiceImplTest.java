@@ -7,9 +7,9 @@ import com.tech_challenge_fiap.domains.payment.Payment;
 import com.tech_challenge_fiap.domains.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.domains.product.CategoryEnum;
 import com.tech_challenge_fiap.domains.product.Product;
-import com.tech_challenge_fiap.dtos.external.PaymentDto;
 import com.tech_challenge_fiap.entities.PaymentEntity;
 import com.tech_challenge_fiap.http.clients.payment.PaymentClient;
+import com.tech_challenge_fiap.http.clients.payment.response.PaymentResponseDto;
 import com.tech_challenge_fiap.repositories.payment.PaymentRepository;
 import com.tech_challenge_fiap.services.payment.PaymentServiceImpl;
 import com.tech_challenge_fiap.utils.exceptions.CouldNotCreatePaymentException;
@@ -78,13 +78,6 @@ public class PaymentServiceImplTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        var paymentDto = PaymentDto.builder()
-                .id(UUID.randomUUID())
-                .qrImage("Image base64")
-                .qrCode("Image code")
-                .status("CREATED")
-                .build();
-
         var paymentEntity = PaymentEntity.builder()
                 .id(UUID.randomUUID())
                 .qrImage("Image base64")
@@ -92,7 +85,14 @@ public class PaymentServiceImplTest {
                 .status(PaymentStatusEnum.CREATED)
                 .build();
 
-        when(paymentClient.createPayment(order)).thenReturn(paymentDto);
+        var paymentResponseDto = PaymentResponseDto.builder()
+                .id(UUID.randomUUID().toString())
+                .qrImage("Image base64")
+                .qrCode("Image code")
+                .status(PaymentStatusEnum.CREATED.name())
+                .build();
+
+        when(paymentClient.createPayment(any())).thenReturn(paymentResponseDto);
         when(paymentRepository.save(any())).thenReturn(paymentEntity);
 
         assertDoesNotThrow(() -> {
@@ -139,7 +139,7 @@ public class PaymentServiceImplTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        when(paymentClient.createPayment(order)).thenThrow(CouldNotCreatePaymentException.class);
+        when(paymentClient.createPayment(any())).thenThrow(CouldNotCreatePaymentException.class);
 
         assertThrows(CouldNotCreatePaymentException.class, () -> {
             paymentService.createPayment(order);

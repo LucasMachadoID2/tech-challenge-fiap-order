@@ -27,6 +27,8 @@ public class Product {
 
     private Long quantity;
 
+    private String productId;
+
     public static ProductBuilder builder() {
         return new CustomProductBuilder();
     }

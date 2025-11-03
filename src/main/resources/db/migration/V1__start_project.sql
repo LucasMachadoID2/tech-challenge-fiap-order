@@ -5,7 +5,8 @@ CREATE TABLE clients
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     cpf VARCHAR(11) UNIQUE,
-    email VARCHAR(100) UNIQUE
+    email VARCHAR(100) UNIQUE,
+    client_id VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE payments
@@ -13,7 +14,8 @@ CREATE TABLE payments
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     qrCode TEXT,
     qrImage TEXT,
-    status VARCHAR(50)
+    status VARCHAR(50),
+    payment_id VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE products
@@ -25,7 +27,8 @@ CREATE TABLE products
     image TEXT,
     price INTEGER,
     price_for_client INTEGER,
-    quantity INTEGER
+    quantity INTEGER,
+    product_id VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE orders

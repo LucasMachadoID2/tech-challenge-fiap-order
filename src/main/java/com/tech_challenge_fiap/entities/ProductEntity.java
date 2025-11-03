@@ -27,4 +27,5 @@ public class ProductEntity {
     private Long price;
     private Long priceForClient;
     private Long quantity;
+    private String productId;
 }

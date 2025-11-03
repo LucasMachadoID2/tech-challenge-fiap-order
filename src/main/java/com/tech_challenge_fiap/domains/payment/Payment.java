@@ -17,4 +17,6 @@ public class Payment {
     String qrCode;
 
     PaymentStatusEnum status;
+
+    String paymentId;
 }

@@ -21,4 +21,6 @@ public class ClientResponseDto {
     private String cpf;
 
     private String email;
+
+    private String clientId;
 }
