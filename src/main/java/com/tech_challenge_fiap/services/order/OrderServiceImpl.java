@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
         paymentService.updatePaymentStatus(paymentId, status);
     }
 
-    private Order createOrder(UUID clientId, List<String> productIds) {
+    private Order createOrder(String clientId, List<String> productIds) {
         Client client = findClientOrNull(clientId);
 
         List<Product> productEntities = productIds.stream().map(this::findProduct).toList();
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
         return toDomain(orderSaved);
     }
 
-    private Client findClientOrNull(UUID clientId) {
+    private Client findClientOrNull(String clientId) {
         if (nonNull(clientId)) {
             var clientResponseDto = clientClient.getClientById(clientId);
             return toClient(clientResponseDto);
