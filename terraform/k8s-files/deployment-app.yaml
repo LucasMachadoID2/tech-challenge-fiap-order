@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tech-chall-app
+  name: app-order
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tech-chall-app
+      app: app-order
   template:
     metadata:
       labels:
-        app: tech-chall-app
+        app: app-order
     spec:
       containers:
-        - name: tech-chall-container
+        - name: app-order
           image: lucasmachadoid/fiap-tech-chall:latest
           imagePullPolicy: Always
           ports:
