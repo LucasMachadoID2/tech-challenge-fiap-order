@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-order-database-postgres
+  name: app-order-database-postgres-service
 spec:
   selector:
     app: app-order-database-postgres
