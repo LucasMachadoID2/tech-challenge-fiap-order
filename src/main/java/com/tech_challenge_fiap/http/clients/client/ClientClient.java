@@ -17,7 +17,7 @@ public class ClientClient {
     @Value("${client-client-url}")
     private String clientServiceUrl;
 
-    public ClientResponseDto getClientById(UUID clientId) {
+    public ClientResponseDto getClientById(String clientId) {
         try {
             return restTemplate.getForEntity(
                     clientServiceUrl + "v1/clients/" + clientId, ClientResponseDto.class

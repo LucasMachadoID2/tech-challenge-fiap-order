@@ -91,7 +91,7 @@ public class OrderServiceImplTest {
         when(orderRepository.save(any())).thenReturn(orderEntity);
 
         var request = OrderRequestDto.builder()
-                .clientId(UUID.randomUUID())
+                .clientId(UUID.randomUUID().toString())
                 .productIds(List.of(UUID.randomUUID().toString()))
                 .build();
 

@@ -18,7 +18,7 @@ public class ProductClient {
 
     public ProductResponseDto getProductbyId(String productId) {
         return restTemplate.getForEntity(
-                productServiceUrl + "v1/products/" + productId, ProductResponseDto.class
+                productServiceUrl + "api/products/" + productId, ProductResponseDto.class
         ).getBody();
     }
 }
