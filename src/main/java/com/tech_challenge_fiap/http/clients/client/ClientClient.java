@@ -20,7 +20,7 @@ public class ClientClient {
     public ClientResponseDto getClientById(String clientId) {
         try {
             return restTemplate.getForEntity(
-                    clientServiceUrl + "v1/clients/" + clientId, ClientResponseDto.class
+                    clientServiceUrl + "/v1/clients/" + clientId, ClientResponseDto.class
             ).getBody();
         } catch (HttpClientErrorException.NotFound e) {
             return null;

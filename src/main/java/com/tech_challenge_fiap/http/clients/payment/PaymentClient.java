@@ -21,7 +21,7 @@ public class PaymentClient {
 
     public PaymentResponseDto createPayment(PaymentRequestDto paymentRequestDto) {
         return restTemplate.postForEntity(
-                paymentServiceUrl + "v1/payments/", paymentRequestDto, PaymentResponseDto.class
+                paymentServiceUrl + "/payments/", paymentRequestDto, PaymentResponseDto.class
         ).getBody();
     }
 }
