@@ -36,7 +36,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             return toDomain(savedPayment);
         } catch (Exception e) {
-            throw new CouldNotCreatePaymentException(order.getId(), e);
+            throw new CouldNotCreatePaymentException(order.getId(), e.getMessage());
         }
     }
 

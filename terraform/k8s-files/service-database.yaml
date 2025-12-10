@@ -6,6 +6,6 @@ spec:
   selector:
     app: app-order-database-postgres
   ports:
-    - port: 5433
+    - port: 5432
       targetPort: 5432
   type: ClusterIP

@@ -3,6 +3,5 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  DATABASE_HOST: postgres
-  DATABASE_PORT: "5433"
+  DATABASE_PORT: "5432"
   DATABASE_NAME: tech-chall
