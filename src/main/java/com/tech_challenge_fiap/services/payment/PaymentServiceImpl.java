@@ -54,7 +54,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .build();
         PaymentRequestDto paymentRequestDto = PaymentRequestDto.builder()
                 .amount(order.getOrderPrice())
-                .paymentMethod("PIX")
+                .paymentMethod("pix")
                 .payer(payer)
                 .build();
         return paymentClient.createPayment(paymentRequestDto);
