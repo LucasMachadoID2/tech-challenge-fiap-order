@@ -8,7 +8,8 @@ public enum OrderStatusEnum {
     RECEIVED("Recebido"),
     IN_PREPARATION("Em preparação"),
     READY("Pronto"),
-    FINALIZED("Finalizado"); 
+    FINALIZED("Finalizado"),
+    CANCELED("Cancelado");
 
     public final String description;
 

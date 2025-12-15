@@ -218,13 +218,86 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    void shouldUpdatePaymentStatusSuccessfully() {
+    void shouldUpdatePaymentStatusPaidSuccessfully() {
+        var paymentEntity = PaymentEntity.builder()
+                .id(UUID.randomUUID())
+                .qrImage("Image base64")
+                .qrCode("Image code")
+                .status(PaymentStatusEnum.CREATED)
+                .build();
+
+        var productEntity = ProductEntity.builder()
+                .id(UUID.randomUUID())
+                .name("Product Name")
+                .description("Product Description")
+                .image("product-image.jpg")
+                .price(100L)
+                .priceForClient(90L)
+                .category(CategoryEnum.ACOMPANHAMENTO)
+                .quantity(10L)
+                .build();
+
+        var orderEntity = OrderEntity.builder()
+                .id(UUID.randomUUID())
+                .status(OrderStatusEnum.CREATED)
+                .client(null)
+                .products(List.of(productEntity))
+                .payment(paymentEntity)
+                .createdAt(LocalDateTime.now())
+                .build();
+
         doNothing().when(paymentService).updatePaymentStatus(any(), any());
+        doReturn(orderEntity).when(orderRepository).findOrderByPaymentId(any());
+        doReturn(orderEntity).when(orderRepository).save(any());
 
         assertDoesNotThrow(() -> {
-            orderService.updatePaymentStatus(any(), any());
+            orderService.updatePaymentStatus(UUID.randomUUID(), PaymentStatusEnum.PAID);
         });
 
         verify(paymentService, times(1)).updatePaymentStatus(any(), any());
+        verify(orderRepository, times(1)).findOrderByPaymentId(any());
+        verify(orderRepository, times(1)).save(any());
+    }
+
+    @Test
+    void shouldUpdatePaymentStatusRefusedSuccessfully() {
+        var paymentEntity = PaymentEntity.builder()
+                .id(UUID.randomUUID())
+                .qrImage("Image base64")
+                .qrCode("Image code")
+                .status(PaymentStatusEnum.CREATED)
+                .build();
+
+        var productEntity = ProductEntity.builder()
+                .id(UUID.randomUUID())
+                .name("Product Name")
+                .description("Product Description")
+                .image("product-image.jpg")
+                .price(100L)
+                .priceForClient(90L)
+                .category(CategoryEnum.ACOMPANHAMENTO)
+                .quantity(10L)
+                .build();
+
+        var orderEntity = OrderEntity.builder()
+                .id(UUID.randomUUID())
+                .status(OrderStatusEnum.CREATED)
+                .client(null)
+                .products(List.of(productEntity))
+                .payment(paymentEntity)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        doNothing().when(paymentService).updatePaymentStatus(any(), any());
+        doReturn(orderEntity).when(orderRepository).findOrderByPaymentId(any());
+        doReturn(orderEntity).when(orderRepository).save(any());
+
+        assertDoesNotThrow(() -> {
+            orderService.updatePaymentStatus(UUID.randomUUID(), PaymentStatusEnum.REFUSED);
+        });
+
+        verify(paymentService, times(1)).updatePaymentStatus(any(), any());
+        verify(orderRepository, times(1)).findOrderByPaymentId(any());
+        verify(orderRepository, times(1)).save(any());
     }
 }
