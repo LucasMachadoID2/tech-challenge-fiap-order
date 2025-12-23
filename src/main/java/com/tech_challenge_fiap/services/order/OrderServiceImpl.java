@@ -16,6 +16,7 @@ import com.tech_challenge_fiap.http.clients.product.ProductClient;
 import com.tech_challenge_fiap.http.clients.product.response.ProductResponseDto;
 import com.tech_challenge_fiap.repositories.order.OrderRepository;
 import com.tech_challenge_fiap.services.payment.PaymentService;
+import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundByPaymentException;
 import com.tech_challenge_fiap.utils.exceptions.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 import static com.tech_challenge_fiap.converter.ClientConverter.toClient;
 import static com.tech_challenge_fiap.converter.OrderConverter.toDomain;
 import static com.tech_challenge_fiap.converter.OrderConverter.toEntity;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -64,6 +66,25 @@ public class OrderServiceImpl implements OrderService {
 
     public void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status) {
         paymentService.updatePaymentStatus(paymentId, status);
+        updateStatusByPaymentId(paymentId, status);
+    }
+
+    private void updateStatusByPaymentId(UUID paymentId, PaymentStatusEnum paymentStatus) {
+        var orderEntity = orderRepository.findOrderByPaymentId(paymentId);
+
+        if (isNull(orderEntity)) {
+            throw new OrderNotFoundByPaymentException(paymentId);
+        }
+
+        if (PaymentStatusEnum.PAID.equals(paymentStatus)) {
+            orderEntity.setStatus(OrderStatusEnum.RECEIVED);
+            orderRepository.save(orderEntity);
+        }
+
+        if (PaymentStatusEnum.REFUSED.equals(paymentStatus)) {
+            orderEntity.setStatus(OrderStatusEnum.CANCELED);
+            orderRepository.save(orderEntity);
+        }
     }
 
     private Order createOrder(String clientId, List<String> productIds) {
