@@ -43,7 +43,7 @@ public class OrderController {
     @PatchMapping("/update-payment-status/{paymentId}")
     public ResponseEntity<?> updatePaymentStatus(@PathVariable String paymentId,
                                                                 @RequestParam PaymentStatusEnum status) {
-        orderService.updatePaymentStatus(UUID.fromString(paymentId), status);
+        orderService.updatePaymentStatus(paymentId, status);
         return ResponseEntity.ok().build();
     }
 }

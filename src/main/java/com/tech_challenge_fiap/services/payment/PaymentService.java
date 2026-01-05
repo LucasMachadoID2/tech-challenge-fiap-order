@@ -10,5 +10,5 @@ public interface PaymentService {
 
     Payment createPayment(Order order);
 
-    void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status);
+    void updatePaymentStatus(String paymentId, PaymentStatusEnum status);
 }

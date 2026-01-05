@@ -154,16 +154,17 @@ public class PaymentServiceImplTest {
                 .qrImage("Image base64")
                 .qrCode("Image code")
                 .status(PaymentStatusEnum.CREATED)
+                .paymentId(UUID.randomUUID().toString())
                 .build();
 
-        when(paymentRepository.findById(paymentEntity.getId())).thenReturn(Optional.of(paymentEntity));
+        when(paymentRepository.findByPaymentId(paymentEntity.getPaymentId())).thenReturn(paymentEntity);
         when(paymentRepository.save(any())).thenReturn(paymentEntity);
 
         assertDoesNotThrow(() -> {
-            paymentService.updatePaymentStatus(paymentEntity.getId(), PaymentStatusEnum.PAID);
+            paymentService.updatePaymentStatus(paymentEntity.getPaymentId(), PaymentStatusEnum.PAID);
         });
 
-        verify(paymentRepository, times(1)).findById(any());
+        verify(paymentRepository, times(1)).findByPaymentId(any());
         verify(paymentRepository, times(1)).save(any());
     }
 
@@ -175,7 +176,7 @@ public class PaymentServiceImplTest {
             paymentService.updatePaymentStatus(any(), PaymentStatusEnum.PAID);
         });
 
-        verify(paymentRepository, times(1)).findById(any());
+        verify(paymentRepository, times(1)).findByPaymentId(any());
         verify(paymentRepository, times(0)).save(any());
     }
 }

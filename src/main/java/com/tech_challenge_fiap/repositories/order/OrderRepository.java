@@ -14,7 +14,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
             "ORDER BY o.status ASC, o.createdAt ASC")
     List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
-    @Query("SELECT o FROM OrderEntity o " +
-            "WHERE o.payment.id = :paymentId")
-    OrderEntity findOrderByPaymentId(UUID paymentId);
+    @Query("SELECT o FROM OrderEntity o WHERE o.payment.paymentId = :paymentId")
+    OrderEntity findOrderByPaymentId(String paymentId);
 }

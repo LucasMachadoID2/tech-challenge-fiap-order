@@ -16,5 +16,5 @@ public interface OrderService {
 
     OrderResponseDto updateStatus(UUID orderId, OrderStatusEnum status);
 
-    void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status);
+    void updatePaymentStatus(String paymentId, PaymentStatusEnum status);
 }
