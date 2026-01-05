@@ -103,7 +103,13 @@ public class OrderServiceImpl implements OrderService {
 
         order.setPayment(payment);
 
-        var orderSaved = orderRepository.save(toEntity(order));
+        var entity = toEntity(order);
+        if (nonNull(entity.getClient())) {
+            entity.getClient().setOrder(entity);
+        }
+        entity.getPayment().setOrder(entity);
+        entity.getProducts().forEach(it -> it.setOrder(entity));
+        var orderSaved = orderRepository.save(entity);
 
         return toDomain(orderSaved);
     }

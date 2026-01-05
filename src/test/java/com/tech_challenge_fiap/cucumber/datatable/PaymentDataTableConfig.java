@@ -18,6 +18,7 @@ public class PaymentDataTableConfig {
                 .qrImage(row.get("category"))
                 .qrCode(row.get("name"))
                 .status(nonNull(row.get("status")) ? PaymentStatusEnum.valueOf(row.get("status")) : null)
+                .paymentId(row.get("paymentId"))
                 .build();
     }
 }

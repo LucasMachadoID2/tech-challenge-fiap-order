@@ -100,7 +100,6 @@ public class PaymentServiceImplTest {
         });
 
         verify(paymentClient, times(1)).createPayment(any());
-        verify(paymentRepository, times(1)).save(any());
     }
 
     @Test
@@ -146,7 +145,6 @@ public class PaymentServiceImplTest {
         });
 
         verify(paymentClient, times(1)).createPayment(any());
-        verify(paymentRepository, times(0)).save(any());
     }
 
     @Test

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 import static com.tech_challenge_fiap.converter.PaymentConverter.toDomain;
-import static com.tech_challenge_fiap.converter.PaymentConverter.toEntity;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -31,10 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment createPayment(Order order) {
         try {
             PaymentResponseDto paymentResponseDto = requestCreatePayment(order);
-            Payment payment = toDomain(paymentResponseDto);
-            PaymentEntity savedPayment = paymentRepository.save(toEntity(payment));
-
-            return toDomain(savedPayment);
+            return toDomain(paymentResponseDto);
         } catch (Exception e) {
             throw new CouldNotCreatePaymentException(order.getId(), e.getMessage());
         }
