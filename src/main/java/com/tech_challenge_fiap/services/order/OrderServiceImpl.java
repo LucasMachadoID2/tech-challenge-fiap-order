@@ -64,12 +64,12 @@ public class OrderServiceImpl implements OrderService {
         return OrderConverter.toResponse(order);
     }
 
-    public void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status) {
+    public void updatePaymentStatus(String paymentId, PaymentStatusEnum status) {
         paymentService.updatePaymentStatus(paymentId, status);
         updateStatusByPaymentId(paymentId, status);
     }
 
-    private void updateStatusByPaymentId(UUID paymentId, PaymentStatusEnum paymentStatus) {
+    private void updateStatusByPaymentId(String paymentId, PaymentStatusEnum paymentStatus) {
         var orderEntity = orderRepository.findOrderByPaymentId(paymentId);
 
         if (isNull(orderEntity)) {

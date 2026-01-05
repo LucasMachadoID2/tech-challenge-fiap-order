@@ -14,9 +14,8 @@ import com.tech_challenge_fiap.utils.exceptions.PaymentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 import static com.tech_challenge_fiap.converter.PaymentConverter.toDomain;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -37,8 +36,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void updatePaymentStatus(UUID paymentId, PaymentStatusEnum status) {
-        PaymentEntity paymentEntity = paymentRepository.findById(paymentId).orElseThrow(() -> new PaymentNotFoundException(paymentId));
+    public void updatePaymentStatus(String paymentId, PaymentStatusEnum status) {
+        PaymentEntity paymentEntity = paymentRepository.findByPaymentId(paymentId);
+        if (isNull(paymentEntity)) {
+            throw new PaymentNotFoundException(paymentId);
+        }
         paymentEntity.setStatus(status);
         paymentRepository.save(paymentEntity);
     }

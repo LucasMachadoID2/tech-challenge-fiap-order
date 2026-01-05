@@ -251,7 +251,7 @@ public class OrderServiceImplTest {
         doReturn(orderEntity).when(orderRepository).save(any());
 
         assertDoesNotThrow(() -> {
-            orderService.updatePaymentStatus(UUID.randomUUID(), PaymentStatusEnum.PAID);
+            orderService.updatePaymentStatus(UUID.randomUUID().toString(), PaymentStatusEnum.PAID);
         });
 
         verify(paymentService, times(1)).updatePaymentStatus(any(), any());
@@ -293,7 +293,7 @@ public class OrderServiceImplTest {
         doReturn(orderEntity).when(orderRepository).save(any());
 
         assertDoesNotThrow(() -> {
-            orderService.updatePaymentStatus(UUID.randomUUID(), PaymentStatusEnum.REFUSED);
+            orderService.updatePaymentStatus(UUID.randomUUID().toString(), PaymentStatusEnum.REFUSED);
         });
 
         verify(paymentService, times(1)).updatePaymentStatus(any(), any());
