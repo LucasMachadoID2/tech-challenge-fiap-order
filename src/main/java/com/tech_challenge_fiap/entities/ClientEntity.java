@@ -1,13 +1,7 @@
 package com.tech_challenge_fiap.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -19,10 +13,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ClientEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
     private String cpf;
     private String email;
     @Column(name = "client_id")
     private String clientId;
+    @Setter
+    @OneToOne(optional = false)
+    @JoinColumn(
+            name = "order_id",
+            nullable = false,
+            unique = true
+    )
+    private OrderEntity order;
 }

@@ -2,10 +2,7 @@ package com.tech_challenge_fiap.entities;
 
 import com.tech_challenge_fiap.domains.product.CategoryEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -18,6 +15,7 @@ import java.util.UUID;
 public class ProductEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Enumerated(EnumType.STRING)
     private CategoryEnum category;
@@ -28,4 +26,8 @@ public class ProductEntity {
     private Long priceForClient;
     private Long quantity;
     private String productId;
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderEntity order;
 }

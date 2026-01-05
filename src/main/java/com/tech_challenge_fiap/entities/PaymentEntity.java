@@ -15,6 +15,7 @@ import java.util.UUID;
 public class PaymentEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String qrImage;
     private String qrCode;
@@ -23,4 +24,12 @@ public class PaymentEntity {
     private PaymentStatusEnum status;
     @Column(name = "payment_id")
     private String paymentId;
+    @Setter
+    @OneToOne(optional = false)
+    @JoinColumn(
+            name = "order_id",
+            nullable = false,
+            unique = true
+    )
+    private OrderEntity order;
 }
