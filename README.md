@@ -15,6 +15,9 @@ valida dados de entrada, persiste em Postgres e entrega contratos claros de erro
 | PUT    | /v1/orders/{orderId}                         | Atualiza o status de um pedido              |
 | PUT    | /v1/orders/update-payment-status/{paymentId} | Atualiza o status de um pagamento de pedido |
 
+## 📌 Cobertura de testes
+![img.png](docs/img.png)
+
 ### Passo a Passo
 
 1. **Clone o repositório**
